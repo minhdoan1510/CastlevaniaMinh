@@ -1,0 +1,127 @@
+﻿#pragma once
+
+#include <Windows.h>
+#include <dinput.h>
+#include <WinUser.h> 
+
+#include <stdlib.h> 
+#include <stdarg.h> 
+#include <stdio.h> 
+#include <time.h> 
+
+#include <d3d9.h>
+#include <d3dx9.h>
+
+#include "Utils.h"
+
+#define WINDOW_CLASS_NAME L"CastleVaniaMinh"
+#define MAIN_WINDOW_TITLE L"CastleVaniaMinh"
+
+#define MAX_FRAME_RATE 120
+
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
+#define SCREEN_WIDTH 528//528
+#define SCREEN_HEIGHT 500//480
+
+#define PULL_Y 20 //kéo vũ khí xuống ngang tâm người simon
+#define PULL_SCREEN_Y 80
+
+#define HEAL_DEFAULT 16
+#define TIME_GAME 400
+
+#define SAFE_DELETE(a) { delete (a); (a) = NULL; }
+
+
+enum ObjectType
+{
+	TEX_ALL = 1510,
+	SIMON = 0,
+	SIMON_TRANS,
+	SIMON_DEADTH=-900000,
+
+	///TextureType
+	BRICK = 3,
+
+	TEX_BRICK_TYPE_TRANSPARENT,
+
+	CANDLE = 9000,
+	CANDLE1 = 9100,
+	TEX_CANDLE_TYPE_1 = 9100,
+	CANDLE2 = 9200,
+	TEX_CANDLE_TYPE_2 = 9200,
+
+	///MapType
+	MAP = 100000,
+	MAP1 = 100001,
+	MAP2 = 100002,
+	MAP3 = 100003,
+	MAP4 = 100004,
+	MAP5 = 100005,
+	MAP6 = 100006,
+	MAP7 = 100007,
+	MAP8 = 100008,
+	MAP9 = 100009,
+	
+
+	//Weapon
+	WEAPON,
+	WHIP = 8000,
+	WHIP_LV1 = 8010,
+	WHIP_LV2 = 8020,
+	WHIP_LV3 = 8030,
+
+	KNIFE = 8100,
+	AXE = 8200,
+	BOOMERANG = 8300,
+	GUNPOWDER = 8400,
+
+
+	//
+	BBOX,
+
+	RENDERBBOX = -100,
+	//Death
+	DEATH_ANI = -1000,
+	TEX_DEATH_OBJECT = -1001,
+	DEBRIS = -1100,
+
+	//Item
+	ITEM = 50000,
+	TEX_ITEM = 50001,
+	HEART_ITEM = 51000,
+	HEART_BIG_ITEM = 52000,
+	MONEY_RED_ITEM = 53000,
+	MONEY_WHITE_ITEM = 54000,
+	MONEY_BLU_ITEM = 55000,
+	WHIP_ITEM = 56000,
+	KNIFE_ITEM = 57000,
+	OCLOCK_ITEM = 58000,
+	AXE_ITEM = 60000,
+	MONEY_BOX_YELLOW_ITEM = 62000,
+	MONEY_BOX_RED_ITEM = 63000,
+	GUNPOWDER_ITEM = 64000,
+	DOUBLE_WEAPON = 66000,
+	BOOMERANG_ITEM = 72000,
+	CROWM_YELLOW_ITEM = 73000,
+	
+	MONEY_EFFECT = 80000,
+	MONEY_100_EFFECT = 81000,
+	MONEY_400_EFFECT = 82000,
+	MONEY_700_EFFECT = 83000,
+	MONEY_1000_EFFECT = 84000,
+	MONEY_2000_EFFECT = 85000,
+	TEX_MONEY = 80001,
+
+	//Trigger
+	TRIGGER = 70000,
+	PASS_SCENE_TRIGGER = 71000,
+	TOP_STAIRS_TRIGGER = 72100,
+	BOTTOM_STAIRS_TRIGGER = 72200,
+
+	//Board
+	FONT_BOARD = 123450,
+	FRAME_ITEM_BOARD = 123451,
+	HEART_ITEM_BOARD = 123452,
+	HEAL_ITEM_BOARD = 123453,
+	Null
+};
