@@ -1,13 +1,15 @@
 #include "Effect.h"
 
-CEffect::CEffect(float _x, float _y, ObjectType type)
+CEffect::CEffect(float _x, float _y,ObjectType _effectType, DWORD _timeEffect , ObjectType _itemHolder)
 {
 	x = _x;
 	y = _y;
-	effectType = type;
-	sprite = CSprites::GetInstance()->Get(type);
 	lifeTime = GetTickCount();
-	numDraw = 0;
+	effectType = _effectType;
+	ani = CAnimations::GetInstance()->Get(_effectType);
+	isDead = 0;
+	itemHolder = _itemHolder;
+	timeEffect = _timeEffect;
 }
 
 CEffect::~CEffect()
@@ -17,21 +19,29 @@ CEffect::~CEffect()
 
 void CEffect::Render()
 {
-	if (GetTickCount() - lifeTime >= TIME_DEAD_EFFECT)
-	{
-		IsDead == true;
-		return;
-	}
-	if (numDraw % 20 < 10)
-		sprite->Draw(x + 10, y, 255);
-	numDraw ++;
+	ani->Render(x, y, 0);
 }
 
 void CEffect::Update(DWORD dt)
 {
-
+	if (GetTickCount() - lifeTime >= timeEffect)
+	{
+		isDead = true;
+	}
 }
 
-void CEffect::GetBoundingBox(float& l, float& t, float& r, float& b)
+bool CEffect::GetDeath()
 {
+	return isDead;
+}
+
+ObjectType CEffect::GetItemHolder()
+{
+	return itemHolder;
+}
+
+void CEffect::GetPosition(float& _x, float& _y)
+{
+	_x = x;
+	_y = y;
 }

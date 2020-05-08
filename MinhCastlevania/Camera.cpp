@@ -1,12 +1,16 @@
 ﻿#include "Camera.h"
+#include "MapManager.h"
+#include "SceneManager.h"
 #include<cmath>
 
+#define W_CAM_BOUND 16
 CCamera* CCamera::Intance = NULL;
 
 CCamera::CCamera(int w, int h)
 {
 	width = w;
 	height = h;
+	floor = 1;
 }
 
 CCamera::~CCamera()
@@ -16,7 +20,7 @@ CCamera::~CCamera()
 CCamera* CCamera::GetInstance()
 {
 	if (Intance == NULL)
-		Intance = new CCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
+		Intance = new CCamera(SCREEN_WIDTH, SCREEN_HEIGHT-PULL_SCREEN_Y);
 	return Intance;
 }
 
@@ -25,16 +29,17 @@ D3DXVECTOR2 CCamera::Transform(float x, float y)
 	return D3DXVECTOR2(x - xC, y - yC);
 }
 
-void CCamera::SetPosition(float x, float y)
+void CCamera::SetPosition(float x, float y,int _floor)
 {
-	if (x < boundLeft)
+	if (x <= boundLeft)
 		xC = boundLeft;
-	else if (x > boundRight - width + 16)
-		xC = boundRight - width + 16;
+	else if (x > boundRight - width + W_CAM_BOUND)
+		xC = boundRight - width + W_CAM_BOUND;
 	else
 		xC = x;
 	//xC = (x < 0) ? 0 : (x + width > boundaryWidth) ? boundaryWidth - width : x;
 	yC = y;
+	floor = _floor;
 }
 
 float CCamera::GetXCam()
@@ -45,6 +50,11 @@ float CCamera::GetXCam()
 float CCamera::GetYCam()
 {
 	return yC;
+}
+
+int CCamera::GetCurrentFloor()
+{
+	return floor;
 }
 
 int CCamera::GetWidth()

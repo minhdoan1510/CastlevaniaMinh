@@ -19,35 +19,35 @@ void CFont::Draw(string str, int x, int y)
 		rect = rectTex;
 		if (str[i] <= 'Z' && str[i] >= 'A')
 		{
-			rect.left += SIZE_FONT_W * (((int)str[i]) - 65);
+			rect.left += SIZE_FONT_W * (((int)str[i]) - INT_A_ASCII);
 			rect.top += 0;
 			rect.right = rect.left + SIZE_FONT_W;
 			rect.bottom = rect.top + SIZE_FONT_H;
-			sprite->DrawFrame(x + 15 * i, y, rect);//65-90
+			sprite->DrawFrame(x + SIZE_FONT_W * i, y, rect);//65-90
 		}
 		else if (str[i] == '-')
 		{
-			rect.left += SIZE_FONT_W * 36;
+			rect.left += SIZE_FONT_W * INT_EXEPT_ASCII;
 			rect.top += 0;
 			rect.right = rect.left + SIZE_FONT_W;
 			rect.bottom = rect.top + SIZE_FONT_H;
-			sprite->DrawFrame(x + 15 * i, y, rect);
+			sprite->DrawFrame(x + SIZE_FONT_W * i, y, rect);
 		}
 		else if (str[i] >= '0' && str[i] <= '9')
 		{
-			rect.left += SIZE_FONT_W * (((int)str[i]) - 48 + 26);
+			rect.left += SIZE_FONT_W * (((int)str[i]) - INT_0_ASCII + SIZE_AZ_ASCII);
 			rect.top += 0;
 			rect.right = rect.left + SIZE_FONT_W;
 			rect.bottom = rect.top + SIZE_FONT_H;
-			sprite->DrawFrame(x + 15 * i, y, rect);
+			sprite->DrawFrame(x + SIZE_FONT_W * i, y, rect);
 		}
 		else if (str[i] == ' ')
 		{
-			rect.left += SIZE_FONT_W *37;
+			rect.left += SIZE_FONT_W * INT_SPACE_ASCII;
 			rect.top += 0;
 			rect.right = rect.left + SIZE_FONT_W;
 			rect.bottom = rect.top + SIZE_FONT_H;
-			sprite->DrawFrame(x + 15 * i, y, rect);
+			sprite->DrawFrame(x + SIZE_FONT_W * i, y, rect);
 		}
 	}
 }

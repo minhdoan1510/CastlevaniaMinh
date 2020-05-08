@@ -9,10 +9,11 @@ CTrigger::CTrigger(int _x, int _y, int _w, int _h, ObjectType _type, int _Direct
 	height = _h;
 	triggerType = _type;
 	if (_DirectStair == 1)
-		x_checkpoint = x;
+		x_checkpoint = x + CHECKPOINT_X1;
 	else
-		x_checkpoint = x + 32;
+		x_checkpoint = x - CHECKPOINT_X;
 	DirectStair = _DirectStair;
+	isActive = 1;
 	//isColisible = false;
 }
 
@@ -24,6 +25,7 @@ void CTrigger::Render()
 {
 	RenderBoundingBox();
 }
+
 
 void CTrigger::GetBoundingBox(float& l, float& t, float& r, float& b)
 {

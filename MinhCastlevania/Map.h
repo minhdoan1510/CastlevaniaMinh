@@ -16,14 +16,16 @@ private:
 	int sizeFrame;
 	int tileMap[200][200];
 public:
-	CMap(int _id, LPCWSTR fileMap);
+	CMap(int _id, string fileMap);
 	~CMap();
-	void ReadFileMap(LPCWSTR filePath);
+	void ReadFileMap(string filePath);
 	void DrawMap();
-	void LoadMap();	
+	void DrawIntroScene();
+	void LoadMap(string fileTileMap);
 	int GetMapWidth();
 	int GetMapHeight();
 	int GetFloorMap();
+	void SetSpriteTex(CSprite* s, LPDIRECT3DTEXTURE9 texture);
 	void SetBoundaryLeftRight(int floor);
 };
 

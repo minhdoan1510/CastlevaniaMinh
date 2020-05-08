@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "GameDefine.h" 
+#include "GameDefine.h"
+
 
 class CCamera
 {
@@ -12,14 +13,16 @@ class CCamera
 	float boundHeight;
 	float boundLeft;
 	float boundRight;
+	int floor;
 public:
 	static CCamera* GetInstance();
 	CCamera(int w, int h);
 	~CCamera();
 	D3DXVECTOR2 Transform(float x, float y);
-	void SetPosition(float x, float y);
+	void SetPosition(float x, float y, int _floor);
 	float GetXCam();
 	float GetYCam();
+	int GetCurrentFloor();
 	int GetWidth();
 	int GetHeight();
 	RECT GetRectCam();
@@ -29,6 +32,7 @@ public:
 	void SetBoundLeftRight(float _l, float _r);
 	void GetBoundLeftRight(float& _l, float& _r);
 	bool IsContainCam(RECT rect);
+
 };
 
 

@@ -2,15 +2,17 @@
 #include "TextureManager.h"
 #include "GameDefine.h"
 
-CBrick::CBrick(float X, float Y, int W, int H, int _type)
+CBrick::CBrick(float X, float Y, int W, int H, int _type, ObjectType _item)
 {
 	typeBrick = static_cast<ObjectType>(_type);
-	this->x = X;
-	this->y = Y;
-	this->width = W;
-	this->height = H;
+	x = X;
+	y = Y;
+	width = W;
+	height = H;
 	objType = ObjectType::BRICK;
 	if (typeBrick == BRICK_MODEL_TRANSPARENT_1 || typeBrick == BRICK_MODEL_TRANSPARENT_2) return;
+	if (_item != Null)
+		itemHolder = _item;
 	sprite = CSprites::GetInstance()->Get(typeBrick);
 	if (sprite == NULL)
 		DebugOut(L"[Brick] Sprite brick type %d not found in CSprites\n",_type);
@@ -19,7 +21,7 @@ CBrick::CBrick(float X, float Y, int W, int H, int _type)
 void CBrick::Render()
 {
 	RenderBoundingBox();
-	if (typeBrick == BRICK_MODEL_TRANSPARENT_1)
+	if (typeBrick == BRICK_MODEL_TRANSPARENT_1 || typeBrick == BRICK_MODEL_TRANSPARENT_2)
 		return;
 	sprite->Draw(x, y);
 }
@@ -27,6 +29,18 @@ void CBrick::Render()
 int CBrick::GetTypeBrick()
 {
 	return typeBrick;
+}
+
+void CBrick::Death()
+{
+	if (typeBrick == BRICK_MODEL_TRANSPARENT_1 || typeBrick == BRICK_MODEL_TRANSPARENT_2)
+		return;
+	IsDead = true;
+}
+
+ObjectType CBrick::GetItemHolder()
+{
+	return itemHolder;
 }
 
 void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)

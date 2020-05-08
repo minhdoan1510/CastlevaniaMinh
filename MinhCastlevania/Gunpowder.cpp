@@ -1,10 +1,11 @@
 #include "Gunpowder.h"
 #include "Item.h"
 
+#define MIN_Y_ATTACK 18
 CGunpowder::CGunpowder()
 {
 	isCollision = 0;
-	ani = new CAnimation(*(CAnimations::GetInstance()->Get(GUNPOWDER)));
+	ani =CAnimations::GetInstance()->Get(GUNPOWDER);
 	weaponType = GUNPOWDER;
 }
 
@@ -29,7 +30,7 @@ void CGunpowder::Render()
 void CGunpowder::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isFinish) return;
-	if (ani->GetDoneFrameFinal())
+	if (GetTickCount64() - timeFire > GUNPOWDER_TIME_ATTACK && timeFire != 0)
 	{
 		isFinish = 1;
 		return;
@@ -81,9 +82,12 @@ void CGunpowder::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult.at(i);
 			if (!dynamic_cast<CItem*>(e->obj))
 			{
+				if (dynamic_cast<CEnemy*>(e->obj))
+					static_cast<CEnemy*>(e->obj)->Death(GetDamage());
 				e->obj->Death();
 				isCollision = 1;
 				y -= 10;
+				timeFire = GetTickCount();
 			}
 		}
 	}
@@ -93,12 +97,13 @@ bool CGunpowder::Attack(float _x, float _y, int _nx)
 {
 	if (lifeTime == 0 || GetTickCount64() - lifeTime > GUNPOWDER_SPEED_ATTACK)
 	{
+		timeFire = 0;
 		ani->ResetFarmeCurrent();
 		lifeTime = GetTickCount64();
 		isFinish = false;
 		isCollision = 0;
 		x = _x;
-		y = (_y + PULL_Y < 18) ? 18 : _y + PULL_Y;
+		y = (_y + PULL_Y < MIN_Y_ATTACK) ? MIN_Y_ATTACK : _y + PULL_Y;
 		nx = _nx;
 		vy = -GUNPOWDER_VFLY;
 		return true;
@@ -112,4 +117,9 @@ void CGunpowder::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = this->y;
 	r = x + GUNPOWDER_BBOX_WIDTH;
 	b = y + GUNPOWDER_BBOX_HEIGHT;
+}
+
+int CGunpowder::GetDamage()
+{
+	return GUNPOWDER_DAMAGE;
 }

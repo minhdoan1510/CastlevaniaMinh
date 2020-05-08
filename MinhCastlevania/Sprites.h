@@ -33,14 +33,17 @@ class CSprites
 	static CSprites * __instance;
 
 	unordered_map<int, CSprite*> sprites;
+	unordered_map<int, CSprite*> spritesScene;
 
 public:
-	void Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
-	void Add(int id, CSprite* cs);
+	void Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex, bool isScene);
+	void Add(int id, CSprite* cs, bool isScene);
+	void Add(int id, int idTexture, bool isScene);
 	LPSPRITE Get(int id);
-	void Clear(); 
-	void LoadResource();
-
+	void Clear();
+	void ClearSpritesScene();
+	void LoadResource(string filesprite);
+	void LoadResourceScene(string filesprite);
 	static CSprites * GetInstance();
 };
 

@@ -10,23 +10,26 @@
 #include "Candle.h"
 #include "Item.h"
 #include "ScoreBoard.h"
+#include "Grid.h"
+#include "Effect.h"
 
+#define TIME_DEFAULT_SCENE 400
 
 class CPlayScene: public CScene
 {
 private:
 	DWORD lifeTime;
 	int timeGame;
-	int ScoreGame;
-	LPCWSTR filePathObj;
-	LPCWSTR filePathMap;
+	string filePathObj;
+	string filePathMap;
 	CMap* map;
+	CGrid* grid;
 	CScoreBoard* cScoreBoard;
-	vector<LPGAMEOBJECT> objects;
 	void LoadMap();
 	void LoadObject();
+	vector<CEffect*> effects;
 public:
-	CPlayScene(int id);
+	CPlayScene(int id, string filePath);
 	void Load();
 	void Update(DWORD dt);
 	void Render();
@@ -38,8 +41,8 @@ public:
 class CPlayScenceKeyHandler : public CScenceKeyHandler
 {
 public: 
-	virtual void KeyState(BYTE *states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
+	void KeyState(BYTE *states);
+	void OnKeyDown(int KeyCode);
+	void OnKeyUp(int KeyCode);
 	CPlayScenceKeyHandler(CScene *s) :CScenceKeyHandler(s) {};
 };

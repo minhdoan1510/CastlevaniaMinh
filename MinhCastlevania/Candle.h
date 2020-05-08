@@ -1,10 +1,9 @@
 #pragma once
 #include"GameObject.h"
 
-#define	CANDLE_1_SIZE_W 32
-#define	CANDLE_1_SIZE_H 64
-#define	CANDLE_2_SIZE_W 16
-#define	CANDLE_2_SIZE_H 32
+#define	CANDLE_1_SIZE D3DXVECTOR2(32,64)
+#define	CANDLE_2_SIZE D3DXVECTOR2(16,32)
+#define DEATH_ANI_SIZE D3DXVECTOR2(30,30)
 
 class CCandle :public CGameObject
 {
@@ -14,8 +13,6 @@ class CCandle :public CGameObject
 	int height;
 	int IsDeading;
 	int IsDestroy;
-	CAnimation* ani;
-
 public:
 	CCandle(float x, float y, ObjectType holderType, ObjectType candleType);
 	~CCandle();

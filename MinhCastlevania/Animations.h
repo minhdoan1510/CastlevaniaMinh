@@ -28,12 +28,12 @@ class CAnimation
 	bool DoneFrameFinal = false;
 public:
 	CAnimation(int defaultTime = 100) { lifeFrameTime = 0; this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
-	CAnimation* Clone();
+	//CAnimation* Clone();
 	void Add(int spriteId, DWORD time = 0);
 
 	void Render(float x, float y,bool flipX,  int alpha = 255 ,int R = 255, int G = 255, int B= 255);
 	void RenderFrame(int idFrame, float x, float y, bool flipX, int alpha = 255, int R = 255, int G = 255, int B = 255);
-	void KeepFramePresent(); // giữ lại frame vừa vẽ
+	//void KeepFramePresent(); // giữ lại frame vừa vẽ
 	int GetCurrentFrame();
 	bool IsFinalFrame() { return currentFrame == frames.size()-1; }
 	int GetFrameTime(){}
@@ -50,10 +50,13 @@ class CAnimations
 {
 	static CAnimations * _instance;
 	unordered_map<int, LPANIMATION> animations;
+	unordered_map<int, LPANIMATION> animationsScene;
 public:
-	void Add(int id, LPANIMATION ani);
+	//void Add(int id, LPANIMATION ani);
 	LPANIMATION Get(int id);
 	void Clear();
+	void ClearAniScene();
+	void Add(int id, LPANIMATION ani, bool isScene);
 	static CAnimations * GetInstance();
 };
 
@@ -64,10 +67,15 @@ class CAnimationSets
 {
 	static CAnimationSets * _instance;
 	unordered_map<int, LPANIMATION_SET> animation_sets;
+	unordered_map<int, LPANIMATION_SET> animation_setsScene;
 public:
 	static CAnimationSets * GetInstance();
 	CAnimationSets();
-	void Add(int id, LPANIMATION_SET ani);
+	void LoadResource(string Folderpath);
+	void LoadResourceScene(string Folderpath);
+	void Add(int id, LPANIMATION_SET ani_set, bool isScene);
+	void Clear();
+	void ClearAniScene();
+	//void Add(int id, LPANIMATION_SET ani);
 	LPANIMATION_SET Get(ObjectType id);
-	void LoadResource();
 };

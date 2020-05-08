@@ -36,6 +36,8 @@ class CGame
 	CSceneManager* cSceneManager;
 public:
 	static CGame* GetInstance();
+	void _ParseSection_SETTINGS(string line);
+	void _ParseSection_SCENES(string line);
 	void Init(HWND hWnd);
 	void Load(LPCWSTR gameFile);
 

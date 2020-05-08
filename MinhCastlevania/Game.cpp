@@ -32,12 +32,12 @@ void CGame::Init(HWND hWnd)
 
 	if (d3ddv == NULL)
 	{
-		OutputDebugString(L"[Game.cpp] CreateDevice failed\n");
+		OutputDebugString(L"[Game] CreateDevice failed\n");
 		return;
 	}
 	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 	D3DXCreateSprite(d3ddv, &spriteHandler);
-	OutputDebugString(L"[Game.cpp] InitGame done;\n");
+	OutputDebugString(L"[Game] InitGame done;\n");
 }
 
 int CGame::IsKeyDown(int KeyCode)
@@ -57,7 +57,7 @@ void CGame::InitKeyboard()
 
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[Game.cpp] DirectInput8Create failed!\n");
+		DebugOut(L"[Game] DirectInput8Create failed!\n");
 		return;
 	}
 
@@ -66,7 +66,7 @@ void CGame::InitKeyboard()
 	// TO-DO: put in exception handling
 	if (hr != DI_OK) 
 	{
-		DebugOut(L"[Game.cpp] CreateDevice failed!\n");
+		DebugOut(L"[Game] CreateDevice failed!\n");
 		return;
 	}
 
@@ -89,11 +89,11 @@ void CGame::InitKeyboard()
 	hr = didv->Acquire();
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[Game.cpp] Acquire failed!\n");
+		DebugOut(L"[Game] Acquire failed!\n");
 		return;
 	}
 
-	DebugOut(L"[Game.cpp] Keyboard has been initialized successfully\n");
+	DebugOut(L"[Game] Keyboard has been initialized successfully\n");
 }
 
 void CGame::ProcessKeyboard()
@@ -109,13 +109,13 @@ void CGame::ProcessKeyboard()
 			HRESULT h = didv->Acquire();
 			if (h==DI_OK)
 			{ 
-				DebugOut(L"[Game.cpp] Keyboard re-acquired!\n");
+				DebugOut(L"[Game] Keyboard re-acquired!\n");
 			}
 			else return;
 		}
 		else
 		{
-			DebugOut(L"[Game.cpp] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			DebugOut(L"[Game] DINPUT::GetDeviceState failed. Error: %d\n", hr);
 			return;
 		}
 	}
@@ -126,7 +126,7 @@ void CGame::ProcessKeyboard()
 	hr = didv->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
 	if (FAILED(hr))
 	{
-		DebugOut(L"[Game.cpp] DINPUT::GetDeviceData failed. Error: %d\n", hr);
+		DebugOut(L"[Game] DINPUT::GetDeviceData failed. Error: %d\n", hr);
 		return;
 	}
 	// Scan through all buffered events, check if the key is pressed or released
@@ -248,22 +248,68 @@ CGame *CGame::GetInstance()
 	return Instance;
 }
 
+//////////////
+#define MAX_GAME_LINE 1024
+
+
+#define GAME_FILE_SECTION_UNKNOWN -1
+#define GAME_FILE_SECTION_SETTINGS 1
+#define GAME_FILE_SECTION_SCENES 2
+
+void CGame::_ParseSection_SETTINGS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	if (tokens[0] == "start")
+		CSceneManager::GetInstance()->SetCurrentSceneID(atoi(tokens[1].c_str()));
+	else
+		DebugOut(L"[ERROR] Unknown game setting %s\n", ToWSTR(tokens[0]).c_str());
+}
+
+void CGame::_ParseSection_SCENES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	int id = atoi(tokens[0].c_str());
+	string pathFolder = tokens[1];
+
+	//LPSCENE scene = new CPlayScene(id, pathFolder);
+	CSceneManager::GetInstance()->AddScene(id, pathFolder);
+}
+
 void CGame::Load(LPCWSTR gameFile)
 {
+	CTextureManager::GetInstance()->LoadResource("Resources/txt/texture.txt");
+	CSprites::GetInstance()->LoadResource("Resources/txt/sprite.txt");
+	CAnimationSets::GetInstance()->LoadResource("Resources/txt/");
 	ifstream f;
 	f.open(gameFile);
-	if (f.fail())
+	char str[MAX_GAME_LINE];
+
+	// current resource section flag
+	int section = GAME_FILE_SECTION_UNKNOWN;
+
+	while (f.getline(str, MAX_GAME_LINE))
 	{
-		DebugOut(L"[Game.cpp] %s is not found!!!",gameFile);
-		return;
+		string line(str);
+
+		if (line[0] == '#') continue;	// skip comment lines	
+
+		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
+		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
+
+		//
+		// data section
+		//
+		switch (section)
+		{
+		case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
+		case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
+		}
 	}
-	f >> numberscene;
 	f.close();
-	CTextureManager::GetInstance()->LoadResource(numberscene);
-	CSprites::GetInstance()->LoadResource();
-	CAnimationSets::GetInstance()->LoadResource();
-	for (int i = 0; i < numberscene; i++)
-	{
-		CSceneManager::GetInstance()->AddScene(i + 1);
-	}
+
+	//CSceneManager::GetInstance()->GetCurrentScene()->Load();
 }

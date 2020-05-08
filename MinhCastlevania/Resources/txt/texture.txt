@@ -1,1 +1,2 @@
 1510	Resources\tex\texture.png
+8401	Resources\tex\bbox.png

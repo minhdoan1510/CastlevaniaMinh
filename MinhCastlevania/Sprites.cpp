@@ -118,65 +118,155 @@ RECT CSprite::GetRECT()
 	return  rect;
 }
 
-void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
+void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex, bool isScene)
 {
-	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
-	sprites[id] = s;
-	
-
-	DebugOut(L"[INFO] sprite added: %d \n", id);
+	if (isScene)
+	{
+		LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
+		spritesScene[id] = s;
+		DebugOut(L"[INFO] sprite added: %d \n", id);
+	}
+	else {
+		LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
+		sprites[id] = s;
+		DebugOut(L"[INFO] sprite added: %d \n", id);
+	}
 }
 
-void CSprites::Add(int id, CSprite* cs)
+void CSprites::Add(int id, CSprite* cs, bool isScene)
 {
-	sprites[id] = cs;
+
+	if (isScene)
+	{
+		spritesScene[id] = cs;
+	}
+	else {
+		sprites[id] = cs;
+	}
+}
+
+void CSprites::Add(int id, int idTexture, bool isScene)
+{
+	LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->Get(static_cast<ObjectType>(idTexture));
+	if (isScene)
+	{
+		spritesScene[id] = new CSprite(id, tex);
+	}
+	else {
+		sprites[id] = new CSprite(id, tex);
+	}
 }
 
 LPSPRITE CSprites::Get(int id)
 {
-	return sprites[id];
+	CSprite* c = sprites[id];
+	if (c == NULL)
+	{
+		c = spritesScene[id];
+	}
+	return c;
 }
 
 void CSprites::Clear()
 {
+	ClearSpritesScene();
 	for (auto x : sprites)
 	{
 		LPSPRITE s = x.second;
 		delete s;
 	}
 	this->sprites.clear();
+	DebugOut(L"[Texture] Clear all sprite success\n");
 }
 
-void CSprites::LoadResource()
+void CSprites::ClearSpritesScene()
+{
+	for (auto x : spritesScene)
+	{
+		LPSPRITE s = x.second;
+		delete s;
+	}
+	this->spritesScene.clear();
+	DebugOut(L"[Texture] Clear sprite scene success\n");
+}
+
+#define MAX_LENGTH_LINE 100
+#define MAX_LINE 1000
+void CSprites::LoadResource(string filesprite)
 {
 	LPDIRECT3DTEXTURE9 tex;
 	ifstream f;
-	f.open(ToLPCWSTR("Resources/txt/sprite.txt"));
-
-	char str[100];
-	while (f.getline(str, 1000))
+	//f.open(ToLPCWSTR("Resources/txt/sprite.txt"));
+	f.open(filesprite);
+	char str[MAX_LENGTH_LINE];
+	while (f.getline(str, MAX_LINE))
 	{
 		string line(str);
 		vector<string> tokens = split(line);
-		if (tokens.size() != 6)
+		if (tokens.size() == 6)
 		{
-			continue;
-		}
-		int ID = atoi(tokens[0].c_str());
-		int l = atoi(tokens[1].c_str());
-		int t = atoi(tokens[2].c_str());
-		int r = atoi(tokens[3].c_str());
-		int b = atoi(tokens[4].c_str());
-		int texID = atoi(tokens[5].c_str());
 
-		
-		LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->Get(static_cast<ObjectType>(texID));
-		if (tex == NULL)
-		{
-			DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
-			continue;
+			int ID = atoi(tokens[0].c_str());
+			int l = atoi(tokens[1].c_str());
+			int t = atoi(tokens[2].c_str());
+			int r = atoi(tokens[3].c_str());
+			int b = atoi(tokens[4].c_str());
+			int texID = atoi(tokens[5].c_str());
+
+
+			LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->Get(static_cast<ObjectType>(texID));
+			if (tex == NULL)
+			{
+				DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+				continue;
+			}
+			CSprites::GetInstance()->Add(ID, l, t, r, b, tex, 0);
 		}
-		CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+		else if (tokens.size() == 2)
+		{
+			int ID = atoi(tokens[0].c_str());
+			int texID = atoi(tokens[1].c_str());
+			CSprites::GetInstance()->Add(ID, texID, 0);
+		}
 	}
 
+	DebugOut(L"[Texture] Load success resource sprite global\n");
+}
+
+void CSprites::LoadResourceScene(string filesprite)
+{
+	LPDIRECT3DTEXTURE9 tex;
+	ifstream f;
+	//f.open(ToLPCWSTR("Resources/txt/sprite.txt"));
+	f.open(filesprite);
+	char str[MAX_LENGTH_LINE];
+	while (f.getline(str, MAX_LINE))
+	{
+		string line(str);
+		vector<string> tokens = split(line);
+		if (tokens.size() == 6)
+		{
+			int ID = atoi(tokens[0].c_str());
+			int l = atoi(tokens[1].c_str());
+			int t = atoi(tokens[2].c_str());
+			int r = atoi(tokens[3].c_str());
+			int b = atoi(tokens[4].c_str());
+			int texID = atoi(tokens[5].c_str());
+
+			LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->Get(static_cast<ObjectType>(texID));
+			if (tex == NULL)
+			{
+				DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+				continue;
+			}
+			CSprites::GetInstance()->Add(ID, l, t, r, b, tex, 1);
+		}
+		else if (tokens.size() == 2)
+		{
+			int ID = atoi(tokens[0].c_str());
+			int texID = atoi(tokens[1].c_str());
+			CSprites::GetInstance()->Add(ID, texID, 1);
+		}
+	}
+	DebugOut(L"[Texture] Load success resource sprite scene\n");
 }

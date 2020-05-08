@@ -7,6 +7,7 @@
 #include "Sprites.h"
 #include "Simon.h"
 #include "Trigger.h"
+#include "Enemy.h"
 
 CGameObject::CGameObject()
 {
@@ -70,6 +71,8 @@ void CGameObject::CalcPotentialCollisions(
 
 	for (int i = 0; i < coObjects->size(); i++)
 	{
+		if (dynamic_cast<CEnemy*>(coObjects->at(i))&& dynamic_cast<CEnemy*>(this))
+			continue;
 		if(dynamic_cast<CTrigger*>(coObjects->at(i)))
 			continue;
 		if((dynamic_cast<CTrigger*>(coObjects->at(i)) && dynamic_cast<CSimon*>(this)))
@@ -139,7 +142,7 @@ void CGameObject::RenderBoundingBox()
 	r.right = rect.right - rect.left;
 	r.bottom = rect.bottom - rect.top;
 	D3DXVECTOR2 pos = CCamera::GetInstance()->Transform(rect.left, rect.top + PULL_SCREEN_Y);
-	CGame::GetInstance()->GetSpriteHandler()->Draw(bbox, &r, NULL, &D3DXVECTOR3(pos.x, pos.y, 0), D3DCOLOR_ARGB(128, 255, 255, 255));
+	//CGame::GetInstance()->GetSpriteHandler()->Draw(bbox, &r, NULL, &D3DXVECTOR3(pos.x, pos.y, 0), D3DCOLOR_ARGB(OPACITY_BBOX, 255, 255, 255));
 }
 
 bool CGameObject::IsContain(RECT rect1, RECT rect2)

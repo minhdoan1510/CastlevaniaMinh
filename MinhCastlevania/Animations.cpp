@@ -1,14 +1,11 @@
 #include "Animations.h"
 #include "Utils.h"
 #include "TextureManager.h"
-#include<fstream>
+#include <fstream>
+#include "strsafe.h"
 
 CAnimationSets * CAnimationSets::_instance = NULL;
 
-CAnimation* CAnimation::Clone()
-{
-	return new CAnimation(*this);
-}
 
 void CAnimation::Add(int spriteId, DWORD time)
 {
@@ -67,19 +64,12 @@ void CAnimation::Render(float _x, float _y, bool flipX ,  int alpha, int R, int 
 
 void CAnimation::RenderFrame(int idFrame, float _x, float _y, bool flipX, int alpha, int R, int G, int B)
 {
+	if (idFrame == -1)
+		idFrame = 0;
 	if (flipX)
 		frames[idFrame]->GetSprite()->DrawFlipX(_x, _y, alpha, R, G, B);
 	else
 		frames[idFrame]->GetSprite()->Draw(_x, _y, alpha, R, G, B);
-}
-
-void CAnimation::KeepFramePresent()
-{
-	if (currentFrame == -1)
-		return;
-	currentFrame--;
-	if (currentFrame < 0)
-		currentFrame = frames.size() - 1;
 }
 
 int CAnimation::GetCurrentFrame()
@@ -96,14 +86,19 @@ CAnimations * CAnimations::GetInstance()
 	return _instance;
 }
 
-void CAnimations::Add(int id, LPANIMATION ani)
+void CAnimations::Add(int id, LPANIMATION ani, bool isScene)
 {
-	animations[id] = ani;
+	if(isScene)
+		animationsScene[id] = ani;
+	else
+		animations[id] = ani;
 }
 
 LPANIMATION CAnimations::Get(int id)
 {
 	LPANIMATION ani = animations[id];
+	if (ani == NULL)
+		ani = animationsScene[id];
 	if (ani == NULL)
 		DebugOut(L"[ERROR] Failed to find animation id: %d\n", id);
 	return ani;
@@ -120,6 +115,17 @@ void CAnimations::Clear()
 	animations.clear();
 }
 
+void CAnimations::ClearAniScene()
+{
+	for (auto x : animationsScene)
+	{
+		LPANIMATION ani = x.second;
+		delete ani;
+	}
+
+	animationsScene.clear();
+}
+
 CAnimationSets::CAnimationSets()
 {
 
@@ -133,21 +139,23 @@ CAnimationSets* CAnimationSets::GetInstance()
 
 LPANIMATION_SET CAnimationSets::Get(ObjectType id)
 {
-	LPANIMATION_SET ani_set = animation_sets[id];
+	LPANIMATION_SET ani_set = animation_sets[id]; 
+	if (ani_set == NULL)
+		ani_set = animation_setsScene[id];
 	if (ani_set == NULL)
 		DebugOut(L"[ERROR] Failed to find animation set id: %d\n",id);
 	 
 	return ani_set;
 }
 
-void CAnimationSets::LoadResource()
+#define MAX_LENGTH_LINE 500
+#define MAX_LINE 1000
+void CAnimationSets::LoadResource(string Folderpath)
 {
 	#pragma region ani
-
-
-	ifstream f("Resources/txt/animation.txt");
-	char str[100];
-	while (f.getline(str, 1000))
+	ifstream f(Folderpath+"/animation.txt");
+	char str[MAX_LENGTH_LINE];
+	while (f.getline(str, MAX_LINE))
 	{
 		string line(str);
 		vector<string> tokens = split(line);
@@ -164,15 +172,15 @@ void CAnimationSets::LoadResource()
 			id_sprite = atoi(tokens[i].c_str());
 			ani->Add(id_sprite);
 		}
-		CAnimations::GetInstance()->Add(ani_id, ani);
+		CAnimations::GetInstance()->Add(ani_id, ani,0);
 	}
 	f.close();
 
 #pragma endregion
 
 	#pragma region aniSet
-	ifstream ifs("Resources/txt/animationset.txt");
-	while (ifs.getline(str,1000))
+	ifstream ifs(Folderpath + "/animationset.txt");
+	while (ifs.getline(str, MAX_LINE))
 	{
 		string line(str);
 		vector<string> tokens = split(line);
@@ -185,13 +193,104 @@ void CAnimationSets::LoadResource()
 			ani_id = atoi(tokens[i].c_str());
 			s->insert(make_pair(ani_id, CAnimations::GetInstance()->Get(ani_id)));
 		}
-		CAnimationSets::GetInstance()->Add(ani_set_id, s);
+		CAnimationSets::GetInstance()->Add(ani_set_id, s,0);
+	}
+	ifs.close();
+#pragma endregion
+
+
+}
+
+void CAnimationSets::LoadResourceScene(string Folderpath)
+{
+
+#pragma region ani
+	ifstream f(Folderpath + "/animation.txt");
+		char str[MAX_LENGTH_LINE];
+	if (f.fail())
+	{
+		DebugOut(L"[Texture] File animation.txt scene not found\n");
+	}
+	else
+	{
+		while (f.getline(str, MAX_LINE))
+		{
+			string line(str);
+			vector<string> tokens = split(line);
+
+			if (tokens.size() < 3) return;
+			int ani_id = atoi(tokens[0].c_str());
+			int frameTime = atoi(tokens[1].c_str());
+			LPANIMATION ani = new CAnimation(frameTime);
+			int id_sprite;
+			for (int i = 2; i < tokens.size(); i++)
+			{
+				if (tokens[i].c_str() == "")
+					continue;
+				id_sprite = atoi(tokens[i].c_str());
+				ani->Add(id_sprite);
+			}
+			CAnimations::GetInstance()->Add(ani_id, ani, 1);
+		}
+	}
+	f.close();
+
+#pragma endregion
+
+#pragma region aniSet
+	ifstream ifs(Folderpath + "/animationset.txt");
+	if (f.fail())
+	{
+		DebugOut(L"[Texture] File animationset.txt scene not found\n");
+	}
+	else
+	{
+		while (ifs.getline(str, MAX_LINE))
+		{
+			string line(str);
+			vector<string> tokens = split(line);
+			if (tokens.size() < 2) return;
+			int ani_set_id = atoi(tokens[0].c_str());
+			LPANIMATION_SET s = new CAnimationSet();
+			int ani_id;
+			for (int i = 1; i < tokens.size(); i++)
+			{
+				ani_id = atoi(tokens[i].c_str());
+				s->insert(make_pair(ani_id, CAnimations::GetInstance()->Get(ani_id)));
+			}
+			CAnimationSets::GetInstance()->Add(ani_set_id, s, 1);
+		}
 	}
 	ifs.close();
 #pragma endregion
 }
 
-void CAnimationSets::Add(int id, LPANIMATION_SET ani_set)
+void CAnimationSets::Add(int id, LPANIMATION_SET ani_set,bool isScene)
 {
+	if(isScene)
+		animation_setsScene[id] = ani_set;
+	else
 	animation_sets[id] = ani_set;
+}
+
+void CAnimationSets::Clear()
+{
+	ClearAniScene();
+	for (auto x : animation_sets)
+	{
+		LPANIMATION_SET ani = x.second;
+		delete ani;
+	}
+	animation_sets.clear();
+	DebugOut(L"[Animation] Clear all animation success\n");
+}
+void CAnimationSets::ClearAniScene()
+{
+	for (auto x : animation_setsScene)
+	{
+		LPANIMATION_SET ani = x.second;
+		delete ani;
+	}
+	animation_setsScene.clear();
+	DebugOut(L"[Animation] Clear animation scene success\n");
 }

@@ -54,6 +54,7 @@ protected:
 	bool IsFinish = false;
 
 	LPANIMATION_SET animation_set;
+	LPANIMATION ani;
 	ObjectType objType;
 
 	LPSPRITE sprite;
@@ -63,7 +64,7 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-
+	int GetNx() { return nx; }
 	bool GetDeath();
 	virtual void Death() {}
 	bool IsContain(RECT rect1, RECT rect2);	
@@ -81,7 +82,10 @@ public:
 
 	RECT GetBBox();
 	void RenderBoundingBox();
-	virtual ObjectType GetItemHolder() { return Null; }
+	virtual ObjectType GetItemHolder() 
+	{
+		return Null; 
+	}
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;

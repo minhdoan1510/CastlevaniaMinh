@@ -15,43 +15,51 @@ CScoreBoard::~CScoreBoard()
 
 void CScoreBoard::Render()
 {
-	D3DXVECTOR2 pos = CCamera::GetInstance()->Transform(x, y);
-	pos.x = CCamera::GetInstance()->GetXCam();
+	D3DXVECTOR2 pos;// = CCamera::GetInstance()->Transform(x, y);
+	pos.x = CCamera::GetInstance()->GetXCam()+ BOARD_X_POSITION_DEFAULT;
 	pos.y = CCamera::GetInstance()->GetYCam()+ BOARD_Y_POSITION_DEFAULT;
 	string temp;
-	for (int i = 0; i < 6 - std::to_string(score).length(); i++)
+	for (int i = 0; i < LENGTH_SCORE - std::to_string(score).length(); i++)
 		temp += '0';
-	font->Draw("SCORE-"+ temp + to_string(score), 13 + pos.x, 15 + pos.y);
-	font->Draw("PLAYER", 13 + pos.x, 34 + pos.y);
-	font->Draw("ENEMY", 11 + pos.x, 52 + pos.y);
-	font->Draw("TIME", 228 + pos.x, 15 + pos.y);
-	font->Draw("STAGE", 382 + pos.x, 15 + pos.y);
-	font->Draw("-" + std::to_string(heart), 379 + pos.x, 33 + pos.y);
-	font->Draw("P-" + std::to_string(lifeSimon), 364 + pos.x, 51 + pos.y);
-	CSprites::GetInstance()->Get(FRAME_ITEM_BOARD)->Draw(pos.x + 301, pos.y + 32, 255);
-	CSprites::GetInstance()->Get(HEART_ITEM_BOARD)->Draw(pos.x + 362, pos.y + 34);
 
-	font->Draw(std::to_string(time), 300 + pos.x, 15 + pos.y);
-	
+	font->Draw("SCORE-"+ temp + to_string(score), SCORE_POSITION.x + pos.x, SCORE_POSITION.y + pos.y);
+	font->Draw("PLAYER", PLAYER_POSITION.x + pos.x, PLAYER_POSITION.y + pos.y);
+	font->Draw("ENEMY", ENEMY_POSITION.x + pos.x, ENEMY_POSITION.y + pos.y);
+	font->Draw("TIME " + std::to_string(time), TIME_POSITION.x + pos.x, TIME_POSITION.y + pos.y);
+	font->Draw("STAGE 0"+ std::to_string(stage), STAGE_POSITION.x + pos.x, STAGE_POSITION.y + pos.y);
+	font->Draw("-" + std::to_string(heart), HEART_POSITION.x + pos.x, HEART_POSITION.y + pos.y);
+	font->Draw("P-" + std::to_string(lifeSimon), LIFE_POSITION.x + pos.x, LIFE_POSITION.y + pos.y);
+	CSprites::GetInstance()->Get(FRAME_ITEM_BOARD)->Draw(pos.x + FRAME_ITEM_POSITION.x, pos.y + FRAME_ITEM_POSITION.y, 255);
+	CSprites::GetInstance()->Get(HEART_ITEM_BOARD)->Draw(pos.x + HEART_ITEM_POSITION.x, pos.y + HEART_ITEM_POSITION.y);
 
-	font->Draw('0' + std::to_string(stage), 471 + pos.x, 15 + pos.y);
 
-	heal->Draw(120 + pos.x, 36 + pos.y, hpSimon, 1);
-	heal->Draw(120 + pos.x, 54 + pos.y, hpSimon, 0);
+	heal->Draw(HEAL_SIMON_POSITION.x + pos.x, HEAL_SIMON_POSITION.y + pos.y, hpSimon, 1);
+	heal->Draw(HEAL_ENEMY_POSITION.x + pos.x, HEAL_ENEMY_POSITION.y + pos.y, hpEnemy, 0);
 
+	switch (amount2ndWeapon)
+	{
+	case 2:
+		CSprites::GetInstance()->Get(DOUBLE_WEAPON)->Draw(ITEM_AMOUNT_WEAPON_POSITION.x + pos.x, ITEM_AMOUNT_WEAPON_POSITION.y + pos.y);
+		break;
+	case 3:	
+		CSprites::GetInstance()->Get(TRIPLE_WEAPON)->Draw(ITEM_AMOUNT_WEAPON_POSITION.x + pos.x, ITEM_AMOUNT_WEAPON_POSITION.y + pos.y);
+		break;
+	}
+
+	pos += WEAPON_POSITION;
 	switch (secondweaponCurrent)
 	{
 	case KNIFE:
-		CSprites::GetInstance()->Get(KNIFE_ITEM)->Draw(308 + pos.x, 37 + pos.y);
+		CSprites::GetInstance()->Get(KNIFE_ITEM)->Draw(pos.x, pos.y);
 		break;
 	case AXE:
-		CSprites::GetInstance()->Get(AXE_ITEM)->Draw(308 + pos.x, 37 + pos.y);
+		CSprites::GetInstance()->Get(AXE_ITEM)->Draw(pos.x,pos.y);
 		break;
 	case BOOMERANG:
-		CSprites::GetInstance()->Get(BOOMERANG_ITEM)->Draw(308 + pos.x, 37 + pos.y);
+		CSprites::GetInstance()->Get(BOOMERANG_ITEM)->Draw(pos.x,pos.y);
 		break; 
 	case GUNPOWDER:
-		CSprites::GetInstance()->Get(GUNPOWDER_ITEM)->Draw(308 + pos.x, 37 + pos.y);
+		CSprites::GetInstance()->Get(GUNPOWDER_ITEM)->Draw(pos.x,pos.y);
 		break;
 	default:
 		break;
@@ -59,7 +67,7 @@ void CScoreBoard::Render()
 
 }
 
-void CScoreBoard::Update(int _time, int _score, int _heart, int _lifeSimon, int _hpSimon, int _hpEnemy, int _stage, ObjectType _secondweaponCurrent)
+void CScoreBoard::Update(int _time, int _score, int _heart, int _lifeSimon, int _hpSimon, int _hpEnemy, int _stage, ObjectType _secondweaponCurrent, int _amount2ndWeapon)
 {
 	secondweaponCurrent = _secondweaponCurrent;
 	time =_time;
@@ -69,4 +77,5 @@ void CScoreBoard::Update(int _time, int _score, int _heart, int _lifeSimon, int 
 	hpSimon = _hpSimon;
 	hpEnemy = _hpEnemy;
 	stage = _stage;
+	amount2ndWeapon = _amount2ndWeapon;
 }

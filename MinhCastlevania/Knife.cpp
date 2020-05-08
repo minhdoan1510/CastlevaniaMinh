@@ -1,9 +1,11 @@
 #include "Knife.h"
 #include "Trigger.h"
 
+#define MIN_Y_ATTACK 18
+
 CKnife::CKnife()
 {
-	ani = new CAnimation(*CAnimations::GetInstance()->Get(KNIFE));
+	ani = CAnimations::GetInstance()->Get(KNIFE);
 	objType = weaponType = KNIFE;
 }
 
@@ -57,9 +59,11 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 		for (int i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult.at(i);
-			
+			if (dynamic_cast<CEnemy*>(e->obj))
+				static_cast<CEnemy*>(e->obj)->Death(GetDamage());
 			e->obj->Death();
 		}
+		for (int i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
 
 }
@@ -67,7 +71,7 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 bool CKnife::Attack(float _x, float _y, int _nx)
 {
 	x = _x;
-	y = (_y + PULL_Y < 18) ? 18 : _y + PULL_Y;
+	y = (_y + PULL_Y < MIN_Y_ATTACK) ? MIN_Y_ATTACK : _y + PULL_Y;
 	nx = _nx;
 	if (lifeTime == 0 || GetTickCount64() - lifeTime  > KNIFE_SPEED_ATTACK)
 	{
@@ -91,4 +95,9 @@ void CKnife::Render()
 	if (isFinish) return;
 	ani->Render(x, y, nx > 0);
 	RenderBoundingBox();
+}
+
+int CKnife::GetDamage()
+{
+	return KNIFE_DAMAGE;
 }

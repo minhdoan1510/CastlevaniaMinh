@@ -10,11 +10,8 @@ CCandle::CCandle(float x, float y, ObjectType _itemHolder, ObjectType _candleTyp
 	isColisible = 0;
 	IsDeading = false;
 	IsDestroy = false;
-	/*if (CandleType == CANDLE2)
-	{
-		DebugOut(L"canlde2");
-	}*/
-	ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType)->Clone();
+	ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType);
+	//ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType)->Clone();
 }
 
 CCandle::~CCandle()
@@ -26,16 +23,16 @@ void CCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	switch (candleType)
 	{
 	case CANDLE1:
-		width = CANDLE_1_SIZE_W;
-		height = CANDLE_1_SIZE_H;
+		width = CANDLE_1_SIZE.x;
+		height = CANDLE_1_SIZE.y;
 		break;
 	case CANDLE2:
-		width = CANDLE_2_SIZE_W;
-		height = CANDLE_2_SIZE_H;
+		width = CANDLE_2_SIZE.x;
+		height = CANDLE_2_SIZE.y;
 		break;
 	case DEATH_ANI:
-		width = 30;
-		height = 30;
+		width = DEATH_ANI_SIZE.x;
+		height = DEATH_ANI_SIZE.y;
 		break;
 	}
 }
@@ -64,8 +61,7 @@ void CCandle::Render()
 			ani->Render(x, y, false);
 			if (ani->IsFinalFrame() == true)
 			{
-				IsDead = true;
-				
+				IsDead = true;				
 			}
 		}
 	}

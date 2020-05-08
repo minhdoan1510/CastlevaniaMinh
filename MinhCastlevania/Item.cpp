@@ -1,4 +1,4 @@
-#include"Item.h"
+﻿#include"Item.h"
 
 CItem::CItem(float _x, float _y, ObjectType _type)
 {
@@ -13,8 +13,9 @@ CItem::CItem(float _x, float _y, ObjectType _type)
 		vx = ITEM_SPEED_FLY;
 	else
 		vx = 0;
-	lifetime = GetTickCount64();
 	isOnGround = 0;
+	lifetime = 0;
+	y -= ITEM_PULL_Y;//kéo item lên để tránh overlap
 }
 
 CItem::~CItem()
@@ -25,46 +26,45 @@ void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = this->x;
 	t = this->y;
-
+	D3DXVECTOR2 framesize;
 	switch (ItemType)
 	{
 	case HEART_ITEM:
-		r = x + 16;
-		b = y + 16;
+		framesize = HEART_ITEM_SIZE;
 		break;
 	case HEART_BIG_ITEM:
-		r = x + 24;
-		b = y + 20;
+		framesize = HEART_BIG_ITEM_SIZE;
 		break;
 	case WHIP_ITEM:
-		r = x + 32;
-		b = y + 32;
+		framesize = WHIP_ITEM_SIZE;
 		break;
 	case KNIFE_ITEM:
-		r = x + 30;
-		b = y + 30;
+		framesize = KNIFE_ITEM_SIZE;
 		break;
 	case AXE_ITEM:
-		r = x + 30;
-		b = y + 28;
+		framesize = AXE_ITEM_SIZE;
 		break;
 	case BOOMERANG_ITEM:
-		r = x + 28;
-		b = y + 28;
+		framesize = BOOMERANG_ITEM_SIZE;
 		break;
 	case MONEY_BLU_ITEM:case MONEY_RED_ITEM:case MONEY_WHITE_ITEM:
-		r = x + 30;
-		b = y + 30;
+		framesize = MONEY_ITEM_SIZE;
 		break;
 	case GUNPOWDER_ITEM:
-		r = x + 30;
-		b = y + 30;
+		framesize = GUNPOWDER_ITEM_SIZE;
 		break;
 	case DOUBLE_WEAPON:
-		r = x + 28;
-		b = y + 28;
+		framesize = DOUBLE_WEAPON_SIZE;
+	case CROWM_YELLOW_ITEM:
+		framesize = CROWM_YELLOW_SIZE;
+		break;
+	case CHICKEN_ITEM:
+		framesize = CHICKEN_SIZE;
 		break;
 	}
+
+	r = l + framesize.x;
+	b = t + framesize.y;
 }
 
 void CItem::Render()
@@ -77,6 +77,10 @@ void CItem::Render()
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 {
 	if (IsDead) return;
+	if (lifetime == 0)
+	{
+		lifetime = GetTickCount64();
+	}
 	if (!isOnGround && ItemType == HEART_ITEM)
 	{
 		if (x <= x_backup - WIDTH_MOVE_HEART)

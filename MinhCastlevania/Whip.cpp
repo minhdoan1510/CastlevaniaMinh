@@ -1,5 +1,9 @@
 ﻿#include "Whip.h"
 #include"Item.h"
+#include"Simon.h"
+#include "Enemy.h"
+
+
 
 
 CWhip::CWhip() :CWeapon::CWeapon()
@@ -20,14 +24,17 @@ void CWhip::SetLever(int lv)
 	case 1:
 		weaponType = WHIP_LV1;
 		whipWidth = WHIP_1_WIDTH;
+		damage = WHIP_1_DAMAGE;
 		break;
 	case 2:
 		weaponType = WHIP_LV2;
 		whipWidth = WHIP_2_WIDTH;
+		damage = WHIP_2_DAMAGE;
 		break;
 	case 3:
 		weaponType = WHIP_LV3;
 		whipWidth = WHIP_3_WIDTH;
+		damage = WHIP_3_DAMAGE;
 		break;
 	}
 	//ani = CAnimationSets::GetInstance()->Get(WHIP)->at(weaponType);
@@ -43,7 +50,8 @@ bool CWhip::Attack(float _x, float _y, int _nx)
 		x = _x;
 		y = _y;
 		nx = _nx;
-		isFinish = false;
+		isFinish = 0;
+		isDamage = 0;
 		ani->ResetFarmeCurrent();
 		return true;
 	}
@@ -56,12 +64,21 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (ani->GetCurrentFrame() == 2)
 	{
-		for (int i = 0; i < coObjects->size(); i++)
+		if (!isDamage)
 		{
-			if (coObjects->at(i)->GetObjType() != SIMON && IsContain(GetBBox(), coObjects->at(i)->GetBBox()))
+			for (int i = 0; i < coObjects->size(); i++)
 			{
-				if (!dynamic_cast<CItem*>(coObjects->at(i)))
-					coObjects->at(i)->Death();
+				if (coObjects->at(i)->GetObjType() != SIMON && IsContain(GetBBox(), coObjects->at(i)->GetBBox()))
+				{
+					if (dynamic_cast<CItem*>(coObjects->at(i))) continue;
+					if (dynamic_cast<CEnemy*>(coObjects->at(i)))
+					{
+						isDamage = 1;
+						static_cast<CEnemy*>(coObjects->at(i))->Death(GetDamage());
+					}
+					else
+						coObjects->at(i)->Death();
+				}
 			}
 		}
 	}
@@ -77,33 +94,33 @@ void CWhip::Render()
 		RenderBoundingBox();
 		if (nx > 0)
 		{
-			ani->Render(x - 24, y, 1);
+			ani->Render(x - X_FRAME_2_RIGHT, y, 1);
 		}
 		else
 		{
-			ani->Render(x - 75, y, 0);
+			ani->Render(x - X_FRAME_2_LEFT, y, 0);
 		}
 	}
 	else if (ani->GetCurrentFrame() == 1)
 	{
 		if (nx > 0)
 		{
-			ani->Render(x - 25, y, 1);
+			ani->Render(x - X_FRAME_1_RIGHT, y, 1);
 		}
 		else
 		{
-			ani->Render(x - 75, y, 0);
+			ani->Render(x - X_FRAME_1_LEFT, y, 0);
 		}
 	}
 	else
 	{
 		if (nx > 0)
 		{
-			ani->Render(x - 23, y, 1);
+			ani->Render(x - X_FRAME_0_RIGHT, y, 1);
 		}
 		else
 		{
-			ani->Render(x - 80, y, 0);
+			ani->Render(x - X_FRAME_0_LEFT, y, 0);
 		}
 	}
 
@@ -117,11 +134,16 @@ void CWhip::GetBoundingBox(float& l, float& t, float& r, float& b)
 	b = t + WHIP_HEIGHT;
 	if (nx > 0)
 	{
-		l = x + 60; // trừ BBOX của Simon
+		l = x + SIMON_BBOX_WIDTH; // trừ BBOX của Simon
 	}
 	else
 	{
 		l = x - whipWidth;
 	}
 	r = l + whipWidth;
+}
+
+int CWhip::GetDamage()
+{
+	return damage;
 }

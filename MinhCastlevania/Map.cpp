@@ -1,7 +1,8 @@
 #include "Map.h"
 #include<fstream>
+#include "strsafe.h"
 
-CMap::CMap(int _id,LPCWSTR filepath)
+CMap::CMap(int _id,string filepath)
 {
 	id = _id;
 	ReadFileMap(filepath);
@@ -11,7 +12,7 @@ CMap::~CMap()
 {
 }
 
-void CMap::ReadFileMap(LPCWSTR filePath)
+void CMap::ReadFileMap(string filePath)
 {
 	ifstream f(filePath, ios::in);
 	f >> rowMap >> columnMap >> _rowTile >> _columnTile >> floor >> sizeFrame >> _idTileTransparent;
@@ -69,15 +70,36 @@ void CMap::DrawMap()
 
 }
 
-void CMap::LoadMap()
-{
-	texture = CTextureManager::GetInstance()->Get(static_cast<ObjectType>(id + MAP));
-	if (CSprites::GetInstance()->Get(id + MAP1) == NULL)
+void CMap::DrawIntroScene() {
+	RECT rect;
+	int frame;
+	int m, n;
+
+	for (int i = 0; i < columnMap; i++)
 	{
-		CSprites::GetInstance()->Add(id + MAP1, new CSprite(id + MAP1, texture));
+		for (int j = 0; j < rowMap; j++)
+		{
+			if (i < 0 || j < 0)
+				continue;
+			D3DXVECTOR3 pos(i * sizeFrame, j * sizeFrame, 0);
+			frame = tileMap[j][i];
+			m = frame % _columnTile;
+			n = frame / _columnTile;
+			rect.left = sizeFrame * m;
+			rect.top = sizeFrame * n;
+			rect.right = rect.left + sizeFrame;
+			rect.bottom = rect.top + sizeFrame;
+			pos.y -= PULL_SCREEN_Y;
+			sprite->DrawFrame(pos.x, pos.y, rect);
+		}
 	}
 
-	sprite = CSprites::GetInstance()->Get(id + MAP1);
+}
+
+void CMap::LoadMap(string fileTileMap)
+{
+	texture = CTextureManager::GetInstance()->Get(static_cast<ObjectType>(id + MAP));
+	sprite = CSprites::GetInstance()->Get(id + MAP);
 }
 
 int CMap::GetMapWidth()
@@ -93,6 +115,12 @@ int CMap::GetMapHeight()
 int CMap::GetFloorMap()
 {
 	return floor;
+}
+
+void CMap::SetSpriteTex(CSprite* s,	LPDIRECT3DTEXTURE9 t)
+{
+	sprite = s;
+	texture = t;
 }
 
 void CMap::SetBoundaryLeftRight(int floor)

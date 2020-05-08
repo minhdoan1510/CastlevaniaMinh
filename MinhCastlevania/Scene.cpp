@@ -1,6 +1,17 @@
 #include "Scene.h"
 
-CScene::CScene(int id)
+CScene::CScene(int _id, string _folderPath)
 {
-	this->id = id;
+	id = _id;
+	folderPath = _folderPath;
+}
+
+string CScene::GetFolderPath()
+{
+	return folderPath;
+}
+
+int CScene::GetID()
+{
+	return id;
 }

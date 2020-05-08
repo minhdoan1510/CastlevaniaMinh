@@ -1,4 +1,5 @@
 ﻿#pragma once
+#define _CRT_SECURE_NO_DEPRECATE
 #include <Windows.h>
 #include <signal.h>
 #include <string>
@@ -7,6 +8,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
+#include "atlstr.h"
 
 using namespace std;
 
@@ -15,3 +17,6 @@ vector<string> split(string line, string delimeter = "\t");
 wstring ToWSTR(string st);
 LPCWSTR ToLPCWSTR(string st);
 
+char* ToChar_t(LPCWSTR val);
+
+int GetRandomInt(int x, int y);

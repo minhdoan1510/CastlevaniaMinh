@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include "Utils.h"
+#include <random>
 
 void DebugOut(const wchar_t *fmt, ...)
 {
@@ -53,4 +54,20 @@ LPCWSTR ToLPCWSTR(string st)
 
 	// delete wcstring   // << can I ? 
 	return w->c_str();
+}
+
+char* ToChar_t(LPCWSTR val)
+{
+	std::string MyString = CW2A(val);
+	char* temp = new char[MyString.size() + 1];
+	strcpy_s(temp, MyString.size() + 1, MyString.c_str());
+	return temp;
+}
+
+int GetRandomInt(int x, int y)
+{
+	random_device t;
+	mt19937 mt(t());
+	uniform_int_distribution<int> minh(x,y);
+	return minh(t);
 }
