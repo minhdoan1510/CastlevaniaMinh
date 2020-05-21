@@ -11,6 +11,7 @@ CSceneManager::CSceneManager()
 	currentSceneIDinVector = -1;
 	ScoreGame = 0;
 	scenes.push_back(make_pair(0, new CBeginScene()));
+	cHandleTransScene = nullptr;
 }
 
 CSceneManager::~CSceneManager()
@@ -61,7 +62,36 @@ CSceneManager* CSceneManager::GetInstance()
 
 void CSceneManager::Update(DWORD dt)
 {
-	currentScene->Update(dt);
+	if (isPassScene)
+	{
+		if (cHandleTransScene == NULL || cHandleTransScene->IsDoneTransScene())
+		{
+			isPassScene = 0;
+			EndPassScene();
+			currentScene->Update(dt);
+			return;
+		}
+		else
+		{
+			cHandleTransScene->Update(dt);
+		}
+	}
+	else
+	{
+		currentScene->Update(dt);
+	}
+}
+
+void CSceneManager::Render()
+{
+	if (isPassScene)
+	{
+		cHandleTransScene->Render();
+	}
+	else
+	{
+		currentScene->Render();
+	}
 }
 
 void CSceneManager::LostGame()
@@ -80,7 +110,7 @@ void CSceneManager::WinGame()
 bool CSceneManager::IsPassScene()
 {
 	if (isPassScene){
-		isPassScene = 0;
+		//isPassScene = 0;
 		return true;
 	}
 	return false;
@@ -96,25 +126,56 @@ void CSceneManager::ReloadScene()
 	currentScene->Load();
 }
 
-
-void CSceneManager::PassScene()
+void CSceneManager::StartPassScene()
 {
-	currentSceneIDinVector++;
-	currentScene->Unload();
-	//SAFE_DELETE(currentScene);
-	if (currentSceneIDinVector >= scenes.size())
+	if (currentSceneIDinVector + 1 >= scenes.size())
 	{
 		WinGame();
 		return;
 	}
+	
+	nextScene = scenes.at(currentSceneIDinVector+1).second;
+	
+	isPassScene = 1;
+	if (currentSceneID == 1)
+	{
+		currentScene->Unload();
+		SAFE_DELETE(currentScene);
+		currentScene = nextScene;
+		currentScene->Load();
+		return;
+	}
+	nextScene->Load();
+	cHandleTransScene = new CHandleTransScene(static_cast<CPlayScene*>(currentScene)->GetMap(), static_cast<CPlayScene*>(nextScene)->GetMap(), CSimon::GetIntance()->GetNx(), static_cast<CPlayScene*>(nextScene)->GetPosSimonDefault());
+}
+
+void CSceneManager::EndPassScene()
+{
+	
+	currentSceneIDinVector++;
+	currentScene = nextScene;
 	currentSceneID = scenes.at(currentSceneIDinVector).first;
-	currentScene = scenes.at(currentSceneIDinVector).second;
+	//prevScene = currentScene;
+	if (currentSceneID != 1)
+	{
+		currentScene->Unload();
+		//SAFE_DELETE(currentScene);
+		currentScene = scenes.at(currentSceneIDinVector).second;
+		currentScene->Load();
+	}
+	
+	//currentScene = scenes.at(currentSceneIDinVector).second;
 	CGame::GetInstance()->SetKeyHandler(currentScene->GetKeyEventHandler());
-	currentScene->Load();
+	//currentScene->Load();
+
+	D3DXVECTOR2 PosSimon = static_cast<CPlayScene*>(currentScene)->GetPosSimonDefault();
+	CSimon::GetIntance()->SetPosition(PosSimon.x, PosSimon.y);
+
 	float _x, _y;
 	CSimon::GetIntance()->GetPosition(_x, _y);
 	CMapManager::GetIntance()->Get(currentSceneID)->SetBoundaryLeftRight(1 + (int)(_y + SIMON_BBOX_HEIGHT / 2) / (CMapManager::GetIntance()->Get(currentSceneID)->GetMapHeight() / CMapManager::GetIntance()->Get(currentSceneID)->GetFloorMap()));
-	isPassScene = true;
+	isPassScene = 0;
+	SAFE_DELETE(cHandleTransScene);
 }
 
 CScene* CSceneManager::GetCurrentScene()

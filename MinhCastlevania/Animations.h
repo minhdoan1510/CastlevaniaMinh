@@ -24,23 +24,24 @@ class CAnimation
 	DWORD lifeFrameTime;
 	int currentFrame;
 	int defaultTime;
-	vector<LPANIMATION_FRAME> frames;
+	vector<LPANIMATION_FRAME>* frames;
 	bool DoneFrameFinal = false;
 public:
-	CAnimation(int defaultTime = 100) { lifeFrameTime = 0; this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
-	//CAnimation* Clone();
+	CAnimation(int _defaultTime = 100);
+	CAnimation(vector<LPANIMATION_FRAME> * _frames, int _defaultTime);
+	CAnimation* Clone();
 	void Add(int spriteId, DWORD time = 0);
 
 	void Render(float x, float y,bool flipX,  int alpha = 255 ,int R = 255, int G = 255, int B= 255);
 	void RenderFrame(int idFrame, float x, float y, bool flipX, int alpha = 255, int R = 255, int G = 255, int B = 255);
 	//void KeepFramePresent(); // giữ lại frame vừa vẽ
 	int GetCurrentFrame();
-	bool IsFinalFrame() { return currentFrame == frames.size()-1; }
+	bool IsFinalFrame() { return currentFrame == frames->size()-1; }
 	int GetFrameTime(){}
 	bool GetDoneFrameFinal() {
 		return DoneFrameFinal; }
 	DWORD GetLifeFrameTime() { return lastFrameTime; }
-
+	void FreezeFrame();
 	void ResetFarmeCurrent() { currentFrame = -1; DoneFrameFinal = 0; }
 };
 

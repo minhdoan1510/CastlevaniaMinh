@@ -1,11 +1,13 @@
 #pragma once
-#include"GameObject.h"
+#include"Effect.h"
 
-#define TIME_DEAD_EFFECT 1000
-#define PULL_X_EFFECT 10
-class CMoneyEffect : public CGameObject
+#define TIME_DEAD_EFFECT	1000
+#define PULL_X_EFFECT		10
+#define TIME_MONEY_EFFECT	2500
+
+class CMoneyEffect : public CEffect
 {
-protected:
+private:
 	ObjectType effectType;
 	DWORD lifeTime;
 	int numDraw;
@@ -14,6 +16,5 @@ public:
 	~CMoneyEffect();
 	void Render();
 	void Update(DWORD dt);
-	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
 

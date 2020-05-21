@@ -1,0 +1,360 @@
+﻿  Animations.cpp
+  C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Animations.cpp(50,12): warning C4244:  'initializing': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Animations.cpp(199,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Animations.cpp(222,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Animations.cpp(257,22): warning C4018:  '<': signed/unsigned mismatch
+  Axe.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Animations.cpp(287,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Animations.cpp(287,22): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Axe.cpp(30,20): warning C4018:  '<': signed/unsigned mismatch
+  Bat.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Axe.cpp(78,28): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Axe.cpp(78,28): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  BatIntro.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BatIntro.cpp(9,11): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+  BeginScene.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BatIntro.cpp(10,23): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BatIntro.cpp(10,23): warning C4305: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(37,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(37,27): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(22,20): warning C4101:  'directStair': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(22,13): warning C4101:  '_item': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(107,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(138,74): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(138,52): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(142,73): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(142,51): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+  BlackKnight.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(148,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BeginScene.cpp(148,21): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BlackKnight.cpp(44,49): warning C4244:  '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BlackKnight.cpp(46,49): warning C4244:  '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BlackKnight.cpp(78,20): warning C4018:  '<': signed/unsigned mismatch
+  Boomerang.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BlackKnight.cpp(107,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BlackKnight.cpp(107,22): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Boomerang.cpp(43,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Boomerang.cpp(64,21): warning C4018:  '<': signed/unsigned mismatch
+  Brick.cpp
+  BrickEffect.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Boomerang.cpp(92,28): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Boomerang.cpp(92,28): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Boomerang.cpp(92,28): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(33,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(35,9): warning C4018:  '>=': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(43,30): warning C4244:  '=': conversion from '_Ty1' to 'LONG', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(43,30): warning C4244:         with
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(43,30): warning C4244:         [
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(43,30): warning C4244:             _Ty1=float
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(43,30): warning C4244:         ]
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(44,29): warning C4244:  '=': conversion from '_Ty2' to 'LONG', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(44,29): warning C4244:         with
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(44,29): warning C4244:         [
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(44,29): warning C4244:             _Ty2=float
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(44,29): warning C4244:         ]
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(58,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:  'initializing': conversion from '_Ty' to '_Ty1', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:         with
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:             _Ty=double
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:         ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:         and
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:             _Ty1=float
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,16): warning C4244:         ]
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(13): message :  see reference to function template instantiation 'std::pair<float,float>::pair<double,double,0>(std::pair<double,double> &&) noexcept' being compiled
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\BrickEffect.cpp(13): message :  see reference to function template instantiation 'std::pair<float,float>::pair<double,double,0>(std::pair<double,double> &&) noexcept' being compiled
+  Bridge.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:  'initializing': conversion from '_Ty' to '_Ty2', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:         with
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:             _Ty=double
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:         ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:         and
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:             _Ty2=float
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244:         ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.22.27905\include\utility(161,1): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Bridge.cpp(42,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Bridge.cpp(59,21): warning C4018:  '<': signed/unsigned mismatch
+  Camera.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Bridge.cpp(69,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Bridge.cpp(69,22): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(37,8): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(39,27): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(41,8): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(43,7): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(49,9): warning C4244:  'return': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(54,9): warning C4244:  'return': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(85,16): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(133,20): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+  Candle.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(139,43): warning C4244:  '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Camera.cpp(139,43): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Candle.cpp(26,24): warning C4244:  '=': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Candle.cpp(27,25): warning C4244:  '=': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Candle.cpp(30,24): warning C4244:  '=': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Candle.cpp(31,25): warning C4244:  '=': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Candle.cpp(34,25): warning C4244:  '=': conversion from 'FLOAT' to 'int', possible loss of data
+  CloudIntro.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Candle.cpp(35,26): warning C4244:  '=': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Candle.cpp(35,26): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  DeadEffect.cpp
+  Effect.cpp
+  Enemy.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\CloudIntro.cpp(9,11): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\CloudIntro.cpp(9,11): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\CloudIntro.cpp(9,11): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\CloudIntro.cpp(9,11): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+  Feaman.cpp
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message : C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Feaman.cpp(210,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Feaman.cpp(243,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Feaman.cpp(140,18): warning C4101:  '_vy': unreferenced local variable
+  Font.cpp
+  Game.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Feaman.cpp(140,13): warning C4101:  '_vx': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Feaman.cpp(140,13): warning C4101: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Feaman.cpp(140,13): warning C4101: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+  GameObject.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\GameObject.cpp(74,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\GameObject.cpp(146,74): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
+  Generating Code...
+  Compiling...
+  Ghost.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\GameObject.cpp(146,58): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\GameObject.cpp(146,58): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Grid.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(32,17): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(33,14): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(70,32): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(70,28): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(73,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(73,27): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(85,33): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(85,29): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(85,25): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(85,21): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(143,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(156,13): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(157,13): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(158,16): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(159,16): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(174,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(200,13): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(201,13): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(202,16): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(203,16): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(222,13): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(223,13): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(228,16): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(229,16): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+  Gunpowder.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(237,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Grid.cpp(237,22): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Gunpowder.cpp(80,21): warning C4018:  '<': signed/unsigned mismatch
+  HandleTransScene.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Gunpowder.cpp(102,28): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Gunpowder.cpp(102,28): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\HandleTransScene.cpp(21,18): warning C4244:  '=': conversion from 'int' to 'FLOAT', possible loss of data
+  Heal.cpp
+  Item.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\HandleTransScene.cpp(27,34): warning C4244:  '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\HandleTransScene.cpp(27,34): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\HandleTransScene.cpp(27,34): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Knife.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Item.cpp(82,28): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Item.cpp(82,28): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Knife.cpp(32,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Knife.cpp(59,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Knife.cpp(66,21): warning C4018:  '<': signed/unsigned mismatch
+  LostScene.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Knife.cpp(78,28): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Knife.cpp(78,28): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\LostScene.cpp(49,64): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\LostScene.cpp(49,43): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\LostScene.cpp(50,63): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\LostScene.cpp(50,42): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\LostScene.cpp(51,48): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+  main.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\LostScene.cpp(51,32): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\LostScene.cpp(51,32): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+  Map.cpp
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message : C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(33,53): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(33,33): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(36,32): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(37,31): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(60,36): warning C4244:  'argument': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(60,22): warning C4244:  'argument': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(69,32): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(69,25): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(82,35): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(83,34): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(106,37): warning C4244:  'argument': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(106,22): warning C4244:  'argument': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(115,43): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(115,28): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(131,37): warning C4244:  'argument': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(131,22): warning C4244:  'argument': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(140,32): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(140,25): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(183,16): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(192,20): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+  MapManager.cpp
+  MoneyEffect.cpp
+  PlayScence.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(200,23): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(200,23): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(200,23): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Map.cpp(200,23): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(54,27): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(61,12): warning C4244:  'initializing': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(80,108): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(79,31): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(100,56): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(116,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(123,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(130,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(135,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(144,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(178,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(238,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(260,20): warning C4018:  '<': signed/unsigned mismatch
+  Raven.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(263,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\PlayScence.cpp(263,20): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Scene.cpp
+  SceneManager.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\SceneManager.cpp(37,20): warning C4018:  '<': signed/unsigned mismatch
+  ScoreBoard.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\SceneManager.cpp(131,33): warning C4018:  '>=': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\SceneManager.cpp(131,33): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(22,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(25,91): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(25,65): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(26,68): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(26,41): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(27,65): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(27,39): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(28,86): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(28,61): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(29,90): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(29,64): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(30,85): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(30,59): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(31,88): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(31,63): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(36,66): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(36,35): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(37,66): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+  Simon.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(37,35): warning C4244:  'argument': conversion from 'FLOAT' to 'int', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\ScoreBoard.cpp(37,35): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(144,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(164,26): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(238,26): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(647,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(662,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(694,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(711,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(756,20): warning C4018:  '<': signed/unsigned mismatch
+  Sprites.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(857,29): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.cpp(857,29): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Sprites.cpp(107,61): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Sprites.cpp(107,54): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Sprites.cpp(197,21): warning C4101:  'tex': unreferenced local variable
+  TextureManager.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Sprites.cpp(238,21): warning C4101:  'tex': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Sprites.cpp(238,21): warning C4101: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005:  'DIRECTINPUT_VERSION': macro redefinition
+  Generating Code...
+  Compiling...
+  Trigger.cpp
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message :  see previous definition of 'DIRECTINPUT_VERSION'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h(42): message : C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Trigger.cpp(6,6): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+  Utils.cpp
+  Weapon.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Trigger.cpp(7,6): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Trigger.cpp(7,6): warning C4244: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Whip.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Weapon.cpp(29,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Weapon.cpp(29,20): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Whip.cpp(49,28): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+  WhiteSkeleton.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Whip.cpp(69,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Whip.cpp(69,22): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(35,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(69,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(77,16): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(84,21): warning C4244:  '=': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(95,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(104,16): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(111,21): warning C4244:  '=': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(160,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(232,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(269,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(277,77): warning C4244:  'argument': conversion from 'LONG' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(277,65): warning C4244:  'argument': conversion from 'LONG' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(286,76): warning C4244:  'argument': conversion from 'LONG' to 'FLOAT', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(286,65): warning C4244:  'argument': conversion from 'LONG' to 'FLOAT', possible loss of data
+  WhiteSkeletonWeapon.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(296,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeleton.cpp(296,21): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeletonWeapon.cpp(72,72): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+  WinScene.cpp
+  Zombie.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeletonWeapon.cpp(77,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\WhiteSkeletonWeapon.cpp(77,21): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+  EnemyDoor.cpp
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Zombie.cpp(53,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Zombie.cpp(53,20): warning C4018: C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Generating Code...
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\MinhCastlevania\Simon.h(135,81): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+  MinhCastlevania.vcxproj -> C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\Debug\MinhCastlevania.exe

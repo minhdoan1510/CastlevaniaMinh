@@ -35,6 +35,8 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	dy = vy*dt;
 }
 
+
+
 LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 {
 	float sl, st, sr, sb;
@@ -142,7 +144,7 @@ void CGameObject::RenderBoundingBox()
 	r.right = rect.right - rect.left;
 	r.bottom = rect.bottom - rect.top;
 	D3DXVECTOR2 pos = CCamera::GetInstance()->Transform(rect.left, rect.top + PULL_SCREEN_Y);
-	//CGame::GetInstance()->GetSpriteHandler()->Draw(bbox, &r, NULL, &D3DXVECTOR3(pos.x, pos.y, 0), D3DCOLOR_ARGB(OPACITY_BBOX, 255, 255, 255));
+	CGame::GetInstance()->GetSpriteHandler()->Draw(bbox, &r, NULL, &D3DXVECTOR3(pos.x, pos.y, 0), D3DCOLOR_ARGB(OPACITY_BBOX, 255, 255, 255));
 }
 
 bool CGameObject::IsContain(RECT rect1, RECT rect2)

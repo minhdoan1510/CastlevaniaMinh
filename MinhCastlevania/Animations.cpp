@@ -6,6 +6,28 @@
 
 CAnimationSets * CAnimationSets::_instance = NULL;
 
+CAnimation::CAnimation(int _defaultTime)
+{
+	lifeFrameTime = 0;
+	defaultTime = _defaultTime;
+	lastFrameTime = -1;
+	currentFrame = -1;
+	frames = new vector<LPANIMATION_FRAME>();
+}
+
+CAnimation::CAnimation(vector<LPANIMATION_FRAME>* _frames, int _defaultTime)
+{
+	lifeFrameTime = 0;
+	defaultTime = _defaultTime;
+	lastFrameTime = -1; 
+	currentFrame = -1;
+	frames = _frames;
+}
+
+CAnimation* CAnimation::Clone()
+{
+	return new CAnimation(frames, defaultTime);
+}
 
 void CAnimation::Add(int spriteId, DWORD time)
 {
@@ -20,7 +42,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	}
 
 	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
-	frames.push_back(frame);
+	frames->push_back(frame);
 }
 
 void CAnimation::Render(float _x, float _y, bool flipX ,  int alpha, int R, int G, int B)
@@ -35,21 +57,21 @@ void CAnimation::Render(float _x, float _y, bool flipX ,  int alpha, int R, int 
 	else
 	{
 		DoneFrameFinal = 0;
-		DWORD t = frames[currentFrame]->GetTime();
+		DWORD t = frames->at(currentFrame)->GetTime();
 		if (now - lastFrameTime > t)
 		{
 			lifeFrameTime = now - lastFrameTime;
 			currentFrame++;
 			lastFrameTime = now;
 
-			if (currentFrame == frames.size() - 1)
+			if (currentFrame == frames->size() - 1)
 			{
 				DoneFrameFinal = 1;
 			}
 			else
 				DoneFrameFinal = 0;
 
-			if (currentFrame == frames.size())
+			if (currentFrame == frames->size())
 			{
 				currentFrame = 0;
 			}
@@ -57,9 +79,9 @@ void CAnimation::Render(float _x, float _y, bool flipX ,  int alpha, int R, int 
 		}
 	}
 	if(flipX)
-		frames[currentFrame]->GetSprite()->DrawFlipX(_x, _y, alpha, R, G, B);
+		frames->at(currentFrame)->GetSprite()->DrawFlipX(_x, _y, alpha, R, G, B);
 	else
-	frames[currentFrame]->GetSprite()->Draw(_x, _y, alpha, R, G, B);
+	frames->at(currentFrame)->GetSprite()->Draw(_x, _y, alpha, R, G, B);
 }
 
 void CAnimation::RenderFrame(int idFrame, float _x, float _y, bool flipX, int alpha, int R, int G, int B)
@@ -67,15 +89,24 @@ void CAnimation::RenderFrame(int idFrame, float _x, float _y, bool flipX, int al
 	if (idFrame == -1)
 		idFrame = 0;
 	if (flipX)
-		frames[idFrame]->GetSprite()->DrawFlipX(_x, _y, alpha, R, G, B);
+		frames->at(idFrame)->GetSprite()->DrawFlipX(_x, _y, alpha, R, G, B);
 	else
-		frames[idFrame]->GetSprite()->Draw(_x, _y, alpha, R, G, B);
+		frames->at(idFrame)->GetSprite()->Draw(_x, _y, alpha, R, G, B);
 }
 
 int CAnimation::GetCurrentFrame()
 {
 
 	return currentFrame;
+}
+
+void CAnimation::FreezeFrame()
+{
+	currentFrame--;
+	if (currentFrame == -1|| currentFrame == -2)
+	{
+		currentFrame = frames->size() - 1;
+	}
 }
 
 CAnimations * CAnimations::_instance = NULL;
@@ -284,6 +315,7 @@ void CAnimationSets::Clear()
 	animation_sets.clear();
 	DebugOut(L"[Animation] Clear all animation success\n");
 }
+
 void CAnimationSets::ClearAniScene()
 {
 	for (auto x : animation_setsScene)

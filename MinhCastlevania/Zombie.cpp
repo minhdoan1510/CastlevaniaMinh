@@ -7,7 +7,7 @@ CZombie::CZombie(float _x, float _y)
 	x = _x;
 	y = _y;
 	enemyType = ZOMBIE;
-	ani = CAnimations::GetInstance()->Get(ZOMBIE);
+	ani = CAnimations::GetInstance()->Get(ZOMBIE)->Clone();
 	isActive = 1;
 	DamageofEnemy = ZOMBIE_DAMAGE;
 	isArmor = 1;
@@ -23,6 +23,7 @@ void CZombie::Render()
 {
 	RenderBoundingBox();
 	ani->Render(x, y, nx == 1);
+	CEnemy::Render();
 }
 
 void CZombie::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)

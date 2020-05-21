@@ -1,12 +1,13 @@
 ﻿#pragma once
 #include "GameDefine.h"
 
+#define SPEED_AUTO_CAM	0.08f
 
 class CCamera
 {
 	static CCamera* Intance;
-	float xC;
-	float yC;
+	int xC;
+	int yC;
 	int width;
 	int height;
 	float boundWidth; 
@@ -14,6 +15,10 @@ class CCamera
 	float boundLeft;
 	float boundRight;
 	int floor;
+	bool isAutoCam;
+	float distanceAutoCam;
+	int directAutoCam;
+	float X_BackupAutoCam;
 public:
 	static CCamera* GetInstance();
 	CCamera(int w, int h);
@@ -32,7 +37,9 @@ public:
 	void SetBoundLeftRight(float _l, float _r);
 	void GetBoundLeftRight(float& _l, float& _r);
 	bool IsContainCam(RECT rect);
-
+	bool IsAutoCam();
+	void AutoCamX(float _distance, int direct);
+	void UpdateAutoCam(DWORD dt);
 };
 
 

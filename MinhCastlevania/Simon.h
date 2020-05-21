@@ -75,6 +75,7 @@ class CSimon : public CGameObject
 
 	int aniState;
 	bool isAttacking;
+	bool isAttackingMainWeapon;
 	bool isWalking;
 	bool isFreeze;
 	bool isJumping;
@@ -129,6 +130,7 @@ public:
 	int GetAmount2ndWeapon() { return listWeapon.size() - 1; }
 	vector<CGameObject*> GetAbjAddAfterUpdate() { return objAddAfterUpdate;	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
+	void UpdateAutoGo(DWORD dt);
 	void Render();
 	void StartUntouchable() { isuntouchable = 1; untouchable_start = GetTickCount64(); }
 	bool IsInjured() {return isInjured;}
@@ -148,6 +150,9 @@ public:
 	void SetInjured(int damage,int direct);
 	void SetStateAttacked(int direct);
 	void Attack(bool isMainWeapon);
+	bool IsAttack();
+	bool IsAttackMainWeapon();
+	unordered_map<int, CWeapon*> GetListWeapon();
 	void WantUpOnStair();
 	void CollisionWithItem(ObjectType _type);
 	void CollisionWithEnemy(CGameObject* obj);

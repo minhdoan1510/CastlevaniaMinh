@@ -198,6 +198,12 @@
     <ClCompile Include="EnemyDoor.cpp">
       <Filter>GameObjects\EnemyDoor</Filter>
     </ClCompile>
+    <ClCompile Include="DeadEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleTransScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -343,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="EnemyDoor.h">
       <Filter>GameObjects\EnemyDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="HandleTransScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

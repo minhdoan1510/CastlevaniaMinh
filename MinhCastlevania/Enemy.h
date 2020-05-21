@@ -23,6 +23,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* objects = NULL) = 0;
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b) = 0;
 	virtual void Death(int _hp);
+	LPCOLLISIONEVENT SweatAABBx_SafeEnemy(LPGAMEOBJECT coO, float disSafe);
 	bool IsActive();
 	int GetDamageofEnemy();
 	bool IsArmor();

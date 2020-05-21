@@ -55,6 +55,8 @@ void CMap::DrawMap()
 		{
 			if (i < 0 || j < 0)
 				continue;
+			if (i >= columnMap || j >= rowMap)
+				continue;
 			D3DXVECTOR3 pos(i * sizeFrame,j * sizeFrame,0);
 			frame = tileMap[j][i];			
 			m = frame % _columnTile;
@@ -68,6 +70,51 @@ void CMap::DrawMap()
 		}
 	}
 
+}
+
+void CMap::DrawMapTransform(float xTrans, float yTrans, int directTrans)
+{
+	CCamera* camera = CCamera::GetInstance();
+
+	//camera->SetBoundSize(columnMap * sizeFrame, rowMap * sizeFrame);
+	
+	RECT rectCam;
+	rectCam.left = camera->GetXCam() + xTrans;
+	rectCam.top = camera->GetYCam() + yTrans;
+	rectCam.right = rectCam.left + camera->GetWidth();
+	rectCam.bottom = rectCam.right + camera->GetHeight();
+
+	RECT rectTileMapforCam;
+	rectTileMapforCam.left = (int)(rectCam.left / sizeFrame);
+	rectTileMapforCam.top = (int)(rectCam.top / sizeFrame);
+	rectTileMapforCam.right = (1 + (int)(rectCam.right / sizeFrame));
+	rectTileMapforCam.bottom = (1 + (int)(rectCam.bottom / sizeFrame));
+
+
+	RECT rect;
+	int frame;
+	int m, n;
+
+	for (int i = rectTileMapforCam.left; i <= rectTileMapforCam.right; i++)
+	{
+		for (int j = rectTileMapforCam.top+(rectTileMapforCam.top!=0); j <= rectTileMapforCam.bottom; j++)
+		{
+			if (i < 0 || j < 0)
+				continue;
+			if (i >= columnMap || j >= rowMap)
+				continue;
+			D3DXVECTOR3 pos(i * sizeFrame, j * sizeFrame, 0);
+			frame = tileMap[j][i];
+			m = frame % _columnTile;
+			n = frame / _columnTile;
+			rect.left = sizeFrame * m;
+			rect.top = sizeFrame * n;
+			rect.right = rect.left + sizeFrame;
+			rect.bottom = rect.top + sizeFrame;
+
+			sprite->DrawFrame(pos.x -xTrans, pos.y - yTrans, rect);
+		}
+	}
 }
 
 void CMap::DrawIntroScene() {

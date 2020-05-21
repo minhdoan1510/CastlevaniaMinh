@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
-
 #include "PlayScence.h"
 #include "Utils.h"
 #include "TextureManager.h"
@@ -11,6 +10,9 @@
 #include "Effect.h"
 #include "strsafe.h"
 #include "EnemyDoor.h"
+#include "MoneyEffect.h"
+#include "DeadEffect.h"
+#include "BrickEffect.h"
 
 using namespace std;
 
@@ -51,6 +53,7 @@ void CPlayScene::Load()
 	LoadObject();
 	lifeTime = GetTickCount64();
 	cScoreBoard = new CScoreBoard();
+	isTransScene = 0;
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -66,15 +69,10 @@ void CPlayScene::Update(DWORD dt)
 		GameOver();
 	}
 	
-
-	vector<LPGAMEOBJECT> coObjects = grid->GetListObj();
-
-	CSimon::GetIntance()->Update(dt, &coObjects);//Update CSimon
 	float _x, _y;
 	CSimon::GetIntance()->GetPosition(_x, _y);
-	if (_x + SIMON_BBOX_WIDTH > map->GetMapWidth())
-		CSimon::GetIntance()->SetPosition(map->GetMapWidth() - SIMON_BBOX_WIDTH, _y);
 
+	//SetCamera
 	map->SetBoundaryLeftRight(1 + (int)(_y + SIMON_BBOX_HEIGHT / 2) / (CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()));
 
 	CCamera::GetInstance()->SetPosition(
@@ -82,14 +80,36 @@ void CPlayScene::Update(DWORD dt)
 		(CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()) *
 		((int)(_y + SIMON_BBOX_HEIGHT / 2) / (CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap())),
 		(CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()));
+	//
+
+	vector<LPGAMEOBJECT> coObjects = grid->GetListObj();
+
+	CSimon::GetIntance()->Update(dt, &coObjects);//Update CSimon
+
+	if (CSimon::GetIntance()->IsFreeze()) return;
+
+	if (CSceneManager::GetInstance()->IsPassScene())
+	{
+		//CCamera::GetInstance()->AutoCamX(SCREEN_WIDTH / 2, CSimon::GetIntance()->GetNx());
+		CSceneManager::GetInstance()->Update(dt);
+		//CSceneManager::GetInstance()->EndPassScene();
+		return;
+	}
+
+	if (_x + SIMON_BBOX_WIDTH > map->GetMapWidth())
+		CSimon::GetIntance()->SetPosition(map->GetMapWidth() - SIMON_BBOX_WIDTH, _y);
+
+	/*map->SetBoundaryLeftRight(1 + (int)(_y + SIMON_BBOX_HEIGHT / 2) / (CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()));
+
+	CCamera::GetInstance()->SetPosition(
+		(int)(_x - SCREEN_WIDTH / 2 + SIMON_BBOX_WIDTH / 2),
+		(CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()) *
+		((int)(_y + SIMON_BBOX_HEIGHT / 2) / (CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap())),
+		(CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()));*/
 
 
 	// Kiểm tra đã pass map hay chưa
-	if (CSceneManager::GetInstance()->IsPassScene())
-	{
-		CSceneManager::GetInstance()->GetCurrentScene()->Update(dt);
-		return;
-	}
+	
 
 	//Kiểm tra có obj nào cần được thêm vào hay không
 	vector<CGameObject*> addAfterUpdate= CSimon::GetIntance()->GetAbjAddAfterUpdate();
@@ -125,7 +145,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (effects[i]==NULL) continue;
 		effects[i]->Update(dt);
-		if (effects[i]->GetDeath())
+		if (effects[i]->IsFinish())
 		{
 			if (effects[i]->GetItemHolder() != Null)
 			{
@@ -161,7 +181,6 @@ void CPlayScene::Update(DWORD dt)
 		{
 			float _x, _y;
 			coObjects.at(i)->GetPosition(_x, _y);
-			LPGAMEOBJECT _item = new CItem(_x, _y, coObjects.at(i)->GetItemHolder());
 			//grid->InsertGrid(_item); 
 			CGameObject* backup = coObjects.at(i);
 			
@@ -169,7 +188,21 @@ void CPlayScene::Update(DWORD dt)
 					
 			float _xtemp, _ytemp;
 			backup->GetPosition(_xtemp, _ytemp);
-			effects.push_back(new CEffect(_xtemp, _ytemp, DEATH_ANI,200, backup->GetItemHolder()));
+			switch (backup->GetObjType())
+			{
+			case BRICK:
+				effects.push_back(new CBrickEffect(_xtemp, _ytemp, BRICK_EFFECT, Null));
+				if (backup->GetItemHolder() != Null)
+				{
+					LPGAMEOBJECT _item = new CItem(_x, _y, backup->GetItemHolder());
+					grid->InsertGrid(_item);
+				}
+				break;
+			default:
+				effects.push_back(new CDeadEffect(_xtemp, _ytemp, DEATH_ANI, 200, backup->GetItemHolder()));
+				break;
+			}
+
 			grid->RemoveObj(backup);
 			k++;
 		}
@@ -183,19 +216,19 @@ void CPlayScene::Update(DWORD dt)
 			switch (static_cast<CItem*> (coObjects.at(i))->GetItemType())
 			{
 			case MONEY_RED_ITEM: // 100
-				tempEffect = new CEffect(_xtemp, _ytemp, MONEY_100_EFFECT,2500);
+				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_100_EFFECT);
 				CSceneManager::GetInstance()->ScoreGame += 100;
 				break;
 			case MONEY_WHITE_ITEM: //700
-				tempEffect = new CEffect(_xtemp, _ytemp, MONEY_700_EFFECT,2500);
+				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
 				CSceneManager::GetInstance()->ScoreGame += 700;
 				break;
 			case MONEY_BOX_YELLOW_ITEM: //700
-				tempEffect = new CEffect(_xtemp, _ytemp, MONEY_700_EFFECT,2500);
+				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
 				CSceneManager::GetInstance()->ScoreGame += 700;
 				break;
 			case CROWM_YELLOW_ITEM: //2000
-				tempEffect = new CEffect(_xtemp, _ytemp, MONEY_700_EFFECT,2500);
+				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
 				CSceneManager::GetInstance()->ScoreGame += 2000;
 			default:
 				tempEffect = nullptr;
@@ -252,6 +285,21 @@ void CPlayScene::GameOver()
 	CSimon::GetIntance()->DeathSimon();
 }
 
+CMap* CPlayScene::GetMap()
+{
+	return map;
+}
+
+bool CPlayScene::IsTransScene()
+{
+	return isTransScene;
+}
+
+D3DXVECTOR2 CPlayScene::GetPosSimonDefault()
+{
+	return grid->GetPosSimonDefault();
+}
+
 void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
@@ -272,7 +320,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		simon->Stop();
 		break;
 	case DIK_P:
-		CSceneManager::GetInstance()->PassScene();
+		CSceneManager::GetInstance()->StartPassScene();
 		break;
 	}
 }

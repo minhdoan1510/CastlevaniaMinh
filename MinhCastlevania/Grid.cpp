@@ -54,7 +54,12 @@ void CGrid::LoadGrid()
 		{
 		case SIMON:
 			ifs >> _x >> _y;
-			CSimon::GetIntance()->SetPosition(_x, _y);
+			//CSimon::GetIntance()->SetPosition(_x, _y);
+			if (CSceneManager::GetInstance()->GetCurrentSceneID() == 1)
+			{
+				CSimon::GetIntance()->SetPosition(_x, _y);
+			}
+			posSimonDefault = D3DXVECTOR2(_x, _y);
 			a = CSimon::GetIntance();
 			break;
 		case BRICK:
@@ -204,6 +209,11 @@ void CGrid::InsertGrid(CGameObject* obj)
 			cells[i][j].push_back(obj);
 		}
 	}
+}
+
+D3DXVECTOR2 CGrid::GetPosSimonDefault()
+{
+	return posSimonDefault;
 }
 
 vector<CGameObject*> CGrid::GetListObj()

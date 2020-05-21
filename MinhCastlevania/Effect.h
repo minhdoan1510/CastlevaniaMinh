@@ -13,12 +13,14 @@ protected:
 	DWORD timeEffect;
 	bool isDead;
 	LPANIMATION ani;
+	LPSPRITE sprite;
+	float isFinish;
 public:
-	CEffect(float _x, float _y, ObjectType _effectType, DWORD _timeEffect = 1000, ObjectType _itemHolder = Null);
+	CEffect(float _x, float _y, ObjectType _effectType, DWORD _timeEffect = 5000, ObjectType _itemHolder = Null);
 	~CEffect();
-	void Render();
-	void Update(DWORD dt);
-	bool GetDeath();
+	virtual void Render()=0;
+	virtual void Update(DWORD dt);
+	bool IsFinish();
 	ObjectType GetItemHolder();
 	void GetPosition(float &x, float &y);
 };

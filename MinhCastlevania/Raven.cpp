@@ -48,8 +48,6 @@ void CRaven::UnFollow()
 	timeFollow = GetTickCount();
 }
 
-
-
 CRaven::~CRaven()
 {
 }
@@ -65,6 +63,7 @@ void CRaven::Render()
 	{
 		sprite->Draw(x, y);
 	}
+	CEnemy::Render();
 }
 
 void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
@@ -216,4 +215,3 @@ void CRaven::Death(int _hp)
 		CEnemy::Death(_hp);
 	}
 }
-

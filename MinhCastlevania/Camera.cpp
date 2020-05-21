@@ -10,7 +10,8 @@ CCamera::CCamera(int w, int h)
 {
 	width = w;
 	height = h;
-	floor = 1;
+	floor = 1; 
+	isAutoCam = 0;
 }
 
 CCamera::~CCamera()
@@ -31,6 +32,7 @@ D3DXVECTOR2 CCamera::Transform(float x, float y)
 
 void CCamera::SetPosition(float x, float y,int _floor)
 {
+	if (isAutoCam) return;
 	if (x <= boundLeft)
 		xC = boundLeft;
 	else if (x > boundRight - width + W_CAM_BOUND)
@@ -102,7 +104,7 @@ void CCamera::SetBoundLeftRight(float _l, float _r)
 	boundRight = _r;
 }
 
-void CCamera::GetBoundLeftRight(float &_l, float &_r)
+void CCamera::GetBoundLeftRight(float& _l, float& _r)
 {
 	_l = boundLeft;
 	_r = boundRight;
@@ -116,4 +118,28 @@ bool CCamera::IsContainCam(RECT rect1)
 		return false;
 	}
 	return true;
+}
+
+bool CCamera::IsAutoCam()
+{
+	return isAutoCam;
+}
+
+void CCamera::AutoCamX(float _distance, int _direct)
+{
+	isAutoCam = 1;
+	distanceAutoCam = _distance;
+	directAutoCam = _direct;
+	X_BackupAutoCam = xC;
+}
+
+
+void CCamera::UpdateAutoCam(DWORD dt)
+{
+	xC += SPEED_AUTO_CAM * dt * directAutoCam;
+	if (abs(xC - X_BackupAutoCam) >= distanceAutoCam)
+	{
+		//xC += distanceAutoCam - (xC - X_BackupAutoCam);
+		isAutoCam = 0;
+	}
 }

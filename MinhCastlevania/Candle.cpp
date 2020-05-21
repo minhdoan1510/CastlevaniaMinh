@@ -10,8 +10,8 @@ CCandle::CCandle(float x, float y, ObjectType _itemHolder, ObjectType _candleTyp
 	isColisible = 0;
 	IsDeading = false;
 	IsDestroy = false;
-	ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType);
-	//ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType)->Clone();
+	//ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType);
+	ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType)->Clone();
 }
 
 CCandle::~CCandle()

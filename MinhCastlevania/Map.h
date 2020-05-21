@@ -20,6 +20,7 @@ public:
 	~CMap();
 	void ReadFileMap(string filePath);
 	void DrawMap();
+	void DrawMapTransform(float xTrans, float yTrans, int directTrans);
 	void DrawIntroScene();
 	void LoadMap(string fileTileMap);
 	int GetMapWidth();

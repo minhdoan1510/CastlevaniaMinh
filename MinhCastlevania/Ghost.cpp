@@ -24,6 +24,7 @@ void CGhost::Render()
 	{
 		RenderBoundingBox();
 		ani->Render(x, y, nx > 0);
+		CEnemy::Render();
 	}
 }
 

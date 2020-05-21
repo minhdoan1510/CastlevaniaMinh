@@ -114,6 +114,7 @@ void CSimon::SetAutoGo(float _AutoGo_X_Distance, int DirectBegin, int _DirectEnd
 	isSitting = 0;
 	isAttacking = 0;
 	isOnStair = 0;
+	aniState = SIMON_ANI_WALKING;
 	vx = nx * SIMON_SPEED_AUTO_GO;
 }
 
@@ -303,7 +304,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				case PASS_SCENE_TRIGGER:
 					if (IsContain(this->GetBBox(), coObjects->at(i)->GetBBox()))
 					{
-						CSceneManager::GetInstance()->PassScene();
+						CSceneManager::GetInstance()->StartPassScene();
+						aniState = SIMON_ANI_IDLE;
 						return;
 					}
 					break;
@@ -335,7 +337,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isWantOnTopstair = 0;
 	}
 
-	if (!isOnStair)
+	if (!isOnStair)//||static_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->IsTransScene())
 	{
 		if (isInjured)
 		{
@@ -456,7 +458,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						if (y_OnStair == 0)
 							y_OnStair=y;
 						h_StepStair = y - y_OnStair;
-						DebugOut(L" %4.2f ", h_StepStair);
+						//DebugOut(L" %4.2f ", h_StepStair);
 						if (directOnStair == 1)
 						{
 							if (h_StepStair > 0 && h_StepStair != 16)
@@ -634,7 +636,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (size_t i = 0; i < coObjects->size(); i++)
 		if (dynamic_cast<CItem*>(coObjects->at(i)))
 		{
-			if (IsContain(this->GetBBox(), coObjects->at(i)->GetBBox()))
+			if (!static_cast<CItem*>(coObjects->at(i))->GetDeath()&&IsContain(this->GetBBox(), coObjects->at(i)->GetBBox()))
 			{
 				CollisionWithItem(static_cast<CItem*>(coObjects->at(i))->GetItemType());
 				coObjects->at(i)->Death();
@@ -748,7 +750,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
-
 		}
 	}
 
@@ -777,6 +778,26 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	x = (x > boundR - 12) ? boundR - 12 : x;
 	//x = (x + SIMON_BBOX_WIDTH > CCamera::GetInstance()->GetBoundaryLeft()) ? CCamera::GetInstance()->GetBoundaryLeft() - SIMON_BBOX_WIDTH : x;
 
+}
+
+void CSimon::UpdateAutoGo(DWORD dt)
+{
+	vy = 0;
+	CGameObject::Update(dt);
+	x += dx;
+	y += dy; 
+	if (isAutoGo)
+	{
+		if (abs(x - AutoGo_X_Backup) >= AutoGo_X_Distance)
+		{
+			isAutoGo = false;
+			x = x - (abs(x - AutoGo_X_Backup) - AutoGo_X_Distance);
+			vx = 0;
+			isWalking = 0;
+			nx = DirectEnd;
+			aniState = SIMON_ANI_IDLE;
+		}
+	}
 }
 
 void CSimon::Render()
@@ -932,6 +953,7 @@ void CSimon::Attack(bool isMainWeapon)
 				y -= PULL_UP_SIMON_SITTING;// kéo simon lên. tránh overlaping
 			}
 			//DebugOut(L"Ấn đánh\n");
+			isAttackingMainWeapon = 1;
 		}
 	}
 	else
@@ -948,6 +970,7 @@ void CSimon::Attack(bool isMainWeapon)
 						{
 							//DebugOut(L"dcd");
 							isAttacking = true;
+							isAttackingMainWeapon = 0;
 							if (isJumping)
 							{
 								y -= PULL_UP_SIMON_SITTING;// kéo simon lên. tránh overlaping
@@ -962,11 +985,26 @@ void CSimon::Attack(bool isMainWeapon)
 	}
 }
 
+bool CSimon::IsAttack()
+{
+	return isAttacking;
+}
+
+bool CSimon::IsAttackMainWeapon()
+{
+	return isAttackingMainWeapon;
+}
+
+unordered_map<int, CWeapon*> CSimon::GetListWeapon()
+{
+	return listWeapon;
+}
+
 void CSimon::WantUpOnStair()
 {
 	if (isOnStair || isJumping) return;
 	if (isAutoGo) return;
-	DebugOut(L"csd\n");
+	//DebugOut(L"csd\n");
 	if (isContainBottomTrigger)
 		isWantOnBottomstair = 1;
 }
@@ -985,9 +1023,10 @@ void CSimon::CollisionWithItem(ObjectType _type)
 		AddHeart(AMOUNT_HEART);
 		break;
 	case WHIP_ITEM:
+		SetFreeze(1);
 		if (static_cast<CWhip*>(listWeapon.at(WHIP))->GetLever() == 3) break;
 		static_cast<CWhip*>(listWeapon.at(WHIP))->SetLever(static_cast<CWhip*>(listWeapon.at(WHIP))->GetLever() + 1);
-		SetFreeze(1);
+		
 		break;
 	case KNIFE_ITEM:
 		clearListSecondWeapon();
@@ -1122,7 +1161,7 @@ void CSimon::Go()
 		vx = SIMON_WALKING_SPEED * nx;
 	else
 	{
-		DebugOut(L"thang\n");
+		//DebugOut(L"thang\n");
 		y_OnStair = y;
 		timeOnceStair = GetTickCount();
 		if (nx == 1 && directOnStair == 1)

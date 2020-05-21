@@ -1,4 +1,6 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
+#include "Game.h"
+#include <algorithm>
 
 CEnemy::CEnemy()
 {
@@ -25,9 +27,50 @@ void CEnemy::Render()
 
 void CEnemy::Death(int _hp)
 {
-
 	isDamaged = 1; 
 	timeHitDamage = GetTickCount();
+}
+
+LPCOLLISIONEVENT CEnemy::SweatAABBx_SafeEnemy(LPGAMEOBJECT coO, float disSafe)
+{
+	float sl, st, sr, sb;
+	float ml, mt, mr, mb;
+	float t, nx, ny;
+
+	coO->GetBoundingBox(sl, st, sr, sb);
+
+	float svx, svy;
+	coO->GetSpeed(svx, svy);
+
+	float sdx = svx * dt;
+	float sdy = svy * dt;
+
+	//Xác định khoảng cách an toàn để tránh
+	RECT rectWeapon = coO->GetBBox();
+	RECT rectThis = this->GetBBox();
+	if (rectWeapon.left > rectThis.left)
+	{
+		sdx -= disSafe;
+	}
+	else
+	{
+		sdx += disSafe;
+	}
+
+	float dx = this->dx - sdx;
+	float dy = this->dy - sdy;
+
+	GetBoundingBox(ml, mt, mr, mb);
+
+	CGame::SweptAABB(
+		ml, mt, mr, mb,
+		dx, dy,
+		sl, st, sr, sb,
+		t, nx, ny
+	);
+
+	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, coO);
+	return e;
 }
 
 bool CEnemy::IsActive()
@@ -44,3 +87,4 @@ bool CEnemy::IsArmor()
 {
 	return isArmor;
 }
+

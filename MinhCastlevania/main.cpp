@@ -19,7 +19,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void Update(DWORD dt)
 {
-	CSceneManager::GetInstance()->GetCurrentScene()->Update(dt);
+	CSceneManager::GetInstance()->Update(dt);
 }
 
 void Render()
@@ -34,7 +34,7 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		CSceneManager::GetInstance()->GetCurrentScene()->Render();
+		CSceneManager::GetInstance()->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();

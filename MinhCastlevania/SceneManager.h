@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include <unordered_map>
 #include <vector>
+#include "HandleTransScene.h"
 
 class CSceneManager
 {
@@ -11,7 +12,11 @@ private:
 	int currentSceneID; 
 	int currentSceneIDinVector;
 	CScene* currentScene;
+	CScene* nextScene;
+	CMap* nextSceneMap;
+	CScene* prevScene;
 	bool isPassScene = false;
+	CHandleTransScene* cHandleTransScene;
 public:
 	int ScoreGame;
 	static CSceneManager* GetInstance();
@@ -22,8 +27,10 @@ public:
 	CScene* GetCurrentScene();
 	int GetCurrentSceneID();
 	//void AddScene(int id);
-	void PassScene();
+	void StartPassScene();
+	void EndPassScene();
 	void Update(DWORD dt);
+	void Render();
 	void LostGame();
 	void WinGame();
 	bool IsPassScene();

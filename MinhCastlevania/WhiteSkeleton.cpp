@@ -36,6 +36,8 @@ void CWhiteSkeleton::Render()
 		{
 			weapon.at(i)->Render();
 		}
+
+	CEnemy::Render();
 }
 
 void CWhiteSkeleton::Jump(int direct)
@@ -118,7 +120,7 @@ CBrick* CWhiteSkeleton::FilterBrickCanJump(D3DXVECTOR2 _point, int _nx, vector<C
 	if (result != NULL)
 	{
 		RECT r = result->GetBBox();
-		DebugOut(L"Searched Brick: %d, %d, %d, %d\r", r.left, r.top, r.right, r.bottom);
+		//DebugOut(L"Searched Brick: %d, %d, %d, %d\r", r.left, r.top, r.right, r.bottom);
 	}
 	return static_cast<CBrick*>(result);
 }
@@ -236,8 +238,8 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 	CalcPotentialCollisions(colliable_objects, coEvents);
 	if (coEvents.size() == 0)
 	{
-		if (isJumping)
-			DebugOut(L"%.6f  %.6f\n", dx, dy);
+		//if (isJumping)
+			//DebugOut(L"%.6f  %.6f\n", dx, dy);
 		x += dx;
 		y += dy;
 	}

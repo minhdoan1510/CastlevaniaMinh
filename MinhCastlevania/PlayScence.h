@@ -20,6 +20,7 @@ class CPlayScene: public CScene
 private:
 	DWORD lifeTime;
 	int timeGame;
+	bool isTransScene;
 	string filePathObj;
 	string filePathMap;
 	CMap* map;
@@ -28,6 +29,7 @@ private:
 	void LoadMap();
 	void LoadObject();
 	vector<CEffect*> effects;
+	D3DXVECTOR2 posDefaultScene;
 public:
 	CPlayScene(int id, string filePath);
 	void Load();
@@ -35,6 +37,9 @@ public:
 	void Render();
 	void Unload();
 	void GameOver();
+	CMap* GetMap();
+	bool IsTransScene();
+	D3DXVECTOR2 GetPosSimonDefault();
 	friend class CPlayScenceKeyHandler;
 };
 

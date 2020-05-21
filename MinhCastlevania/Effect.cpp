@@ -6,10 +6,9 @@ CEffect::CEffect(float _x, float _y,ObjectType _effectType, DWORD _timeEffect , 
 	y = _y;
 	lifeTime = GetTickCount();
 	effectType = _effectType;
-	ani = CAnimations::GetInstance()->Get(_effectType);
-	isDead = 0;
 	itemHolder = _itemHolder;
 	timeEffect = _timeEffect;
+	isFinish = 0;
 }
 
 CEffect::~CEffect()
@@ -17,22 +16,17 @@ CEffect::~CEffect()
 
 }
 
-void CEffect::Render()
-{
-	ani->Render(x, y, 0);
-}
-
 void CEffect::Update(DWORD dt)
 {
 	if (GetTickCount() - lifeTime >= timeEffect)
 	{
-		isDead = true;
+		isFinish = true;
 	}
 }
 
-bool CEffect::GetDeath()
+bool CEffect::IsFinish()
 {
-	return isDead;
+	return isFinish;
 }
 
 ObjectType CEffect::GetItemHolder()

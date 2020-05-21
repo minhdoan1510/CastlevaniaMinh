@@ -28,6 +28,7 @@ void CBat::Render()
 	else {
 		ani->Render(x, y, nx > 0);
 	}
+	CEnemy::Render();
 }
 
 void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)

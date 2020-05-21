@@ -112,7 +112,7 @@ void CBeginScene::Update(DWORD dt)
 			if (lTime != 0 && GetTickCount() - lTime >= SIMON_ENTER_GAME_TIME)
 			{
 				CSimon::GetIntance()->EnterIntroGameState(0);
-				CSceneManager::GetInstance()->PassScene();
+				CSceneManager::GetInstance()->SetCurrentSceneID(1);
 				CSceneManager::GetInstance()->Update(dt);
 				return;
 			}
