@@ -1,5 +1,6 @@
 #include "Trigger.h"
 #include "Simon.h"
+#include "SceneManager.h"
 
 CTrigger::CTrigger(int _x, int _y, int _w, int _h, ObjectType _type, int _DirectStair)
 {
@@ -8,6 +9,10 @@ CTrigger::CTrigger(int _x, int _y, int _w, int _h, ObjectType _type, int _Direct
 	width = _w;
 	height = _h;
 	triggerType = _type;
+
+	if (triggerType == PASS_SCENE_TRIGGER)
+		spriteDoor = CSprites::GetInstance()->Get(9601);
+
 	if (_DirectStair == 1)
 		x_checkpoint = x + CHECKPOINT_X1;
 	else
@@ -24,8 +29,14 @@ CTrigger::~CTrigger()
 void CTrigger::Render()
 {
 	RenderBoundingBox();
+	if (triggerType == PASS_SCENE_TRIGGER&&CSceneManager::GetInstance()->GetCurrentSceneID()!=1)
+	{
+		if (DirectStair == 1)
+			spriteDoor->DrawFlipX(x, y);
+		else
+			spriteDoor->Draw(x, y);
+	}
 }
-
 
 void CTrigger::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
@@ -34,3 +45,4 @@ void CTrigger::GetBoundingBox(float& l, float& t, float& r, float& b)
 	r = width + l;
 	b = height + t;
 }
+

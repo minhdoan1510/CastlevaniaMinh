@@ -4,7 +4,7 @@
 
 
 
-CHandleTransScene::CHandleTransScene(CMap* pre, CMap* next, int direct, D3DXVECTOR2 _posSimonNextMap)
+CHandleTransScene::CHandleTransScene(CMap* pre, CMap* next, int direct, D3DXVECTOR2 _posSimonNextMap, D3DXVECTOR2 _posDoorScene)
 {
 	preMap = pre;
 	nextMap = next;
@@ -12,6 +12,7 @@ CHandleTransScene::CHandleTransScene(CMap* pre, CMap* next, int direct, D3DXVECT
 	float xtemp, ytemp;
 	CSimon::GetIntance()->GetPosition(xtemp, ytemp);
 	posSimonNextMap = _posSimonNextMap;
+	posDoorScene = _posDoorScene;
 
 	float _l, _r;
 	CCamera::GetInstance()->GetBoundLeftRight(_l, _r);
@@ -37,7 +38,10 @@ CHandleTransScene::~CHandleTransScene()
 
 void CHandleTransScene::Init()
 {
+	aniDoor = CAnimationSets::GetInstance()->Get(DOOR_SCENE);
+	aniDoorState = DOOR_STATE_CLOSE_SCENE;
 	transCam2nd = 0;
+	isPassDoorScene = 0;
 	DoneTransScene = 0;
 	cScoreBoard = new CScoreBoard();
 	CCamera::GetInstance()->AutoCamX(-PULL_X_SCREEN + (int)SCREEN_WIDTH / 2,CSimon::GetIntance()->GetNx());
@@ -48,20 +52,64 @@ void CHandleTransScene::Update(DWORD dt)
 {
 	if (!CCamera::GetInstance()->IsAutoCam())
 	{
-		if (transCam2nd)
+		DWORD now = GetTickCount();
+		if ((aniDoorState == DOOR_STATE_CLOSE_SCENE || aniDoorState == DOOR_STATE_OPEN_SCENE) && transCam2nd ==0)
 		{
-			DoneTransScene = 1;
-			return;
+			if (isGoPassScene == 1)
+			{
+				if (!CSimon::GetIntance()->IsAutoGo()&& isPassDoorScene==0)
+				{
+					aniDoorState = DOOR_CLOSE_SCENE;
+					timeDoor = now;
+				}
+
+				if(isPassDoorScene)
+				{
+					CCamera::GetInstance()->AutoCamX(-PULL_X_SCREEN + (int)SCREEN_WIDTH / 2, CSimon::GetIntance()->GetNx());
+					transCam2nd = 1;
+				}
+			}
+			else
+				if (DOOR_STATE_CLOSE_SCENE)
+				{
+					aniDoorState = DOOR_OPEN_SCENE;
+					timeDoor = now;
+				}
 		}
-		if (isGoPassScene == 0&&!CSimon::GetIntance()->IsAutoGo())
+		else
 		{
-			isGoPassScene = 1;
-			CSimon::GetIntance()->SetAutoGo(distanceSimon, directTrans, directTrans);
-		}
-		if(isGoPassScene == 1&&!CSimon::GetIntance()->IsAutoGo())
-		{
-			CCamera::GetInstance()->AutoCamX(-PULL_X_SCREEN + (int)SCREEN_WIDTH / 2, CSimon::GetIntance()->GetNx());
-			transCam2nd = 1;
+			if (now - timeDoor >= DOOR_ANI_TIME && timeDoor != 0)
+			{
+				timeDoor = 0;
+				if (aniDoorState == DOOR_CLOSE_SCENE)
+				{
+					aniDoorState = DOOR_STATE_CLOSE_SCENE;
+					isPassDoorScene = 1;
+				}
+				else
+				{
+					aniDoorState = DOOR_STATE_OPEN_SCENE;
+					if (isGoPassScene == 0 && !CSimon::GetIntance()->IsAutoGo())
+					{
+						isGoPassScene = 1;
+						CSimon::GetIntance()->SetAutoGo(distanceSimon, directTrans, directTrans);
+					}
+				}
+			}
+			else
+			{
+				if (transCam2nd)
+				{
+					DoneTransScene = 1;
+					return;
+				}
+				
+				if (timeDoor == 0 && isGoPassScene == 1 && !CSimon::GetIntance()->IsAutoGo())
+				{
+					aniDoorState = DOOR_CLOSE_SCENE;
+					timeDoor = now;
+				}
+			}
 		}
 	}
 	else
@@ -69,16 +117,33 @@ void CHandleTransScene::Update(DWORD dt)
 		CCamera::GetInstance()->UpdateAutoCam(dt);
 	}
 	if (CSimon::GetIntance()->IsAutoGo())
+	{
+		aniDoorState = DOOR_STATE_OPEN_SCENE;
 		CSimon::GetIntance()->UpdateAutoGo(dt);
-	
+	}
 }
 
 void CHandleTransScene::Render()
 {
 	preMap->DrawMap();
 	nextMap->DrawMapTransform(-posNextMap.x, -posNextMap.y, directTrans);
-	CSimon::GetIntance()->Render();
 	cScoreBoard->Render();
+
+	if (aniDoorState == DOOR_CLOSE_SCENE || aniDoorState == DOOR_OPEN_SCENE)
+		aniDoor->at(aniDoorState)->Render(posDoorScene.x, posDoorScene.y, directTrans == 1);
+	else
+	{
+		switch (aniDoorState)
+		{
+		case DOOR_STATE_CLOSE_SCENE:
+			aniDoor->at(DOOR_CLOSE_SCENE)->RenderFrame(aniDoor->at(DOOR_CLOSE_SCENE)->GetLastFrame(), posDoorScene.x, posDoorScene.y, directTrans == 1);
+			break;
+		case DOOR_STATE_OPEN_SCENE:
+			aniDoor->at(DOOR_OPEN_SCENE)->RenderFrame(aniDoor->at(DOOR_OPEN_SCENE)->GetLastFrame(), posDoorScene.x, posDoorScene.y, directTrans == 1);
+			break;
+		}
+	}
+	CSimon::GetIntance()->Render();
 }
 
 bool CHandleTransScene::IsDoneTransScene()

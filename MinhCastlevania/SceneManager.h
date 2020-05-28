@@ -27,7 +27,7 @@ public:
 	CScene* GetCurrentScene();
 	int GetCurrentSceneID();
 	//void AddScene(int id);
-	void StartPassScene();
+	//void StartPassScene();
 	void EndPassScene();
 	void Update(DWORD dt);
 	void Render();
@@ -35,5 +35,6 @@ public:
 	void WinGame();
 	bool IsPassScene();
 	void ReloadScene();
+	void StartPassScene(float xDoor=0, float yDoor=0, bool isDebugPass = 0);
 	//void ResetScene();
 };

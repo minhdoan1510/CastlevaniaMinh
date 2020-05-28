@@ -126,7 +126,7 @@ void CSceneManager::ReloadScene()
 	currentScene->Load();
 }
 
-void CSceneManager::StartPassScene()
+void CSceneManager::StartPassScene(float xDoor, float yDoor, bool isDebugPass)
 {
 	if (currentSceneIDinVector + 1 >= scenes.size())
 	{
@@ -137,7 +137,7 @@ void CSceneManager::StartPassScene()
 	nextScene = scenes.at(currentSceneIDinVector+1).second;
 	
 	isPassScene = 1;
-	if (currentSceneID == 1)
+	if (currentSceneID == 1||isDebugPass)
 	{
 		currentScene->Unload();
 		SAFE_DELETE(currentScene);
@@ -146,7 +146,7 @@ void CSceneManager::StartPassScene()
 		return;
 	}
 	nextScene->Load();
-	cHandleTransScene = new CHandleTransScene(static_cast<CPlayScene*>(currentScene)->GetMap(), static_cast<CPlayScene*>(nextScene)->GetMap(), CSimon::GetIntance()->GetNx(), static_cast<CPlayScene*>(nextScene)->GetPosSimonDefault());
+	cHandleTransScene = new CHandleTransScene(static_cast<CPlayScene*>(currentScene)->GetMap(), static_cast<CPlayScene*>(nextScene)->GetMap(), CSimon::GetIntance()->GetNx(), static_cast<CPlayScene*>(nextScene)->GetPosSimonDefault(),D3DXVECTOR2(xDoor,yDoor));
 }
 
 void CSceneManager::EndPassScene()

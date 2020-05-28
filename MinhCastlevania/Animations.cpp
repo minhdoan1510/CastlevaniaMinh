@@ -94,6 +94,11 @@ void CAnimation::RenderFrame(int idFrame, float _x, float _y, bool flipX, int al
 		frames->at(idFrame)->GetSprite()->Draw(_x, _y, alpha, R, G, B);
 }
 
+int CAnimation::GetLastFrame()
+{
+	return frames->size()-1;
+}
+
 int CAnimation::GetCurrentFrame()
 {
 

@@ -204,6 +204,9 @@
     <ClCompile Include="HandleTransScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="PhantomBat.cpp">
+      <Filter>GameObjects\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="HandleTransScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PhantomBat.h">
+      <Filter>GameObjects\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

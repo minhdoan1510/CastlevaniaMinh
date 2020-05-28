@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "GameDefine.h"
 
-#define SPEED_AUTO_CAM	0.08f
+#define SPEED_AUTO_CAM	0.15f
 
 class CCamera
 {

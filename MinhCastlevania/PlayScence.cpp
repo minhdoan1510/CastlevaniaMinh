@@ -320,7 +320,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		simon->Stop();
 		break;
 	case DIK_P:
-		CSceneManager::GetInstance()->StartPassScene();
+		CSceneManager::GetInstance()->StartPassScene(0,0,1);
 		break;
 	}
 }

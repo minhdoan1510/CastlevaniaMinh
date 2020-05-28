@@ -14,6 +14,7 @@ class CTrigger :public CGameObject
 	float y_checkpoint;
 	int DirectStair;
 	bool isActive;
+	LPSPRITE spriteDoor;
 public:
 	CTrigger(int _x, int _y, int _w, int _h, ObjectType _type, int _DirectStair = 0);
 	~CTrigger();

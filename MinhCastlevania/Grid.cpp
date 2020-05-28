@@ -17,6 +17,7 @@
 #include "WhiteSkeleton.h"
 #include "Zombie.h"
 #include "EnemyDoor.h"
+#include "PhantomBat.h"
 
 vector<CGameObject*> CGrid::FilterObjectDuplicate(vector<CGameObject*> objs)
 {
@@ -113,6 +114,9 @@ void CGrid::LoadGrid()
 				break;
 			case ZOMBIE:
 				a = new CZombie(_x, _y);
+				break;
+			case PHANTOMBAT:
+				a = new CPhantomBat(_x, _y);
 				break;
 			default:
 				a = nullptr;

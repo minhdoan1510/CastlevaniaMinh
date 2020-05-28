@@ -304,7 +304,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				case PASS_SCENE_TRIGGER:
 					if (IsContain(this->GetBBox(), coObjects->at(i)->GetBBox()))
 					{
-						CSceneManager::GetInstance()->StartPassScene();
+						float xDoor, yDoor;
+						coObjects->at(i)->GetPosition(xDoor, yDoor);
+						CSceneManager::GetInstance()->StartPassScene(xDoor, yDoor);
 						aniState = SIMON_ANI_IDLE;
 						return;
 					}

@@ -34,7 +34,7 @@ public:
 
 	void Render(float x, float y,bool flipX,  int alpha = 255 ,int R = 255, int G = 255, int B= 255);
 	void RenderFrame(int idFrame, float x, float y, bool flipX, int alpha = 255, int R = 255, int G = 255, int B = 255);
-	//void KeepFramePresent(); // giữ lại frame vừa vẽ
+	int GetLastFrame();
 	int GetCurrentFrame();
 	bool IsFinalFrame() { return currentFrame == frames->size()-1; }
 	int GetFrameTime(){}
