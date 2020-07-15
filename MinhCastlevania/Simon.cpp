@@ -956,6 +956,8 @@ void CSimon::ResetSimon()
 	isFreeze = 0;
 	isuntouchable = 0;
 	isOnStair = 0;
+	isEatEnd_Item = false;
+	isEndgameState = false;
 	//IsDead = 0;
 }
 

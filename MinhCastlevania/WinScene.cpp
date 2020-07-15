@@ -22,6 +22,7 @@ void CWinScene::Unload()
 
 void CWinScene::Update(DWORD dt)
 {
+	CCamera::GetInstance()->SetPosition(0, PULL_SCREEN_Y, 1);
 	if (isEnter)
 	{
 		CSceneManager::GetInstance()->SetCurrentSceneID(0);

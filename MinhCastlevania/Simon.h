@@ -42,7 +42,7 @@
 #define SIMON_ANI_ENTER_GAME			1100
 
 #define SIMON_DEFAULT_HP	16
-#define SIMON_DEFAULT_LIFE	1//30//3
+#define SIMON_DEFAULT_LIFE	3//30//3
 #define SIMON_DEFAULT_HEART	5
 
 #define SIMON_UNTOUCHABLE_TIME	2000 
@@ -135,6 +135,7 @@ public:
 	bool IsProcessStair() { return isProcessStair; }
 	bool IsEndgameState() { return isEndgameState; }
 	unordered_map<int, CWeapon*> GetListWeapon();
+	void ResetLifeSimon() { lifeSimon = SIMON_DEFAULT_LIFE; }
 
 	//State_Handle
 	void ResetPositionBackup() { x = x_backup; y = y_backup; nx = nx_backup; }

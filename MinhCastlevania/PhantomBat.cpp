@@ -130,10 +130,13 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 			if (boxSimon.top - boxThis.top < 0)
 			{
 				statePhantomBat = PHANTOMBAT_STATE_ATTACK_WEAPON;
-				D3DXVECTOR2 nDirect(boxSimon.left - boxThis.left, boxSimon.top - boxThis.top);
-				SAFE_DELETE(bullet);
-				bullet = new CPhantomBatBullet(x, y);
-				bullet->SetVectorMove(nDirect.x, nDirect.y);
+				if (bullet == nullptr || bullet->IsFinish())
+				{
+					D3DXVECTOR2 nDirect(boxSimon.left - boxThis.left, boxSimon.top - boxThis.top);
+					SAFE_DELETE(bullet);
+					bullet = new CPhantomBatBullet(x, y);
+					bullet->SetVectorMove(nDirect.x, nDirect.y);
+				}
 			}
 			else
 			if (boxSimon.top - boxThis.top >= PHANTOMBAT_DISTANCE_FLY_MAX_WITH_SIMON)

@@ -36,8 +36,10 @@ void CSceneManager::SetCurrentSceneID(int id)
 	//if (dynamic_cast<CLostScene*> (currentScene))
 		//SAFE_DELETE(currentScene);
 	if (id == 1 || id == 0)
+	{
+		CSimon::GetIntance()->ResetLifeSimon();
 		ScoreGame = 0;
-	for (int i = 0; i < scenes.size(); i++)
+	}for (int i = 0; i < scenes.size(); i++)
 	{
 		if (scenes.at(i).first == id)
 		{

@@ -1,0 +1,2 @@
+100006	Resources\map\4\map.png
+40000	Resources\map\4\texture.png
