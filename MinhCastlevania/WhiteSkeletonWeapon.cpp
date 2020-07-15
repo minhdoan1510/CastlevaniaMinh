@@ -70,6 +70,7 @@ void CWhiteSkeletonWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult.at(i);
 			static_cast<CSimon*>(e->obj)->SetInjured(WHITESKELETONWEAPON_DAMAGE,-nx);
+			break;
 		}
 
 		isFinish = true;

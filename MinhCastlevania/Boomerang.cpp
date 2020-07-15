@@ -2,6 +2,7 @@
 #include "Simon.h"
 #include "Item.h"
 #include "Brick.h"
+#include "Sound.h"
 
 #define MIN_Y_ATTACK 18
 
@@ -10,11 +11,15 @@ CBoomerang::CBoomerang()
 	ani = CAnimations::GetInstance()->Get(BOOMERANG);
 	objType = weaponType = BOOMERANG;
 	isUsedOnceTime = 0;
+	isFinish = true;
 }
 
 void CBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 {
-	if (isFinish) return;
+	if (isFinish) {
+		CSound::GetInstance()->stop("Boomerang");
+		return;
+	}
 	if (nx > 0)
 	{
 		vx += -BOOMERANG_FORCE * dt;
@@ -67,19 +72,18 @@ void CBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 			if (dynamic_cast<CSimon*>(e->obj))
 			{
 				isFinish = true;
+				continue;
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				if (nx_backup == ((vx>0)?1:-1)) //block 1 chiều boomerang
 					vx = 0;
-				else {
-					DebugOut(L"");
-				}
 			}
 			else if (dynamic_cast<CEnemy*>(e->obj))
 				static_cast<CEnemy*>(e->obj)->Death(GetDamage());
-			if (dynamic_cast<CItem*>(e->obj)) continue;
+			if (dynamic_cast<CItem*>(e->obj)|| dynamic_cast<CBrick*>(e->obj)) continue;
 			e->obj->Death();
+			CSound::GetInstance()->play("Hit", 0, 1);
 		}
 	}
 
@@ -87,7 +91,7 @@ void CBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 
 bool CBoomerang::Attack(float _x, float _y, int _nx)
 {
-	if (lifeTime == 0 || GetTickCount64() - lifeTime > BOOMERANG_SPEED_ATTACK)
+	if ((lifeTime == 0 || GetTickCount64() - lifeTime > BOOMERANG_SPEED_ATTACK)&& isFinish == true)
 	{
 		lifeTime = GetTickCount64();
 		isFinish = false;
@@ -99,6 +103,7 @@ bool CBoomerang::Attack(float _x, float _y, int _nx)
 			vx = BOOMERANG_VTHROW;
 		else
 			vx = -BOOMERANG_VTHROW;
+		CSound::GetInstance()->play("Boomerang",1,5000);
 		return true;
 	}
 	return false;

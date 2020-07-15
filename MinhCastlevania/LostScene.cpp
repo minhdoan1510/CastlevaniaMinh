@@ -25,7 +25,7 @@ void CLostScene::Unload()
 
 void CLostScene::Update(DWORD dt)
 {
-	CCamera::GetInstance()->SetPosition(0, 0, 1);
+	CCamera::GetInstance()->SetDefaultCam();
 	if (isEnter)
 	{
 		if (isContinue)
@@ -46,8 +46,8 @@ void CLostScene::Update(DWORD dt)
 void CLostScene::Render()
 {
 	csb->Render();
-	font->Draw("GAME OVER", GAMEOVER_POSITION.x, GAMEOVER_POSITION.y);
-	font->Draw("CONTINUE", CONTINUE_POSITION.x, CONTINUE_POSITION.y);
+	font->Draw("GAME OVER", WIN_POSITION.x, WIN_POSITION.y);
+	font->Draw("CONTINUE", ENTER_POSITION.x, ENTER_POSITION.y);
 	font->Draw("END", END_POSITION.x, END_POSITION.y);
 	if (isContinue)
 		heartSel->Draw(CONTINUE_HEART_POSITION.x, CONTINUE_HEART_POSITION.y);

@@ -2,7 +2,9 @@
 #include"GameObject.h"
 #include"Item.h"
 
+#define HEIGHT_DOORPASS		95
 #define CHECKPOINT_X	 4
+
 #define CHECKPOINT_X1	 6
 
 class CTrigger :public CGameObject

@@ -15,9 +15,9 @@ public:
 	CKnife();
 	~CKnife() {}
 
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	bool Attack(float _x, float _y, int nx);
-	virtual void GetBoundingBox(float& x, float& y, float& framew, float& frameh);
+	void GetBoundingBox(float& x, float& y, float& framew, float& frameh);
 	void Render();
 	int GetDamage();
 

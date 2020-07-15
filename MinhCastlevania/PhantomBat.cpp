@@ -1,27 +1,59 @@
 #include "PhantomBat.h"
 #include "Simon.h"
+#include "Weapon.h"
+#include "PhantomBatBullet.h"
 
-float CPhantomBat::CalcSpeed()
+float CPhantomBat::CalcSpeed(float _vx)
 {
-	return (float)(double)((double)3 / 128) * pow(vx, 2) - (double)3 / 64;
+	if (distanceFlew < PHANTOMBAT_FLY_HALF)
+		return float(PHANTOMBAT_FORCE_VY / 65536) * pow(distanceFlew, 2) - (PHANTOMBAT_FORCE_VY / 128) * distanceFlew + PHANTOMBAT_FORCE_VY;
+	else
+		return -(float(PHANTOMBAT_FORCE_VY / 65536) * pow(distanceFlew, 2) - (PHANTOMBAT_FORCE_VY / 128) * distanceFlew + PHANTOMBAT_FORCE_VY);
 }
 
-void CPhantomBat::MovePhantomBat(int direct,int isApproach)
+void CPhantomBat::MovePhantomBatPal(int direct, bool isApproach)
 {
-	if (isMovePhantomBat) return;
-	vx = PHANTOMBAT_FLY_FAST * direct; 
+	vx = PHANTOMBAT_FLY_SLOW * 5 * direct;
+	directFly = direct;
 	yBackupMovePhantomBat = y;
-	vy = (isApproach) ? PHANTOMBAT_VY_APPROACH : PHANTOMBAT_FLY_SLOW;
+	vy = (isApproach) ? PHANTOMBAT_FLY_SLOW : PHANTOMBAT_FLY_SLOW * 2;
+	xBackupMovePhantomBat = x;
+	distanceFlew = 0;
+	stateFly = PHANTOMBAT_STATE_FLY_1;
 }
 
-void CPhantomBat::UpdateMovePhantomBat(int direct)
+void CPhantomBat::UpdateMovePhantomBat(RECT boxSimon)
 {
-	D3DXVECTOR2 posSimon;
-	CSimon::GetIntance()->GetPosition(posSimon.x, posSimon.y);
-	if (y <= posSimon.x - PHANTOMBAT_DISTANCE_FLY_MAX_WITH_SIMON)
+	RECT rectCam = CCamera::GetInstance()->GetRectCam();
+	distanceFlew += abs(xBackupMovePhantomBat - x);
+	xBackupMovePhantomBat = x;
+
+	if (rectCam.left > x || rectCam.right < GetBBox().right)
+		directFly = -1 * directFly;
+	switch (stateFly)
 	{
-		vx = vy = PHANTOMBAT_FLY_SLOW;
+	case PHANTOMBAT_STATE_FLY_1:
+		vx = PHANTOMBAT_FLY_FAST*directFly;
+		vy = CalcSpeed(distanceFlew);
+		DebugOut(L"%4.2f , %4.2f\n", distanceFlew, vy);
+		if (boxSimon.top - y >= PHANTOMBAT_DISTANCE_FLY_MAX_WITH_SIMON)
+			stateFly = PHANTOMBAT_STATE_FLY_2;
+		break;
+	case PHANTOMBAT_STATE_FLY_2:
+		vx = PHANTOMBAT_FLY_SLOW * directFly;
+		vy = PHANTOMBAT_FLY_SLOW;
+		if (boxSimon.top - y <= PHANTOMBAT_DISTANCE_FLY_ATTACK_WITH_SIMON)
+		{
+			stateFly = PHANTOMBAT_STATE_FLY_1;
+			statePhantomBat = PHANTOMBAT_STATE_IDLE;
+			isProcessing = 0;
+			timeIdle = GetTickCount();
+		}
+		break;
 	}
+
+	DebugOut(L"%4.2f,%4.2f\n", vx, vy);
+
 }
 
 CPhantomBat::CPhantomBat(float _x, float _y)
@@ -30,21 +62,28 @@ CPhantomBat::CPhantomBat(float _x, float _y)
 	y = _y;
 	ani = CAnimations::GetInstance()->Get(PHANTOMBAT);
 	sprite = CSprites::GetInstance()->Get(PHANTOMBAT_SLEEP);
-	vx = PHANTOMBAT_FLY_SLOW*3;
-	vy = PHANTOMBAT_FLY_SLOW;
+	vx = 0;
+	vy = 0;
 	enemyType = PHANTOMBAT;
+	statePhantomBat = PHANTOMBAT_STATE_IDLE;
 	isFollow = 0;
 	isActive = 0;
 	timeFollow = 0;
-	timeIdle=0;
+	timeIdle = 0;
+	isBoss = 1;
+	isArmor = 1;
+	HP = PHANTOMBAT_DEFAULT_HP;
+	DamageofEnemy = PHANTOMBAT_DAMAGE;
 }
 
 CPhantomBat::~CPhantomBat()
 {
+	
 }
 
 void CPhantomBat::Render()
 {
+	RenderBoundingBox();
 	if (isActive)
 	{
 		ani->Render(x, y, 0);
@@ -53,58 +92,114 @@ void CPhantomBat::Render()
 	{
 		sprite->Draw(x, y);
 	}
+
+	if (bullet != nullptr && !bullet->IsFinish())
+	{
+		bullet->Render();
+	}
+	CEnemy::Render();
 }
 
 void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
-	D3DXVECTOR2 posSimon;
-	RECT rectSimon;
-	RECT rectCam;
-	RECT rectThis;
-	CSimon::GetIntance()->GetPosition(posSimon.x, posSimon.y);
-	rectSimon = CSimon::GetIntance()->GetBBox();
-	rectCam = CCamera::GetInstance()->GetRectCam();
-	rectThis = GetBBox();
+	DebugOut(L"%d, %d\n", statePhantomBat,(int)timeIdle );
+
+	CGameObject::Update(dt);
+
 	DWORD now = GetTickCount();
-	if (isActive)
+
+	RECT boxSimon = CSimon::GetIntance()->GetBBox();
+	RECT boxThis = GetBBox();
+	if (!isActive && abs(boxSimon.left - x) <= PHANTOMBAT_DISTANCE_ACTIVE)
 	{
-		switch (statePhantomBat)
-		{
-		case PHANTOMBAT_STATE_IDLE:
-			if (now - timeIdle <= PHANTOMBAT_TIME_IDLE)
-			{
-				if (abs(x - posSimon.x) <= PHANTOMBAT_DISTANCE_NEED_APPROACH)
-				{
-					statePhantomBat = PHANTOMBAT_STATE_APPROACH;
-				}
-				else
-				{
-					if (posSimon.y - y > 0)
-						statePhantomBat = PHANTOMBAT_STATE_ATTACK_WEAPON;
-					else
-						statePhantomBat = PHANTOMBAT_STATE_ATTACK;
-				}
-			}
-			break;
-		case PHANTOMBAT_STATE_APPROACH:
-			//((x - posSimon.x > 0) ? -1 : 1)
-			break;
-		case PHANTOMBAT_STATE_ATTACK:
-			break;
-		case PHANTOMBAT_STATE_ATTACK_WEAPON:
-			break;
-		}
-		
-		CGameObject::Update(dt);
-		x += dx;
-		y += dy;
+		isActive = true;
+		timeIdle = now;
 	}
-	else
+	else if(!isActive)
+		return;
+
+
+	switch (statePhantomBat)
 	{
-		if (abs(posSimon.x - x)<=PHANTOMBAT_DISTANCE_ACTIVE)
+	case PHANTOMBAT_STATE_IDLE:
+		vx = vy = 0;
+		if (now - timeIdle >= PHANTOMBAT_TIME_IDLE)
 		{
-			isActive = true;
+
+			timeIdle = now;
+			if (boxSimon.top - boxThis.top < 0)
+			{
+				statePhantomBat = PHANTOMBAT_STATE_ATTACK_WEAPON;
+				D3DXVECTOR2 nDirect(boxSimon.left - boxThis.left, boxSimon.top - boxThis.top);
+				SAFE_DELETE(bullet);
+				bullet = new CPhantomBatBullet(x, y);
+				bullet->SetVectorMove(nDirect.x, nDirect.y);
+			}
+			else
+			if (boxSimon.top - boxThis.top >= PHANTOMBAT_DISTANCE_FLY_MAX_WITH_SIMON)
+			{
+				statePhantomBat = PHANTOMBAT_STATE_APPROACH_DOWN;
+				//DebugOut(L"Test");
+			}
+			else if (abs(boxThis.left - boxSimon.left) >= PHANTOMBAT_DISTANCE_NEED_APPROACH)
+			{
+				statePhantomBat = PHANTOMBAT_STATE_APPROACH;
+			}
+			else
+			{
+					statePhantomBat = PHANTOMBAT_STATE_ATTACK;
+			}
 		}
+		break;
+	case PHANTOMBAT_STATE_APPROACH_DOWN:
+		vx = 0;
+		vy = PHANTOMBAT_FLY_SLOW;
+		if (boxSimon.top - boxThis.top < PHANTOMBAT_DISTANCE_FLY_MAX_WITH_SIMON)
+		{
+			statePhantomBat = PHANTOMBAT_STATE_IDLE;
+			timeIdle = now;
+		}
+		break;
+	case PHANTOMBAT_STATE_APPROACH:
+		if (!isProcessing)
+		{
+			MovePhantomBatPal((boxSimon.left < boxThis.left) ? -1 : 1, 1);
+			isProcessing = 1;
+		}
+		break;
+	case PHANTOMBAT_STATE_ATTACK:
+		if (!isProcessing)
+		{
+			MovePhantomBatPal((boxSimon.left < boxThis.left) ? -1 : 1, 1);
+			isProcessing = 1;
+		}
+		break;
+	case PHANTOMBAT_STATE_ATTACK_WEAPON:
+		vy = -PHANTOMBAT_FLY_SLOW;
+		vx = 0;
+		if (boxSimon.top - y >= PHANTOMBAT_DISTANCE_FLY_ATTACK_WITH_SIMON)
+		{
+			statePhantomBat = PHANTOMBAT_STATE_IDLE;
+			timeIdle = now;
+		}
+
+		break;
+
+	default:
+		break;
+	}
+
+	if (isProcessing)
+		UpdateMovePhantomBat(boxSimon);
+
+	x += vx * dt;
+	y += vy * dt;
+
+
+	//UpdateBullet
+	if (bullet != nullptr && !bullet->IsFinish())
+	{
+		bullet->Update(dt);
 	}
 }
 
@@ -112,16 +207,8 @@ void CPhantomBat::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	t = y;
 	b = y + PHANTOMBAT_BBOX_1_HEIGHT;
-	if (ani->GetCurrentFrame() == 0)
-	{
-		l = x + (PHANTOMBAT_BBOX_2_WIDTH - PHANTOMBAT_BBOX_1_WIDTH) / 2;
-		r = x + PHANTOMBAT_BBOX_1_WIDTH;
-	}
-	else
-	{
-		l = x;
-		r = x + PHANTOMBAT_BBOX_2_WIDTH;
-	}
+	l = x;
+	r = x + PHANTOMBAT_BBOX_2_WIDTH;
 }
 
 void CPhantomBat::Death(int _hp)
@@ -135,4 +222,9 @@ void CPhantomBat::Death(int _hp)
 	{
 		CEnemy::Death(_hp);
 	}
+}
+
+ObjectType CPhantomBat::GetItemHolder()
+{
+	return END_ITEM;
 }

@@ -15,6 +15,7 @@ class CGrid
 public:
 	CGrid(int _mapW, int _mapH, string fileobj);
 	void LoadGrid();
+	void InsertGrid(CGameObject* obj, vector<pair<int, int>> posGrid);
 	~CGrid();
 	void UpdateGrid(vector<CGameObject*> objects);
 	void RemoveObj(CGameObject* obj, bool isDeletePointer = 1);

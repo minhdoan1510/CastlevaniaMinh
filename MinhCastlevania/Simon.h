@@ -10,6 +10,7 @@
 #define SIMON_BBOX_JUMPING_HEIGHT	45
 
 #define PULL_UP_SIMON_SITTING 18.0f 
+#define PULL_UP_SIMON_RESET_JUMP 18.0f 
 
 #define SIMON_GRAVITY			0.005f 
 #define SIMON_GRAVITY_JUMPING	0.001f 
@@ -19,6 +20,7 @@
 #define SIMON_SPEED_ONSTAIR 0.052f 
 #define SIMON_VJUMP			0.36f
 #define SIMON_SPEED_AUTO_GO 0.09f 
+#define SIMON_HEIGHT_STAIR	16
 //#define SIMON_SPEED_ATTACK_SECOND_WEAPON 1000
 
 
@@ -40,7 +42,7 @@
 #define SIMON_ANI_ENTER_GAME			1100
 
 #define SIMON_DEFAULT_HP	16
-#define SIMON_DEFAULT_LIFE	30//3
+#define SIMON_DEFAULT_LIFE	1//30//3
 #define SIMON_DEFAULT_HEART	5
 
 #define SIMON_UNTOUCHABLE_TIME	2000 
@@ -49,6 +51,7 @@
 #define TIME_ONCE_STAIR			300
 
 #define TIME_SIMON_ATTACK 360
+#define TIME_HP_INCREASE  200
 
 
 
@@ -58,6 +61,7 @@ class CSimon : public CGameObject
 	int isuntouchable;
 	DWORD untouchable_start;
 	DWORD timeAniDeadth;
+	DWORD timeincreasehp;
 
 	ObjectType weaponcurrent;
 	ObjectType secondaryweaponcurrent;
@@ -67,6 +71,7 @@ class CSimon : public CGameObject
 	int lifeSimon;
 	int HPSimon;
 	int amountSecondWeapon;
+	int hpincrease;
 
 	bool isAutoGo;
 	float AutoGo_X_Distance;
@@ -85,6 +90,8 @@ class CSimon : public CGameObject
 	bool isInjured;
 	bool flagRenderUntouch;
 	bool isEnterGameIntro;
+	bool isEndgameState;
+	bool isEatEnd_Item;
 
 	bool isOnStair;
 	int directOnStair;
@@ -112,23 +119,30 @@ class CSimon : public CGameObject
 public:
 	CSimon();
 	static CSimon* GetIntance();
-	void SetPosition(float _x, float _y);
-	void SetFinish(bool _i);
+
+	//GetInfoSimon
 	int GetNx() { return nx; }
-	void ResetPositionBackup() { x = x_backup; y = y_backup; nx = nx_backup; }
-	void DeathSimon();
 	bool IsDeading() { return isAniDead; }
 	int GetDirectStair() { return directOnStair; }
-	bool IsOnStair() { return isOnStair; }
-	void SetAutoGo(float _AutoGo_X_Distance, int DirectBegin, int _DirectEnd);
-	bool IsAutoGo();
-	bool IsProcessStair() { return isProcessStair; }
 	void AddHeart(int n) { heart += n; }
 	int GetHeart() { return heart; }
 	int GetLifeSimon() { return lifeSimon; }
 	int GetHPSimon() { return HPSimon; }
 	int GetAmount2ndWeapon() { return listWeapon.size() - 1; }
 	vector<CGameObject*> GetAbjAddAfterUpdate() { return objAddAfterUpdate;	}
+	bool IsOnStair() { return isOnStair; }
+	bool IsAutoGo();
+	bool IsProcessStair() { return isProcessStair; }
+	bool IsEndgameState() { return isEndgameState; }
+	unordered_map<int, CWeapon*> GetListWeapon();
+
+	//State_Handle
+	void ResetPositionBackup() { x = x_backup; y = y_backup; nx = nx_backup; }
+	void SetPosition(float _x, float _y);
+	void SetFinish(bool _i);
+	void ReduceHeart();
+	void DeathSimon();
+	void SetAutoGo(float _AutoGo_X_Distance, int DirectBegin, int _DirectEnd);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	void UpdateAutoGo(DWORD dt);
 	void Render();
@@ -136,6 +150,12 @@ public:
 	bool IsInjured() {return isInjured;}
 	ObjectType GetSecondWeapon() { return secondaryweaponcurrent; }
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void WantUpOnStair();
+	void SetInjured(int damage,int direct);
+	void SetStateAttacked(int direct);
+
+
+	// Set control
 	void Left();
 	void Right();
 	void Go();
@@ -147,13 +167,13 @@ public:
 	void SetFreeze(bool _isFreeze);
 	bool IsFreeze();
 	void ResetSimon();
-	void SetInjured(int damage,int direct);
-	void SetStateAttacked(int direct);
 	void Attack(bool isMainWeapon);
 	bool IsAttack();
+	bool IsJumping();
 	bool IsAttackMainWeapon();
-	unordered_map<int, CWeapon*> GetListWeapon();
-	void WantUpOnStair();
+
+
+	//collision handle
 	void CollisionWithItem(ObjectType _type);
 	void CollisionWithEnemy(CGameObject* obj);
 };

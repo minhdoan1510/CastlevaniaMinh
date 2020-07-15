@@ -55,6 +55,9 @@
     <Filter Include="GameObjects\EnemyDoor">
       <UniqueIdentifier>{ccb6e349-3cb3-4c22-88f0-00b05aabee47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{505cb086-e1e9-4f75-abc0-790389f40d96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -205,6 +208,12 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="PhantomBat.cpp">
+      <Filter>GameObjects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="PhantomBatBullet.cpp">
       <Filter>GameObjects\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -360,6 +369,12 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="PhantomBat.h">
+      <Filter>GameObjects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="PhantomBatBullet.h">
       <Filter>GameObjects\Enemy</Filter>
     </ClInclude>
   </ItemGroup>

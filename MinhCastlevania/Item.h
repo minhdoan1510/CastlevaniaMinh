@@ -22,6 +22,7 @@
 #define DOUBLE_WEAPON_SIZE	 D3DXVECTOR2(28,28)
 #define CROWM_YELLOW_SIZE	 D3DXVECTOR2(32,32)
 #define CHICKEN_SIZE		 D3DXVECTOR2(32,30)
+#define END_SIZE			 D3DXVECTOR2(32,32)
 
 
 
@@ -31,6 +32,7 @@ class CItem : public CGameObject
 	bool isOnGround;
 	ObjectType ItemType;
 	DWORD lifetime;
+	bool isOverTime;
 public:
 	CItem(float _x, float _y, ObjectType type);
 	~CItem();
@@ -38,5 +40,6 @@ public:
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	ObjectType GetItemType();
+	bool IsOverTime();
 	void Death();
 };

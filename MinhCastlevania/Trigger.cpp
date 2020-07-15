@@ -41,7 +41,7 @@ void CTrigger::Render()
 void CTrigger::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
-	t = y;
+	t = y + ((triggerType == PASS_SCENE_TRIGGER)? HEIGHT_DOORPASS : 0);
 	r = width + l;
 	b = height + t;
 }

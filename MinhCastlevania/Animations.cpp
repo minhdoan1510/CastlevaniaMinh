@@ -58,24 +58,29 @@ void CAnimation::Render(float _x, float _y, bool flipX ,  int alpha, int R, int 
 	{
 		DoneFrameFinal = 0;
 		DWORD t = frames->at(currentFrame)->GetTime();
-		if (now - lastFrameTime > t)
+		if (now - lastFrameTime > t )
 		{
-			lifeFrameTime = now - lastFrameTime;
-			currentFrame++;
-			lastFrameTime = now;
-
-			if (currentFrame == frames->size() - 1)
-			{
-				DoneFrameFinal = 1;
+			if (isStop) {
+				isStop = 0;
 			}
 			else
-				DoneFrameFinal = 0;
-
-			if (currentFrame == frames->size())
 			{
-				currentFrame = 0;
+				lifeFrameTime = now - lastFrameTime;
+				currentFrame++;
+				lastFrameTime = now;
+
+				if (currentFrame == frames->size() - 1)
+				{
+					DoneFrameFinal = 1;
+				}
+				else
+					DoneFrameFinal = 0;
+
+				if (currentFrame == frames->size())
+				{
+					currentFrame = 0;
+				}
 			}
-			
 		}
 	}
 	if(flipX)
@@ -112,6 +117,11 @@ void CAnimation::FreezeFrame()
 	{
 		currentFrame = frames->size() - 1;
 	}
+}
+
+void CAnimation::SetStop(bool _isStop)
+{
+	isStop = _isStop;
 }
 
 CAnimations * CAnimations::_instance = NULL;

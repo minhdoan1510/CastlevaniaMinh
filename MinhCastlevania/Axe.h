@@ -2,7 +2,7 @@
 #include "Weapon.h"
 
 #define	AXE_SPEED 0.2f
-#define AXE_GRAVITY 0.003f
+#define AXE_GRAVITY 0.002f
 #define AXE_SPEED_ATTACK 500
 #define AXE_VFLY 0.7f
 

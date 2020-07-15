@@ -11,6 +11,7 @@ CBrick::CBrick(float X, float Y, int W, int H, int _type, ObjectType _item)
 	height = H;
 	objType = ObjectType::BRICK;
 	if (typeBrick == BRICK_MODEL_TRANSPARENT_1 || typeBrick == BRICK_MODEL_TRANSPARENT_2) return;
+	isDestroy = 1;
 	if (_item != Null)
 		itemHolder = _item;
 	sprite = CSprites::GetInstance()->Get(typeBrick);
@@ -36,6 +37,11 @@ void CBrick::Death()
 	if (typeBrick == BRICK_MODEL_TRANSPARENT_1 || typeBrick == BRICK_MODEL_TRANSPARENT_2)
 		return;
 	IsDead = true;
+}
+
+bool CBrick::IsDetroy()
+{
+	return isDestroy;
 }
 
 ObjectType CBrick::GetItemHolder()

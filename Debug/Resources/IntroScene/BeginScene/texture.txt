@@ -1,0 +1,3 @@
+0	Resources/IntroScene/BeginScene/tile.png
+100	Resources/IntroScene/BeginScene/texture.png
+200	Resources/IntroScene/BeginScene/map.png

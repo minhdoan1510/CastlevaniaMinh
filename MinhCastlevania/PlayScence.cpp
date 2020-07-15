@@ -42,6 +42,11 @@ void CPlayScene::LoadObject()
 	grid->LoadGrid();
 }
 
+void CPlayScene::LoadSound()
+{
+	CSound::GetInstance()->loadSound("Resources/map/" + folderPath + "/musicMap.wav", "MusicMap");
+}
+
 void CPlayScene::Load()
 {
 	CTextureManager::GetInstance()->LoadResourceScene("Resources/map/" + folderPath + "/texture.txt");
@@ -54,21 +59,58 @@ void CPlayScene::Load()
 	lifeTime = GetTickCount64();
 	cScoreBoard = new CScoreBoard();
 	isTransScene = 0;
+	hpBoss = 16;
+	CSound::GetInstance()->stop("MusicMap");
+	LoadSound();
+	CSound::GetInstance()->play("MusicMap", 1, 10000);
+	CCamera::GetInstance()->UnlockCam();
 }
 
 void CPlayScene::Update(DWORD dt)
 {
 	DWORD now = GetTickCount64();
-	if (now - lifeTime > 1000)
+	if (now - lifeTime > 1000&& !CSimon::GetIntance()->IsEndgameState())
 	{
 		lifeTime = now;
 		timeGame--;
 	}
-	if (timeGame <= 0)
+	if (timeGame <= 0&& !CSimon::GetIntance()->IsEndgameState())
 	{
 		GameOver();
 	}
-	
+
+	if (CSimon::GetIntance()->IsEndgameState())
+	{
+		if (timeGame > 0 && now - timescoreincrease >= TIME_SCORE_TIMEGAME_INCREASE)
+		{
+			timescoreincrease = now;
+			timeGame-=5;
+			if (timeGame < 0)
+				timeGame = 0;
+			CSceneManager::GetInstance()->ScoreGame += 5;
+		}
+		else if(timeGame <= 0)
+		{
+			CSimon::GetIntance()->SetFreeze(true);
+			if (scoreincrease > 0 && now - timescoreincrease >= TIME_SCORE_INCREASE)
+			{
+				timescoreincrease = now;
+				scoreincrease -= 100;
+				CSceneManager::GetInstance()->ScoreGame += 100;
+				CSimon::GetIntance()->ReduceHeart();
+			}
+			else if (scoreincrease <= 0)
+			{
+				// xuwr lys ket thuc game
+
+				if (now - timescoreincrease >= TIME_SLEEP_END_GAME)
+				{
+					GameOver();
+					CSceneManager::GetInstance()->WinGame();
+				}
+			}
+		}
+	}
 	float _x, _y;
 	CSimon::GetIntance()->GetPosition(_x, _y);
 
@@ -86,8 +128,20 @@ void CPlayScene::Update(DWORD dt)
 
 	CSimon::GetIntance()->Update(dt, &coObjects);//Update CSimon
 
-	if (CSimon::GetIntance()->IsFreeze()) return;
-
+	if (CSimon::GetIntance()->IsFreeze())
+	{
+		LPANIMATION aniObj;
+		for (int i = 0; i < coObjects.size(); i++)
+		{
+			aniObj = coObjects[i]->GetAni();
+			if (aniObj)
+			{
+				aniObj->SetStop(1);
+			}
+		}
+		cScoreBoard->Update(timeGame, CSceneManager::GetInstance()->ScoreGame, CSimon::GetIntance()->GetHeart(), CSimon::GetIntance()->GetLifeSimon(), CSimon::GetIntance()->GetHPSimon(), hpBoss, CSceneManager::GetInstance()->GetCurrentSceneID(), CSimon::GetIntance()->GetSecondWeapon(), CSimon::GetIntance()->GetAmount2ndWeapon());
+		return;
+	}
 	if (CSceneManager::GetInstance()->IsPassScene())
 	{
 		//CCamera::GetInstance()->AutoCamX(SCREEN_WIDTH / 2, CSimon::GetIntance()->GetNx());
@@ -123,6 +177,14 @@ void CPlayScene::Update(DWORD dt)
 	for (int i = 0; i < coObjects.size(); i++)
 	{
 		coObjects[i]->Update(dt, &coObjects);
+		if (dynamic_cast<CEnemy*>(coObjects[i]))
+		{
+			if ((static_cast<CEnemy*>(coObjects[i]))->IsBoss()&&(static_cast<CEnemy*>(coObjects[i]))->IsActive())
+			{
+				CCamera::GetInstance()->LockCam();
+				hpBoss = static_cast<CEnemy*>(coObjects[i])->GetcurrentHP();
+			}
+		}
 	}
 
 	//Kiểm tra có tồn tại enemy nào cần thêm vào sau khi update object
@@ -198,6 +260,22 @@ void CPlayScene::Update(DWORD dt)
 					grid->InsertGrid(_item);
 				}
 				break;
+			case ENEMY:
+				if (backup->GetItemHolder() == Null)
+				{
+					LPGAMEOBJECT _item = new CItem(_x, _y, HEART_ITEM);
+					grid->InsertGrid(_item);
+				}
+				/*else
+				{
+					LPGAMEOBJECT _item = new CItem(_x, _y, backup->GetItemHolder());
+					grid->InsertGrid(_item);
+				}*/
+				if (static_cast<CEnemy*>(backup)->GetEnemyType() == PHANTOMBAT)
+					effects.push_back(new CDeadEffect(_xtemp, _ytemp, BOSS_DESTROY, 600, backup->GetItemHolder()));				
+				else
+					effects.push_back(new CDeadEffect(_xtemp, _ytemp, DEATH_ANI, 200, backup->GetItemHolder()));
+				break;
 			default:
 				effects.push_back(new CDeadEffect(_xtemp, _ytemp, DEATH_ANI, 200, backup->GetItemHolder()));
 				break;
@@ -212,27 +290,26 @@ void CPlayScene::Update(DWORD dt)
 			coObjects.at(i)->GetPosition(_xtemp, _ytemp);
 
 			CEffect* tempEffect;
-
-			switch (static_cast<CItem*> (coObjects.at(i))->GetItemType())
+			if (!static_cast<CItem*> (coObjects.at(i))->IsOverTime())
 			{
-			case MONEY_RED_ITEM: // 100
-				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_100_EFFECT);
-				CSceneManager::GetInstance()->ScoreGame += 100;
-				break;
-			case MONEY_WHITE_ITEM: //700
-				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
-				CSceneManager::GetInstance()->ScoreGame += 700;
-				break;
-			case MONEY_BOX_YELLOW_ITEM: //700
-				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
-				CSceneManager::GetInstance()->ScoreGame += 700;
-				break;
-			case CROWM_YELLOW_ITEM: //2000
-				tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
-				CSceneManager::GetInstance()->ScoreGame += 2000;
-			default:
-				tempEffect = nullptr;
-				break;
+				switch (static_cast<CItem*> (coObjects.at(i))->GetItemType())
+				{
+				case MONEY_RED_ITEM: // 100
+					tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_100_EFFECT);
+					break;
+				case MONEY_WHITE_ITEM: //700
+					tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
+					break;
+				case MONEY_BOX_YELLOW_ITEM: //700
+					tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
+					break;
+				case CROWM_YELLOW_ITEM: //2000
+					tempEffect = new CMoneyEffect(_xtemp, _ytemp, MONEY_700_EFFECT);
+				default:
+					tempEffect = nullptr;
+					break;
+				}
+				effects.push_back(tempEffect);
 			}
 			CGameObject* backup = coObjects.at(i);
 			for (int m = 0; m < coObjects.size(); m++)
@@ -245,12 +322,11 @@ void CPlayScene::Update(DWORD dt)
 			}
 			grid->RemoveObj(backup);
 			k++;
-			effects.push_back(tempEffect);
 		}
 	}
 	grid->UpdateGrid(coObjects);
 	//Update ScoreBoard
-	cScoreBoard->Update(timeGame, CSceneManager::GetInstance()->ScoreGame, CSimon::GetIntance()->GetHeart(), CSimon::GetIntance()->GetLifeSimon(), CSimon::GetIntance()->GetHPSimon(), 16, CSceneManager::GetInstance()->GetCurrentSceneID(), CSimon::GetIntance()->GetSecondWeapon(), CSimon::GetIntance()->GetAmount2ndWeapon());
+	cScoreBoard->Update(timeGame, CSceneManager::GetInstance()->ScoreGame, CSimon::GetIntance()->GetHeart(), CSimon::GetIntance()->GetLifeSimon(), CSimon::GetIntance()->GetHPSimon(), hpBoss, CSceneManager::GetInstance()->GetCurrentSceneID(), CSimon::GetIntance()->GetSecondWeapon(), CSimon::GetIntance()->GetAmount2ndWeapon());
 }
 
 void CPlayScene::Render()
@@ -278,6 +354,7 @@ void CPlayScene::Unload()
 	CSprites::GetInstance()->ClearSpritesScene();
 	CAnimations::GetInstance()->ClearAniScene();
 	CAnimationSets::GetInstance()->ClearAniScene();
+	CSound::GetInstance()->UnLoadSound("MusicMap");
 }
 
 void CPlayScene::GameOver()
@@ -293,6 +370,11 @@ CMap* CPlayScene::GetMap()
 bool CPlayScene::IsTransScene()
 {
 	return isTransScene;
+}
+
+void CPlayScene::SetScoreIncrease(int _scoreincrease)
+{
+	scoreincrease = _scoreincrease;
 }
 
 D3DXVECTOR2 CPlayScene::GetPosSimonDefault()
@@ -317,10 +399,14 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				simon->Attack(0);
 		else
 			simon->Attack(1);
-		simon->Stop();
+		if (!simon->IsJumping())
+			simon->Stop();
 		break;
 	case DIK_P:
 		CSceneManager::GetInstance()->StartPassScene(0,0,1);
+		break;
+	case DIK_R:
+		CSimon::GetIntance()->SetPosition(1400, 0);
 		break;
 	}
 }
@@ -422,6 +508,9 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 	}
 	else
 	{
-		simon->Stop();
+		if (!simon->IsJumping())
+		{
+			simon->Stop();
+		}
 	}
 }

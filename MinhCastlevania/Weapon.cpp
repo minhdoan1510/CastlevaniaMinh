@@ -14,6 +14,11 @@ bool CWeapon::IsFinish()
 	return isFinish;
 }
 
+void CWeapon::SetFinish()
+{
+	isFinish = 1;
+}
+
 ObjectType CWeapon::GetType()
 {
 	return weaponType;

@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include "Game.h"
 #include "SceneManager.h"
+#include "WinScene.h"
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -30,7 +31,10 @@ void Render()
 
 	if (d3ddv->BeginScene())
 	{
-		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		if(dynamic_cast<CWinScene*>(CSceneManager::GetInstance()->GetCurrentScene()))
+			d3ddv->ColorFill(bb, NULL, BACKGROUND_WIN_COLOR);
+		else
+			d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 

@@ -78,6 +78,11 @@ bool CEnemy::IsActive()
 	return isActive;
 }
 
+bool CEnemy::IsBoss()
+{
+	return isBoss;
+}
+
 int CEnemy::GetDamageofEnemy()
 {
 	return DamageofEnemy;
@@ -86,5 +91,10 @@ int CEnemy::GetDamageofEnemy()
 bool CEnemy::IsArmor()
 {
 	return isArmor;
+}
+
+int CEnemy::GetcurrentHP()
+{
+	return HP;
 }
 

@@ -35,13 +35,132 @@ CGrid::CGrid(int _mapW, int _mapH, string _fileobj)
 	fileobj = _fileobj;
 }
 
+
 void CGrid::LoadGrid()
 {
-	/*cells = new vector<CGameObject*> * [rowGrid+1];
-	for (int i = 0; i < rowGrid+1; i++)
+	ifstream ifs(fileobj);
+	int type;
+	float _x, _y, _w, _h;
+	int _type, _item, directStair, _direct;
+	int _xGrid, _yGrid;
+	int _countGrid;
+	vector<pair<int, int>> posGrid;
+	CGameObject* a;
+	while (true)
 	{
-		cells[i] = new vector<CGameObject*>[columnGrid+1];
-	}*/
+		posGrid.clear();
+		ifs >> type;
+		if (type == -555) break;
+		ifs >>_countGrid;
+
+		for (int i = 0; i < _countGrid; i++)
+		{
+			ifs >> _xGrid >> _yGrid;
+			posGrid.push_back(make_pair(_xGrid, _yGrid));
+		}
+		switch (static_cast<ObjectType>(type))
+		{
+		case SIMON:
+			ifs >> _x >> _y;
+			//CSimon::GetIntance()->SetPosition(_x, _y);
+			if (CSceneManager::GetInstance()->GetCurrentSceneID() == 1)
+			{
+				CSimon::GetIntance()->SetPosition(_x, _y);
+			}
+			posSimonDefault = D3DXVECTOR2(_x, _y);
+			a = CSimon::GetIntance();
+			break;
+		case BRICK:
+			ifs >> _x >> _y >> _w >> _h >> _type;
+			if (_type != BRICK_MODEL_TRANSPARENT_1 && _type != BRICK_MODEL_TRANSPARENT_2)
+			{
+				ifs >> _item;
+				a = new CBrick(_x, _y, _w, _h, _type, static_cast <ObjectType>(_item));
+			}
+			else
+				a = new CBrick(_x, _y, _w, _h, _type);
+			break;
+		case BRIDGE:
+			ifs >> _x >> _y;
+			a = new CBridge(_x, _y);
+			break;
+		case CANDLE:
+			ifs >> _x >> _y >> _item >> _type;
+			a = new CCandle(_x, _y, static_cast <ObjectType>(_item), static_cast <ObjectType>(_type));
+			break;
+		case TRIGGER:
+			ifs >> _x >> _y >> _w >> _h >> _type >> directStair;
+			a = new CTrigger(_x, _y, _w, _h, static_cast <ObjectType>(_type), directStair);
+			if (_type == ITEM_HIDDEN_TRIGGER)
+			{
+				ifs >> _x >> _y >> _item;
+				static_cast<CTrigger*>(a)->SetItemHolder(new CItem(_x, _y, static_cast <ObjectType>(_item)));
+			}
+			break;
+		case ENEMY:
+			ifs >> _x >> _y >> _type;
+			switch (static_cast<ObjectType>(_type))
+			{
+			case BLACKKNIGHT:
+				a = new CBlackKnight(_x, _y);
+				break;
+			case BAT:
+				a = new CBat(_x, _y);
+				break;
+			case GHOST:
+				a = new CGhost(_x, _y);
+				break;
+			case RAVEN:
+				a = new CRaven(_x, _y);
+				break;
+			case FEAMAN:
+				a = new CFeaman(_x, _y);
+				break;
+			case WHITESKELETON:
+				a = new CWhiteSkeleton(_x, _y);
+				break;
+			case ZOMBIE:
+				a = new CZombie(_x, _y);
+				break;
+			case PHANTOMBAT:
+				a = new CPhantomBat(_x, _y);
+				break;
+			default:
+				a = nullptr;
+				break;
+			}
+			break;
+
+		case ENEMY_DOOR:
+			ifs >> _x >> _y >> _type >> _direct;
+			a = new CEnemyDoor(_x, _y, static_cast<ObjectType>(_type), _direct);
+			break;
+		default:
+			a = nullptr;
+			break;
+		}
+		if (static_cast<ObjectType>(type) != SIMON && a != nullptr)
+			InsertGrid(a, posGrid);
+	}
+	ifs.close();
+}
+
+void CGrid::InsertGrid(CGameObject* obj, vector<pair<int, int>> posGrid)
+{
+	for (int i = 0; i < posGrid.size(); i++)
+	{
+		cells[posGrid.at(i).first][posGrid.at(i).second].push_back(obj);
+	}
+}
+
+
+/*void CGrid::LoadGrid()
+{
+	//cells = new vector<CGameObject*> * [rowGrid+1];
+	//for (int i = 0; i < rowGrid+1; i++)
+	//{
+		//cells[i] = new vector<CGameObject*>[columnGrid+1];
+	//}
 	ifstream ifs(fileobj);
 	int type;
 	float _x, _y, _w, _h;
@@ -136,7 +255,7 @@ void CGrid::LoadGrid()
 			InsertGrid(a);
 	}
 	ifs.close();
-}
+}*/
 
 CGrid::~CGrid()
 {

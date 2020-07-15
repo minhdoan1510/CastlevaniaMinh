@@ -16,6 +16,7 @@ protected:
 	int DamageofEnemy;
 	bool isActive;
 	bool isArmor;
+	bool isBoss;
 public:
 	CEnemy();
 	~CEnemy();
@@ -25,7 +26,10 @@ public:
 	virtual void Death(int _hp);
 	LPCOLLISIONEVENT SweatAABBx_SafeEnemy(LPGAMEOBJECT coO, float disSafe);
 	bool IsActive();
+	bool IsBoss();
 	int GetDamageofEnemy();
 	bool IsArmor();
+	int GetcurrentHP();
+	ObjectType GetEnemyType() { return enemyType; }
 };
 

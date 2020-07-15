@@ -26,6 +26,7 @@ class CAnimation
 	int defaultTime;
 	vector<LPANIMATION_FRAME>* frames;
 	bool DoneFrameFinal = false;
+	bool isStop;
 public:
 	CAnimation(int _defaultTime = 100);
 	CAnimation(vector<LPANIMATION_FRAME> * _frames, int _defaultTime);
@@ -42,6 +43,7 @@ public:
 		return DoneFrameFinal; }
 	DWORD GetLifeFrameTime() { return lastFrameTime; }
 	void FreezeFrame();
+	void SetStop(bool _isStop);
 	void ResetFarmeCurrent() { currentFrame = -1; DoneFrameFinal = 0; }
 };
 

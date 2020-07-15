@@ -1,10 +1,14 @@
 ﻿#include"Item.h"
+#include "Brick.h"
 
 CItem::CItem(float _x, float _y, ObjectType _type)
 {
 	objType = ITEM;
 	ItemType = _type;
-	sprite = CSprites::GetInstance()->Get(ItemType);
+	if (_type != END_ITEM)
+		sprite = CSprites::GetInstance()->Get(ItemType);
+	else
+		ani = CAnimations::GetInstance()->Get(ItemType);
 	IsDead = false;
 	x_backup = _x;
 	x = _x;
@@ -61,6 +65,11 @@ void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)
 	case CHICKEN_ITEM:
 		framesize = CHICKEN_SIZE;
 		break;
+	case END_ITEM:
+		framesize = END_SIZE;
+		break;
+	default:
+		framesize = END_SIZE;
 	}
 
 	r = l + framesize.x;
@@ -69,9 +78,12 @@ void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CItem::Render()
 {
-	if (IsDead) return;
-	sprite->Draw(x,y);
 	RenderBoundingBox();
+	if (IsDead) return;
+	if (ItemType != END_ITEM)
+		sprite->Draw(x, y);
+	else
+		ani->Render(x, y, 0);
 }
 
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
@@ -99,14 +111,22 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	if (GetTickCount64() - lifetime > ITEM_LIFE_TIME)
 	{
 		this->IsDead = true;
+		isOverTime=1;
 		return;
 
 	}
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
+	vector<LPGAMEOBJECT>* colliableobjs= new vector<LPGAMEOBJECT>();
+	for (int i = 0; i < colliable_objects->size(); i++)//lọc brick
+	{
+		if (dynamic_cast<CBrick*>(colliable_objects->at(i)))
+			colliableobjs->push_back(colliable_objects->at(i));
+	}
+
 	coEvents.clear();
-	CalcPotentialCollisions(colliable_objects, coEvents);
+	CalcPotentialCollisions(colliableobjs, coEvents);
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -129,6 +149,11 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 ObjectType CItem::GetItemType()
 {
 	return ItemType;
+}
+
+bool CItem::IsOverTime()
+{
+	return isOverTime;
 }
 
 void CItem::Death()

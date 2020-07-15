@@ -1,6 +1,7 @@
 #include "Axe.h"
 #include "Item.h"
 #include "Brick.h"
+#include "Sound.h"
 
 CAxe::CAxe()
 {
@@ -64,6 +65,7 @@ void CAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 				if (dynamic_cast<CEnemy*>(e->obj))
 					static_cast<CEnemy*>(e->obj)->Death(GetDamage());
 				e->obj->Death();
+				CSound::GetInstance()->play("Hit", 0, 1);
 			}
 		}
 	}
@@ -73,7 +75,7 @@ void CAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 
 bool CAxe::Attack(float _x, float _y, int _nx)
 {
-	if (lifeTime == 0 || GetTickCount64() - lifeTime > AXE_SPEED_ATTACK)
+	if (lifeTime == 0 || isFinish == true)
 	{
 		lifeTime = GetTickCount64();
 		isFinish = false;

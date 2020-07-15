@@ -14,6 +14,7 @@ protected:
 public:
 	CWeapon();
 	bool IsFinish();
+	void SetFinish();
 	ObjectType GetType();
 	void CollisionWithEnemy(CEnemy* e, int damage);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) = 0;

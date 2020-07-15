@@ -2,6 +2,7 @@
 #include "PlayScence.h"
 #include "BeginScene.h"
 #include "LostScene.h"
+#include "WinScene.h"
 
 CSceneManager* CSceneManager::instance = NULL;
 
@@ -34,6 +35,8 @@ void CSceneManager::SetCurrentSceneID(int id)
 {
 	//if (dynamic_cast<CLostScene*> (currentScene))
 		//SAFE_DELETE(currentScene);
+	if (id == 1 || id == 0)
+		ScoreGame = 0;
 	for (int i = 0; i < scenes.size(); i++)
 	{
 		if (scenes.at(i).first == id)
@@ -96,6 +99,7 @@ void CSceneManager::Render()
 
 void CSceneManager::LostGame()
 {
+	CCamera::GetInstance()->UnlockCam();
 	currentScene->Unload();
 	currentScene = new CLostScene();
 	currentScene->Load();
@@ -105,6 +109,11 @@ void CSceneManager::LostGame()
 void CSceneManager::WinGame()
 {
 	///đang làm
+	CCamera::GetInstance()->UnlockCam();
+	currentScene->Unload();
+	currentScene = new CWinScene();
+	currentScene->Load();
+	CGame::GetInstance()->SetKeyHandler(currentScene->GetKeyEventHandler());
 }
 
 bool CSceneManager::IsPassScene()
@@ -124,6 +133,8 @@ void CSceneManager::ReloadScene()
 	CGame::GetInstance()->SetKeyHandler(currentScene->GetKeyEventHandler());
 	ScoreGame = 0;
 	currentScene->Load();
+	D3DXVECTOR2 PosSimon = static_cast<CPlayScene*>(currentScene)->GetPosSimonDefault();
+	CSimon::GetIntance()->SetPosition(PosSimon.x, PosSimon.y);
 }
 
 void CSceneManager::StartPassScene(float xDoor, float yDoor, bool isDebugPass)
@@ -140,7 +151,7 @@ void CSceneManager::StartPassScene(float xDoor, float yDoor, bool isDebugPass)
 	if (currentSceneID == 1||isDebugPass)
 	{
 		currentScene->Unload();
-		SAFE_DELETE(currentScene);
+		//SAFE_DELETE(currentScene);
 		currentScene = nextScene;
 		currentScene->Load();
 		return;

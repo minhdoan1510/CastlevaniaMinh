@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MinhCastlevania", "MinhCastlevania\MinhCastlevania.vcxproj", "{27A6E9E0-4CAF-47DA-8491-A06F2942BFFF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateGrid", "CreateGrid\CreateGrid.vcxproj", "{E31D87F5-962A-4732-93D9-7C6485926810}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{27A6E9E0-4CAF-47DA-8491-A06F2942BFFF}.Release|x64.Build.0 = Release|x64
 		{27A6E9E0-4CAF-47DA-8491-A06F2942BFFF}.Release|x86.ActiveCfg = Release|Win32
 		{27A6E9E0-4CAF-47DA-8491-A06F2942BFFF}.Release|x86.Build.0 = Release|Win32
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Debug|x64.ActiveCfg = Debug|x64
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Debug|x64.Build.0 = Debug|x64
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Debug|x86.ActiveCfg = Debug|Win32
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Debug|x86.Build.0 = Debug|Win32
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Release|x64.ActiveCfg = Release|x64
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Release|x64.Build.0 = Release|x64
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Release|x86.ActiveCfg = Release|Win32
+		{E31D87F5-962A-4732-93D9-7C6485926810}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

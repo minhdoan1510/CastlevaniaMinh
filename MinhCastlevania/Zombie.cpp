@@ -99,6 +99,7 @@ void CZombie::GetBoundingBox(float& l, float& t, float& r, float& b)
 void CZombie::Death(int _hp)
 {
 	HP -= _hp;
+	CEnemy::Death(_hp);
 	if (HP <= 0)
 	{
 		IsDead = true;

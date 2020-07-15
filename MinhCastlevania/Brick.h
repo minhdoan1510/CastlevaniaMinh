@@ -11,11 +11,13 @@ private:
 	int height;
 	ObjectType typeBrick;
 	ObjectType itemHolder;
+	bool isDestroy;
 public:
 	CBrick(float X, float Y, int W, int H, int Model, ObjectType _item = Null);
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int GetTypeBrick();
 	void Death();
+	bool IsDetroy();
 	ObjectType GetItemHolder();
 };

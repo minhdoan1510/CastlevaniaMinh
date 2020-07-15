@@ -27,9 +27,6 @@ void CWhiteSkeleton::Render()
 	if (!isActive)
 		return;
 	RenderBoundingBox();
-	//if (weapon->IsFinish())
-	//	weapon->Render();
-
 	ani->Render(x, y, x_Simon > x);
 	if (weapon.size() > 0)
 		for (int i = 0; i < weapon.size(); i++)

@@ -313,3 +313,8 @@ void CGame::Load(LPCWSTR gameFile)
 
 	//CSceneManager::GetInstance()->GetCurrentScene()->Load();
 }
+
+HWND CGame::GetHWND()
+{
+	return hWnd;
+}

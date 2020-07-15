@@ -1,5 +1,6 @@
 #include "Knife.h"
 #include "Trigger.h"
+#include "Sound.h"
 
 #define MIN_Y_ATTACK 18
 
@@ -62,6 +63,8 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 			if (dynamic_cast<CEnemy*>(e->obj))
 				static_cast<CEnemy*>(e->obj)->Death(GetDamage());
 			e->obj->Death();
+			CSound::GetInstance()->play("Hit",0,1);
+			
 		}
 		for (int i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
@@ -70,13 +73,14 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 
 bool CKnife::Attack(float _x, float _y, int _nx)
 {
-	x = _x;
-	y = (_y + PULL_Y < MIN_Y_ATTACK) ? MIN_Y_ATTACK : _y + PULL_Y;
-	nx = _nx;
 	if (lifeTime == 0 || GetTickCount64() - lifeTime  > KNIFE_SPEED_ATTACK)
 	{
+		x = _x;
+		y = (_y + PULL_Y < MIN_Y_ATTACK) ? MIN_Y_ATTACK : _y + PULL_Y;
+		nx = _nx;
 		lifeTime = GetTickCount64();
 		isFinish = false;
+		CSound::GetInstance()->play("Knife",0,1);
 		return true;
 	}
 	return false;

@@ -1,5 +1,8 @@
 #include "Gunpowder.h"
 #include "Item.h"
+#include "Sound.h"
+#include "Ghost.h"
+#include "Brick.h"
 
 #define MIN_Y_ATTACK 18
 CGunpowder::CGunpowder()
@@ -7,6 +10,7 @@ CGunpowder::CGunpowder()
 	isCollision = 0;
 	ani =CAnimations::GetInstance()->Get(GUNPOWDER);
 	weaponType = GUNPOWDER;
+	isFinish = true;
 }
 
 CGunpowder::~CGunpowder()
@@ -72,30 +76,38 @@ void CGunpowder::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
 		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		bool flag = 0;
 		for (int i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult.at(i);
 			if (!dynamic_cast<CItem*>(e->obj))
 			{
-				if (dynamic_cast<CEnemy*>(e->obj))
+				if (dynamic_cast<CEnemy*>(e->obj) && !dynamic_cast<CGhost*>(e->obj))
 					static_cast<CEnemy*>(e->obj)->Death(GetDamage());
-				e->obj->Death();
-				isCollision = 1;
+				else
+					e->obj->Death();
+				if (dynamic_cast<CBrick*>(e->obj))
+					flag = 1;
+				CSound::GetInstance()->play("Hit", 0, 1);
 				y -= 10;
 				timeFire = GetTickCount();
 			}
+		}
+		isCollision = flag;
+		if (flag)
+		{
+			x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+			y += min_ty * dy + ny * 0.4f;
+			if (nx != 0) vx = 0;
+			if (ny != 0) vy = 0;
 		}
 	}
 }
 
 bool CGunpowder::Attack(float _x, float _y, int _nx)
 {
-	if (lifeTime == 0 || GetTickCount64() - lifeTime > GUNPOWDER_SPEED_ATTACK)
+	if ((lifeTime == 0 || GetTickCount64() - lifeTime > GUNPOWDER_SPEED_ATTACK)&& isFinish == true)
 	{
 		timeFire = 0;
 		ani->ResetFarmeCurrent();

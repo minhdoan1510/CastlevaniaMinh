@@ -1,7 +1,9 @@
 ﻿#include "Whip.h"
-#include"Item.h"
-#include"Simon.h"
+#include "Item.h"
+#include "Simon.h"
 #include "Enemy.h"
+#include "Sound.h"
+#include "Brick.h"
 
 
 
@@ -71,6 +73,8 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (coObjects->at(i)->GetObjType() != SIMON && IsContain(GetBBox(), coObjects->at(i)->GetBBox()))
 				{
 					if (dynamic_cast<CItem*>(coObjects->at(i))) continue;
+					if (!dynamic_cast<CBrick*>(coObjects->at(i)) || static_cast<CBrick*>(coObjects->at(i))->IsDetroy() == 1)
+						CSound::GetInstance()->play("Hit", 0, 1);
 					if (dynamic_cast<CEnemy*>(coObjects->at(i)))
 					{
 						isDamage = 1;
@@ -88,39 +92,80 @@ void CWhip::Render()
 {
 	if (isFinish) return;
 
-	if (ani->GetCurrentFrame() == 2)
+	if (CSimon::GetIntance()->IsFreeze() && CSimon::GetIntance()->IsEndgameState())
 	{
-
-		RenderBoundingBox();
-		if (nx > 0)
+		if (ani->GetCurrentFrame() == 2)
 		{
-			ani->Render(x - X_FRAME_2_RIGHT, y, 1);
+			RenderBoundingBox();
+			if (nx > 0)
+			{
+				ani->RenderFrame(2,x - X_FRAME_2_RIGHT, y, 1);
+			}
+			else
+			{
+				ani->RenderFrame(2, x - X_FRAME_2_LEFT, y, 0);
+			}
+		}
+		else if (ani->GetCurrentFrame() == 1)
+		{
+			if (nx > 0)
+			{
+				ani->RenderFrame(1,x - X_FRAME_1_RIGHT, y, 1);
+			}
+			else
+			{
+				ani->RenderFrame(1,x - X_FRAME_1_LEFT, y, 0);
+			}
 		}
 		else
 		{
-			ani->Render(x - X_FRAME_2_LEFT, y, 0);
+			if (nx > 0)
+			{
+				ani->RenderFrame(0, x - X_FRAME_0_RIGHT, y, 1);
+			}
+			else
+			{
+				ani->RenderFrame(0, x - X_FRAME_0_LEFT, y, 0);
+			}
 		}
-	}
-	else if (ani->GetCurrentFrame() == 1)
-	{
-		if (nx > 0)
-		{
-			ani->Render(x - X_FRAME_1_RIGHT, y, 1);
-		}
-		else
-		{
-			ani->Render(x - X_FRAME_1_LEFT, y, 0);
-		}
+		return;
 	}
 	else
 	{
-		if (nx > 0)
+		if (ani->GetCurrentFrame() == 2)
 		{
-			ani->Render(x - X_FRAME_0_RIGHT, y, 1);
+
+			RenderBoundingBox();
+			if (nx > 0)
+			{
+				ani->Render(x - X_FRAME_2_RIGHT, y, 1);
+			}
+			else
+			{
+				ani->Render(x - X_FRAME_2_LEFT, y, 0);
+			}
+		}
+		else if (ani->GetCurrentFrame() == 1)
+		{
+			if (nx > 0)
+			{
+				ani->Render(x - X_FRAME_1_RIGHT, y, 1);
+			}
+			else
+			{
+				ani->Render(x - X_FRAME_1_LEFT, y, 0);
+			}
 		}
 		else
 		{
-			ani->Render(x - X_FRAME_0_LEFT, y, 0);
+			if (nx > 0)
+			{
+				ani->Render(x - X_FRAME_0_RIGHT, y, 1);
+			}
+			else
+			{
+				ani->Render(x - X_FRAME_0_LEFT, y, 0);
+			}
 		}
 	}
 
@@ -134,7 +179,7 @@ void CWhip::GetBoundingBox(float& l, float& t, float& r, float& b)
 	b = t + WHIP_HEIGHT;
 	if (nx > 0)
 	{
-		l = x + SIMON_BBOX_WIDTH; // trừ BBOX của Simon
+		l = x + SIMON_BBOX_WIDTH/2+ SIMON_BBOX_WIDTH / 2.5; // trừ BBOX của Simon
 	}
 	else
 	{

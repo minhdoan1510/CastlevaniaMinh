@@ -1,0 +1,2 @@
+100002	Resources\map\scene 2\map.png
+20000	Resources\map\scene 2\texture.png

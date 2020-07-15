@@ -1,0 +1,17 @@
+﻿  Source.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(20,2): warning C4091: 'typedef ': ignored on left of 'RECTR' when no variable is declared
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(84,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(85,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(103,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(110,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(58,6): warning C4101: 'type': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(60,20): warning C4101: 'directStair': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(59,12): warning C4101: '_y': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(59,20): warning C4101: '_h': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(59,8): warning C4101: '_x': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(60,33): warning C4101: '_direct': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(60,13): warning C4101: '_item': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(59,16): warning C4101: '_w': unreferenced local variable
+C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\CreateGrid\Source.cpp(60,6): warning C4101: '_type': unreferenced local variable
+  CreateGrid.vcxproj -> C:\Users\Minh\Desktop\GitGame\CastlevaniaMinh\Debug\CreateGrid.exe

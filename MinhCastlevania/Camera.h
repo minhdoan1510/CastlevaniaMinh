@@ -19,12 +19,14 @@ class CCamera
 	float distanceAutoCam;
 	int directAutoCam;
 	float X_BackupAutoCam;
+	bool isLockCam;
 public:
 	static CCamera* GetInstance();
 	CCamera(int w, int h);
 	~CCamera();
 	D3DXVECTOR2 Transform(float x, float y);
 	void SetPosition(float x, float y, int _floor);
+	void SetDefaultCam();
 	float GetXCam();
 	float GetYCam();
 	int GetCurrentFloor();
@@ -40,6 +42,8 @@ public:
 	bool IsAutoCam();
 	void AutoCamX(float _distance, int direct);
 	void UpdateAutoCam(DWORD dt);
+	void LockCam();
+	void UnlockCam();
 };
 
 

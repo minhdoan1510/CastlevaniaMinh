@@ -1,8 +1,8 @@
 #scene list
 [SCENES]
-1	1
-2	2
-3	3
-4	4
+1	scene 1
+2	scene 2
+3	scene 3
+4	scene 4
 [SETTINGS]
 start	0

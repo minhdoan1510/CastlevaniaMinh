@@ -12,6 +12,7 @@ CCamera::CCamera(int w, int h)
 	height = h;
 	floor = 1; 
 	isAutoCam = 0;
+	isLockCam = 0;
 }
 
 CCamera::~CCamera()
@@ -32,16 +33,20 @@ D3DXVECTOR2 CCamera::Transform(float x, float y)
 
 void CCamera::SetPosition(float x, float y,int _floor)
 {
-	if (isAutoCam) return;
+	if (isAutoCam||isLockCam) return;
 	if (x <= boundLeft)
 		xC = boundLeft;
 	else if (x > boundRight - width + W_CAM_BOUND)
 		xC = boundRight - width + W_CAM_BOUND;
 	else
 		xC = x;
-	//xC = (x < 0) ? 0 : (x + width > boundaryWidth) ? boundaryWidth - width : x;
 	yC = y;
 	floor = _floor;
+}
+
+void CCamera::SetDefaultCam()
+{
+	xC = yC = 0;
 }
 
 float CCamera::GetXCam()
@@ -72,9 +77,9 @@ int CCamera::GetHeight()
 RECT CCamera::GetRectCam()
 {
 	RECT r;
-	r.left = xC;
+	r.left = xC - W_CAM_BOUND;
 	r.top = yC;
-	r.right = xC + width;
+	r.right = xC + width ;
 	r.bottom = yC + height;
 	return r;
 }
@@ -142,4 +147,14 @@ void CCamera::UpdateAutoCam(DWORD dt)
 		//xC += distanceAutoCam - (xC - X_BackupAutoCam);
 		isAutoCam = 0;
 	}
+}
+
+void CCamera::LockCam()
+{
+	isLockCam = true;
+}
+
+void CCamera::UnlockCam()
+{
+	isLockCam = false;
 }

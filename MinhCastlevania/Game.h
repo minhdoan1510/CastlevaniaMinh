@@ -40,6 +40,7 @@ public:
 	void _ParseSection_SCENES(string line);
 	void Init(HWND hWnd);
 	void Load(LPCWSTR gameFile);
+	HWND GetHWND();
 
 	void InitKeyboard();
 	int IsKeyDown(int KeyCode);

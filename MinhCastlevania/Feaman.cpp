@@ -8,7 +8,7 @@ CFeaman::CFeaman(float _x, float _y)
 	x = _x;
 	y = _y;
 	enemyType = FEAMAN;
-	ani = CAnimations::GetInstance()->Get(FEAMAN);
+	ani = CAnimations::GetInstance()->Get(FEAMAN)->Clone();
 	isActive = 0;
 	HP = FEAMAN_DEFAULT_HP;
 	DamageofEnemy = FEAMAN_DAMAGE;
@@ -22,10 +22,20 @@ CFeaman::~CFeaman()
 {
 }
 
+void CFeaman::ClimbJump(int direct)
+{
+	if (isJumping) return;
+
+	vy = -FEAMAN_JUMP_CLIMB;
+	vx = direct * FEAMAN_SPEED * 2;
+	nx = direct;
+	isJumping = 1;
+}
+
 void CFeaman::Jump(int direct, int isJumpHight)
 {
 	if (isJumping) return;
-	//if (timeJump == 0 || GetTickCount() - timeJump <= FEAMAN_TIME_BETWEEN_JUMP) return;
+	//if (timeJump == 0 || now - timeJump <= FEAMAN_TIME_BETWEEN_JUMP) return;
 
 	//timeJump = 0;
 	if (direct == 0)
@@ -37,10 +47,10 @@ void CFeaman::Jump(int direct, int isJumpHight)
 	}
 	if (isJumpHight == -1) // nhảy random hight or short
 	{
-		//if (GetRandomInt(0, 4) == 0)
-		//	SetJumpH(direct);
-		//else
-		SetJumpS(direct);
+		if (GetRandomInt(0, 4) == 0)
+			SetJumpH(direct);
+		else
+		    SetJumpS(direct);
 	}
 	else // nhảy theo isJumpHight
 	{
@@ -70,6 +80,9 @@ void CFeaman::Render()
 	if (isActive||isPrepare)
 	{
 		RenderBoundingBox();
+		if (isIdle)
+			ani->RenderFrame(0, x, y, nx > 0);
+		else
 		ani->Render(x, y, nx > 0);
 		CEnemy::Render();
 	}
@@ -77,83 +90,97 @@ void CFeaman::Render()
 
 void CFeaman::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)
 {
-	if (!isFollow && GetTickCount() - timeFollow >= FEAMAN_TIME_FOLLOW_SIMON) {
+	DWORD now = GetTickCount();
+	if (!isFollow && now - timeFollow >= FEAMAN_TIME_FOLLOW_SIMON) {
 		isFollow = 1;
 	}
 
-	if (GetTickCount() - timePrepare >= FEAMAN_TIME_PREPARE && isPrepare) {
+	if (now - timePrepare >= FEAMAN_TIME_PREPARE && isPrepare) {
 		isActive = 1;
 	}
-	if (isActive)
-	if (!isJumping)
+	if (!isIdle && !isJumping)
 	{
-		if (CSimon::GetIntance()->IsAttack())
-		{
-			RECT rectSimon = CSimon::GetIntance()->GetBBox();
-			RECT rectFeaman = GetBBox();
-			if (CSimon::GetIntance()->GetNx() == 1 && rectSimon.left < rectFeaman.left)
-			{
-				if (CSimon::GetIntance()->IsAttackMainWeapon())
-				{
-					if (abs(rectSimon.right - rectFeaman.left) <= WHIP_3_WIDTH)
-					{
-						Jump(-1, 1);
-						DebugOut(L"Nhay trai");
-					}
-				}
-				else
-				{
-					unordered_map<int, CWeapon*> weaponList = CSimon::GetIntance()->GetListWeapon();
-					for (pair<int, CWeapon*> item : weaponList)
-					{
-						if (item.first == WHIP) continue;
-						if (item.second->IsFinish()) continue;
-						LPCOLLISIONEVENT e = SweatAABBx_SafeEnemy(item.second, FEAMAN_DISTANCE_SAFE_WITH_2ND_WEAPON);
+		isIdle = true;
+		timeIdle = now;
+	}
+	if (now - timeIdle >= FEAMAN_TIME_IDLE) {
+		isIdle = false;
+	}
 
-						if (e->t > 0 && e->t <= 1.0f)
+	if (isIdle)
+		return;
+
+	if (isActive)
+		//xử lý né skill
+		if (!isJumping)
+		{
+			if (CSimon::GetIntance()->IsAttack())
+			{
+				RECT rectSimon = CSimon::GetIntance()->GetBBox();
+				RECT rectFeaman = GetBBox();
+				if (CSimon::GetIntance()->GetNx() == 1 && rectSimon.left < rectFeaman.left)
+				{
+					if (CSimon::GetIntance()->IsAttackMainWeapon())
+					{
+						if (abs(rectSimon.right - rectFeaman.left) <= WHIP_3_WIDTH)
 						{
 							Jump(-1, 1);
 							DebugOut(L"Nhay trai");
-							break;
+						}
+					}
+					else
+					{
+						unordered_map<int, CWeapon*> weaponList = CSimon::GetIntance()->GetListWeapon();
+						for (pair<int, CWeapon*> item : weaponList)
+						{
+							if (item.first == WHIP) continue;
+							if (item.second->IsFinish()) continue;
+							LPCOLLISIONEVENT e = SweatAABBx_SafeEnemy(item.second, FEAMAN_DISTANCE_SAFE_WITH_2ND_WEAPON);
+
+							if (e->t > 0 && e->t <= 1.0f)
+							{
+								Jump(-1, 1);
+								DebugOut(L"Nhay trai");
+								break;
+							}
 						}
 					}
 				}
-			}
-			if (CSimon::GetIntance()->GetNx() == -1 && rectSimon.left > rectFeaman.left)
-			{
-				if (CSimon::GetIntance()->IsAttackMainWeapon())
+				if (CSimon::GetIntance()->GetNx() == -1 && rectSimon.left > rectFeaman.left)
 				{
-					if (abs(rectSimon.left - rectFeaman.right) <= WHIP_3_WIDTH)
+					if (CSimon::GetIntance()->IsAttackMainWeapon())
 					{
-						Jump(1, 1);
-						DebugOut(L"Nhay phai");
-						//Dap datDap datNhay phaiDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap dat
-					}
-				}
-				else
-				{
-					unordered_map<int, CWeapon*> weaponList = CSimon::GetIntance()->GetListWeapon();
-					for (pair<int, CWeapon*> item : weaponList)
-					{
-						if (item.first == WHIP) continue;
-						if (item.second->IsFinish()) continue;
-						float _vx, _vy;
-						LPCOLLISIONEVENT e = SweatAABBx_SafeEnemy(item.second, FEAMAN_DISTANCE_SAFE_WITH_2ND_WEAPON);
-
-						if (e->t > 0 && e->t <= 1.0f)
+						if (abs(rectSimon.left - rectFeaman.right) <= WHIP_3_WIDTH)
 						{
 							Jump(1, 1);
 							DebugOut(L"Nhay phai");
-							break;
+							//Dap datDap datNhay phaiDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap dat
+						}
+					}
+					else
+					{
+						unordered_map<int, CWeapon*> weaponList = CSimon::GetIntance()->GetListWeapon();
+						for (pair<int, CWeapon*> item : weaponList)
+						{
+							if (item.first == WHIP) continue;
+							if (item.second->IsFinish()) continue;
+							float _vx, _vy;
+							LPCOLLISIONEVENT e = SweatAABBx_SafeEnemy(item.second, FEAMAN_DISTANCE_SAFE_WITH_2ND_WEAPON);
+
+							if (e->t > 0 && e->t <= 1.0f)
+							{
+								Jump(1, 1);
+								DebugOut(L"Nhay phai");
+								break;
+							}
 						}
 					}
 				}
 			}
 		}
-	}
 	if (isActive)
 	{
-		if (isFollow)
+		if (isFollow)// xử lý khi follow victim
 		{
 			if (!isJumping)
 			{
@@ -173,7 +200,7 @@ void CFeaman::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)
 			}
 			if (IsContain(GetBBox(), CSimon::GetIntance()->GetBBox()))
 			{
-				timeFollow = GetTickCount();
+				timeFollow = now;
 				isFollow = 0;
 			}
 		}
@@ -182,7 +209,7 @@ void CFeaman::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)
 			Jump();
 		}
 
-		if (amountJump >1 &&!IsContain(GetBBox(), CCamera::GetInstance()->GetRectCam()))
+		if (amountJump > 1 && !IsContain(GetBBox(), CCamera::GetInstance()->GetRectCam()))
 		{
 			IsDead = 1;
 		}
@@ -192,10 +219,10 @@ void CFeaman::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)
 		if (!isPrepare && IsContain(GetBBox(), CCamera::GetInstance()->GetRectCam()))
 		{
 			isPrepare = 1;
-			timePrepare = GetTickCount();
+			timePrepare = now;
 		}
 	}
-	
+
 	vy += FEAMAN_GRAVITY * dt;
 	CGameObject::Update(dt);
 	//DebugOut(L"%.6f \n", vy);
@@ -225,20 +252,30 @@ void CFeaman::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, _nx, ny);
 
-		x += min_tx * dx + _nx * 0.4f;
-		if (ny < 0)
+		if (_nx != 0)//xử lý leo khi đụng tường
 		{
-			y += min_ty * dy + ny * 0.4f;
-			/*if (timeJump == 0)
-			{
-				DebugOut(L"Dap dat");
-				timeJump = GetTickCount();
-			}*/
 			isJumping = 0;
+			ClimbJump(nx);
+			x += vx * dt;
+			y += vy * dt;
 		}
 		else
 		{
-			y += dy;
+			x += min_tx * dx + _nx * 0.4f;
+			if (ny != 0)
+			{
+				if (ny > 0)
+				{
+					y += min_ty * dy - ny * 0.4f;
+					vy = 0;
+				}
+				else
+				{
+					y += min_ty * dy + ny * 0.4f;
+
+					isJumping = 0;
+				}
+			}
 		}
 		for (int i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
