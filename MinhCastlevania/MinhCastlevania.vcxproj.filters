@@ -58,6 +58,9 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{505cb086-e1e9-4f75-abc0-790389f40d96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource File">
+      <UniqueIdentifier>{ea00e43e-60cf-41ea-9122-d156a25c1693}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -377,5 +380,12 @@
     <ClInclude Include="PhantomBatBullet.h">
       <Filter>GameObjects\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MinhCastlevania.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
 </Project>

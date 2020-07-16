@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define BAT_INTRO_V_FLY		0.02
+#define BAT_INTRO_V_FLY		0.015
 #define BAT_INTRO_SIZE_W	18
 #define BAT_INTRO_SIZE_H	18
 

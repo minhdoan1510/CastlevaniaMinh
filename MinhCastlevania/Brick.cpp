@@ -14,6 +14,8 @@ CBrick::CBrick(float X, float Y, int W, int H, int _type, ObjectType _item)
 	isDestroy = 1;
 	if (_item != Null)
 		itemHolder = _item;
+	else
+		itemHolder = Null;
 	sprite = CSprites::GetInstance()->Get(typeBrick);
 	if (sprite == NULL)
 		DebugOut(L"[Brick] Sprite brick type %d not found in CSprites\n",_type);

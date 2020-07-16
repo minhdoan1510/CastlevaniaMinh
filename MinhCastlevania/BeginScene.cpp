@@ -6,6 +6,7 @@
 #include "CloudIntro.h"
 #include "BatIntro.h"
 #include <fstream>
+#include "Sound.h"
 
 CBeginScene::CBeginScene(int id, string folderPath) :CScene(id, folderPath)
 {
@@ -14,7 +15,6 @@ CBeginScene::CBeginScene(int id, string folderPath) :CScene(id, folderPath)
 
 void CBeginScene::LoadObjectIntroScene()
 {
-
 	objects->clear();
 	ifstream ifs("Resources/IntroScene/BeginScene/obj.txt");
 	int type;
@@ -70,6 +70,8 @@ void CBeginScene::Load()
 	isIntro = 1;
 	objects = new vector<CGameObject*>();
 	CSimon::GetIntance()->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON));
+
+	CSound::GetInstance()->loadSound(folderPath + "/introgmaw.wav", "MusicMap");
 }
 
 void CBeginScene::Unload()
@@ -79,6 +81,7 @@ void CBeginScene::Unload()
 	CSprites::GetInstance()->ClearSpritesScene();
 	CAnimations::GetInstance()->ClearAniScene();
 	CAnimationSets::GetInstance()->ClearAniScene();
+	CSound::GetInstance()->UnLoadSound("MusicMap");
 }
 
 void CBeginScene::Update(DWORD dt)
@@ -100,6 +103,7 @@ void CBeginScene::Update(DWORD dt)
 			CSimon::GetIntance()->SetAutoGo(DISTANCE_SIMON_AUTO, -1, 1);
 			lTime = 0;
 			cScoreBoard = new CScoreBoard();
+			CSound::GetInstance()->play("MusicMap", 1, 10000);
 		}
 	}
 	if(!isIntro)
@@ -112,6 +116,7 @@ void CBeginScene::Update(DWORD dt)
 			if (lTime != 0 && GetTickCount() - lTime >= SIMON_ENTER_GAME_TIME)
 			{
 				CSimon::GetIntance()->EnterIntroGameState(0);
+				Unload();
 				CSceneManager::GetInstance()->SetCurrentSceneID(1);
 				CSceneManager::GetInstance()->Update(dt);
 				return;

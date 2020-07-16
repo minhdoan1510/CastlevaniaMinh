@@ -47,6 +47,29 @@ void CPlayScene::LoadSound()
 	CSound::GetInstance()->loadSound("Resources/map/" + folderPath + "/musicMap.wav", "MusicMap");
 }
 
+void CPlayScene::LoadBossMusic()
+{
+	if (!isLoadBossMusic)
+	{
+		isLoadBossMusic = 1;
+		CSound::GetInstance()->UnLoadSound("MusicMap");
+		CSound::GetInstance()->stop("MusicMap");
+		CSound::GetInstance()->loadSound("Resources/map/" + folderPath + "/bossmusic.wav", "MusicMap");
+		CSound::GetInstance()->play("MusicMap", 1, 10000);
+	}
+}
+
+void CPlayScene::LoadEndMusic()
+{
+	if (!isLoadEndMusic) {
+		isLoadEndMusic = 1;
+		CSound::GetInstance()->UnLoadSound("MusicMap");
+		CSound::GetInstance()->stop("MusicMap");
+		CSound::GetInstance()->loadSound("Resources/map/" + folderPath + "/endmusic.wav", "MusicMap");
+		CSound::GetInstance()->play("MusicMap", 1, 10000);
+	}
+}
+
 void CPlayScene::Load()
 {
 	CTextureManager::GetInstance()->LoadResourceScene("Resources/map/" + folderPath + "/texture.txt");
@@ -83,6 +106,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (timeGame > 0 && now - timescoreincrease >= TIME_SCORE_TIMEGAME_INCREASE)
 		{
+			LoadEndMusic();
 			timescoreincrease = now;
 			timeGame-=5;
 			if (timeGame < 0)
@@ -91,6 +115,7 @@ void CPlayScene::Update(DWORD dt)
 		}
 		else if(timeGame <= 0)
 		{
+
 			CSimon::GetIntance()->SetFreeze(true);
 			if (scoreincrease > 0 && now - timescoreincrease >= TIME_SCORE_INCREASE)
 			{
@@ -101,8 +126,6 @@ void CPlayScene::Update(DWORD dt)
 			}
 			else if (scoreincrease <= 0)
 			{
-				// xuwr lys ket thuc game
-
 				if (now - timescoreincrease >= TIME_SLEEP_END_GAME)
 				{
 					GameOver();
@@ -183,6 +206,7 @@ void CPlayScene::Update(DWORD dt)
 			{
 				CCamera::GetInstance()->LockCam();
 				hpBoss = static_cast<CEnemy*>(coObjects[i])->GetcurrentHP();
+				LoadBossMusic();
 			}
 		}
 	}
@@ -402,11 +426,11 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		if (!simon->IsJumping())
 			simon->Stop();
 		break;
-	case DIK_P:
-		CSceneManager::GetInstance()->StartPassScene(0,0,1);
-		break;
-	case DIK_R:
-		CSimon::GetIntance()->SetPosition(1400, 0);
+	//case DIK_P:
+	//	CSceneManager::GetInstance()->StartPassScene(0,0,1);
+	//	break;
+	//case DIK_R:
+	//	CSimon::GetIntance()->SetPosition(1400, 0);
 		break;
 	}
 }

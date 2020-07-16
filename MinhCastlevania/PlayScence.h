@@ -30,12 +30,18 @@ private:
 	string filePathMap;
 	int scoreincrease;
 	CMap* map;
+	bool isLoadBossMusic;
+	bool isLoadEndMusic;
+	bool isIncreaseScoreMusic;
 	CGrid* grid;
 	CScoreBoard* cScoreBoard;
 	int hpBoss;
 	void LoadMap();
 	void LoadObject();
 	void LoadSound();
+	void LoadBossMusic();
+	void LoadEndMusic();
+	void LoadIncreaseScoreMusic();
 	vector<CEffect*> effects;
 	D3DXVECTOR2 posDefaultScene;
 public:

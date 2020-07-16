@@ -180,11 +180,15 @@ void CSound::loadSound(std::string fileName, std::string name)
 
 void CSound::UnLoadSound(string name)
 {
-	std::map< std::string, IDirectSoundBuffer8*> ::iterator it;
-	it = soundBufferMap.find(name);
-	it->second->Release();
-	//SAFE_DELETE(it->second);
-	soundBufferMap.erase(name);
+	try {
+		std::map< std::string, IDirectSoundBuffer8*> ::iterator it;
+		it = soundBufferMap.find(name);
+		it->second->Release();
+		//SAFE_DELETE(it->second);
+		soundBufferMap.erase(name);
+	}
+	catch
+		(exception e){ }
 }
 
 void CSound::play(std::string name, bool infiniteLoop, int times)

@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "SceneManager.h"
 #include "WinScene.h"
+#include "resource.h"
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -59,7 +60,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	wc.lpfnWndProc = (WNDPROC)WinProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
-	wc.hIcon = NULL;
+	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = NULL;

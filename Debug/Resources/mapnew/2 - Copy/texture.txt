@@ -1,2 +1,0 @@
-100004	Resources\map\2 - Copy\map.png
-20000	Resources\map\2 - Copy\texture.png

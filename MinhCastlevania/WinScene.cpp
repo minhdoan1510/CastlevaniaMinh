@@ -1,10 +1,18 @@
 #include "WinScene.h"
 #include "Simon.h"
 #include "SceneManager.h"
+#include "Sound.h"
 
 CWinScene::CWinScene() :CScene(-1, "")
 {
 	key_handler = new CWinSceneKeyHandler(this);
+}
+
+void CWinScene::LoadMusic()
+{
+	CSound::GetInstance()->stop("MusicMap");
+	CSound::GetInstance()->loadSound("Resources/Sound/musicMap1.wav", "MusicMap");
+	CSound::GetInstance()->play("MusicMap", 1, 10000);
 }
 
 void CWinScene::Load()
@@ -13,11 +21,12 @@ void CWinScene::Load()
 	posWin = WIN_POSITION;
 	CCamera::GetInstance()->SetPosition(0,PULL_SCREEN_Y, 1);
 	vx = vy = V_FLY;
+	LoadMusic();
 }
 
 void CWinScene::Unload()
 {
-
+	CSound::GetInstance()->UnLoadSound("MusicMap");
 }
 
 void CWinScene::Update(DWORD dt)
@@ -25,6 +34,7 @@ void CWinScene::Update(DWORD dt)
 	CCamera::GetInstance()->SetPosition(0, PULL_SCREEN_Y, 1);
 	if (isEnter)
 	{
+		Unload();
 		CSceneManager::GetInstance()->SetCurrentSceneID(0);
 		CSimon::GetIntance()->SetFinish(0);
 		CSimon::GetIntance()->ResetSimon();

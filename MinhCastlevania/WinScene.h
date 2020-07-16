@@ -19,6 +19,7 @@ public:
 	bool isEnter;
 	int isContinue;
 	CWinScene();
+	void LoadMusic();
 	void Load();
 	void Unload();
 	void Update(DWORD dt);

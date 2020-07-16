@@ -1,1 +1,0 @@
-100001	Resources\map\1\map.png

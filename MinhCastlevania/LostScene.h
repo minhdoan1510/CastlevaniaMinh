@@ -15,6 +15,7 @@ class CLostScene:public CScene
 	CSprite* heartSel;
 	CScoreBoard* csb;
 	int isEnter;
+	void LoadMusic();
 public:
 	int isContinue;
 	CLostScene();

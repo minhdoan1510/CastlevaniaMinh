@@ -241,6 +241,7 @@
     <ClInclude Include="PhantomBatBullet.h" />
     <ClInclude Include="PlayScence.h" />
     <ClInclude Include="Raven.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScoreBoard.h" />
@@ -257,6 +258,12 @@
     <ClInclude Include="WinScene.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="EnemyDoor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MinhCastlevania.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,13 @@
 #include "LostScene.h"
 #include "Simon.h"
 #include "SceneManager.h"
+#include "Sound.h"
+
+void CLostScene::LoadMusic()
+{
+	CSound::GetInstance()->stop("MusicMap");
+	CSound::GetInstance()->loadSound("Resources/Sound/lostgame.wav", "MusicMap");
+}
 
 CLostScene::CLostScene():CScene(-1,"")
 {
@@ -15,16 +22,17 @@ void CLostScene::Load()
 	csb = new CScoreBoard();
 	isEnter = 0;
 	csb->Update(300, CSceneManager::GetInstance()->ScoreGame, CSimon::GetIntance()->GetHeart(), CSimon::GetIntance()->GetLifeSimon(), CSimon::GetIntance()->GetHPSimon(), 16, CSceneManager::GetInstance()->GetCurrentSceneID(), CSimon::GetIntance()->GetSecondWeapon(), CSimon::GetIntance()->GetAmount2ndWeapon());
-	
+	LoadMusic();
 }
 
 void CLostScene::Unload()
 {
-
+	CSound::GetInstance()->UnLoadSound("MusicMap");
 }
 
 void CLostScene::Update(DWORD dt)
 {
+	CSound::GetInstance()->play("MusicMap", 1, 10000);
 	CCamera::GetInstance()->SetDefaultCam();
 	if (isEnter)
 	{
@@ -36,6 +44,7 @@ void CLostScene::Update(DWORD dt)
 		{
 			CSceneManager::GetInstance()->SetCurrentSceneID(0);
 		}
+		Unload();
 		CSimon::GetIntance()->SetFinish(0);
 		CSimon::GetIntance()->ResetSimon();
 		CSceneManager::GetInstance()->GetCurrentScene()->Load();
