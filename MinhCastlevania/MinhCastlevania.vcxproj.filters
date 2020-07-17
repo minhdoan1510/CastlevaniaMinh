@@ -61,6 +61,9 @@
     <Filter Include="Resource File">
       <UniqueIdentifier>{ea00e43e-60cf-41ea-9122-d156a25c1693}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ReadXml">
+      <UniqueIdentifier>{f62ee048-6e98-44b3-b3c1-ae7e4540ae26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -218,6 +221,18 @@
     </ClCompile>
     <ClCompile Include="PhantomBatBullet.cpp">
       <Filter>GameObjects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>ReadXml</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>ReadXml</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>ReadXml</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>ReadXml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -380,12 +395,24 @@
     <ClInclude Include="PhantomBatBullet.h">
       <Filter>GameObjects\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="tinystr.h">
+      <Filter>ReadXml</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>ReadXml</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MinhCastlevania.rc" />
+    <Image Include="icon1.ico">
+      <Filter>Resource File</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon1.ico" />
+    <ResourceCompile Include="MinhCastlevania.rc">
+      <Filter>Resource File</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

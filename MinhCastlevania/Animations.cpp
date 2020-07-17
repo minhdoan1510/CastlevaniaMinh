@@ -199,7 +199,7 @@ LPANIMATION_SET CAnimationSets::Get(ObjectType id)
 void CAnimationSets::LoadResource(string Folderpath)
 {
 	#pragma region ani
-	ifstream f(Folderpath+"/animation.txt");
+	ifstream f(Folderpath+ folder_ani);
 	char str[MAX_LENGTH_LINE];
 	while (f.getline(str, MAX_LINE))
 	{
@@ -225,7 +225,7 @@ void CAnimationSets::LoadResource(string Folderpath)
 #pragma endregion
 
 	#pragma region aniSet
-	ifstream ifs(Folderpath + "/animationset.txt");
+	ifstream ifs(Folderpath + folder_aniset);
 	while (ifs.getline(str, MAX_LINE))
 	{
 		string line(str);
@@ -244,47 +244,45 @@ void CAnimationSets::LoadResource(string Folderpath)
 	ifs.close();
 #pragma endregion
 
-
 }
 
 void CAnimationSets::LoadResourceScene(string Folderpath)
 {
-
-#pragma region ani
-	ifstream f(Folderpath + "/animation.txt");
-		char str[MAX_LENGTH_LINE];
-	if (f.fail())
-	{
-		DebugOut(L"[Texture] File animation.txt scene not found\n");
-	}
-	else
-	{
-		while (f.getline(str, MAX_LINE))
+	#pragma region ani
+		ifstream f(Folderpath + folder_ani);
+			char str[MAX_LENGTH_LINE];
+		if (f.fail())
 		{
-			string line(str);
-			vector<string> tokens = split(line);
-
-			if (tokens.size() < 3) return;
-			int ani_id = atoi(tokens[0].c_str());
-			int frameTime = atoi(tokens[1].c_str());
-			LPANIMATION ani = new CAnimation(frameTime);
-			int id_sprite;
-			for (int i = 2; i < tokens.size(); i++)
-			{
-				if (tokens[i].c_str() == "")
-					continue;
-				id_sprite = atoi(tokens[i].c_str());
-				ani->Add(id_sprite);
-			}
-			CAnimations::GetInstance()->Add(ani_id, ani, 1);
+			DebugOut(L"[Texture] File animation.txt scene not found\n");
 		}
-	}
-	f.close();
+		else
+		{
+			while (f.getline(str, MAX_LINE))
+			{
+				string line(str);
+				vector<string> tokens = split(line);
 
-#pragma endregion
+				if (tokens.size() < 3) return;
+				int ani_id = atoi(tokens[0].c_str());
+				int frameTime = atoi(tokens[1].c_str());
+				LPANIMATION ani = new CAnimation(frameTime);
+				int id_sprite;
+				for (int i = 2; i < tokens.size(); i++)
+				{
+					if (tokens[i].c_str() == "")
+						continue;
+					id_sprite = atoi(tokens[i].c_str());
+					ani->Add(id_sprite);
+				}
+				CAnimations::GetInstance()->Add(ani_id, ani, 1);
+			}
+		}
+		f.close();
 
-#pragma region aniSet
-	ifstream ifs(Folderpath + "/animationset.txt");
+	#pragma endregion
+
+	#pragma region aniSet
+	ifstream ifs(Folderpath + folder_aniset);
 	if (f.fail())
 	{
 		DebugOut(L"[Texture] File animationset.txt scene not found\n");

@@ -25,8 +25,6 @@ CSimon* CSimon::intance = NULL;
 
 CSimon::CSimon()
 {
-	//sprite = CSprites::GetInstance()->Get(SIMON);
-	//texture = CTextureManager::GetInstance()->Get(SIMON);
 	isuntouchable = 0;
 	nx = 1;
 	objType = SIMON;
@@ -36,7 +34,6 @@ CSimon::CSimon()
 	lifeSimon = SIMON_DEFAULT_LIFE;
 	HPSimon = SIMON_DEFAULT_HP;
 	isWalking = 0;
-	//CCamera::GetInstance()-> SetPosition(0, 0);
 	isAniDead = 0;
 	secondaryweaponcurrent = Null;
 	isOnStair = 0;
@@ -53,16 +50,6 @@ CSimon::CSimon()
 	flagRenderUntouch = 0;
 	isEnterGameIntro = 0;
 	timeOnceStair = 0;
-	//SetAutoGo(200, 1, 1);
-	CSound::GetInstance()->loadSound("Resources/Sound/whip.wav", "Whip");
-	CSound::GetInstance()->loadSound("Resources/Sound/hit.wav", "Hit");
-	CSound::GetInstance()->loadSound("Resources/Sound/collectItem.wav", "CollectItem");
-	CSound::GetInstance()->loadSound("Resources/Sound/collectWhip.wav", "CollectWeapon");
-	CSound::GetInstance()->loadSound("Resources/Sound/collectMoney.wav", "CollectMoney");
-	CSound::GetInstance()->loadSound("Resources/Sound/Knife.wav", "Knife");
-	CSound::GetInstance()->loadSound("Resources/Sound/Boomerang.wav", "Boomerang");
-	
-	//CSound::GetInstance()->setVolume(50, "Whip");
 }
 
 void CSimon::clearListSecondWeapon()
@@ -163,7 +150,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			HPSimon++;
 	}
 	else {
-		if (isEatEnd_Item&&hpincrease==0)
+		if (isEatEnd_Item && hpincrease == 0)
 			isEndgameState = true;
 	}
 
@@ -173,6 +160,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	// AABB check incontain stair trigger 
 	objAddAfterUpdate.clear();
+
 	if (!IsAutoGo())
 	{
 		bool colBottomStair = 0, colTopStair = 0;
@@ -360,6 +348,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (static_cast<CTrigger*>(coObjects->at(i))->IsActive())
 						{
+							CSound::GetInstance()->play("VISIBLE", 0, 1);
 							objAddAfterUpdate.push_back(static_cast<CTrigger*>(coObjects->at(i))->GetItem());
 							static_cast<CTrigger*>(coObjects->at(i))->SetIsActive(0);
 						}
@@ -414,8 +403,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CGameObject::Update(dt);
 
-	//update position for mainWeapon
-	listWeapon[WHIP]->SetPosition(x, y);
 
 	if (IsDead || isFreeze)
 	{
@@ -813,6 +800,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
+	//update position for mainWeapon
+	listWeapon[WHIP]->SetPosition(x, y);
 	//Update Weapon
 	for (auto item : listWeapon)
 		item.second->Update(dt, coObjects);

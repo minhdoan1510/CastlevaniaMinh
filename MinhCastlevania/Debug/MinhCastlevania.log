@@ -1,5 +1,7 @@
-﻿  main.cpp
+﻿  Whip.cpp
   C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-C:\Users\Minh\Desktop\GitPushGame\CastlevaniaMinh\MinhCastlevania\Game.h(11,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\include\dinput.h(42): message : see previous definition of 'DIRECTINPUT_VERSION'
+C:\Users\Minh\Desktop\GitPushGame\CastlevaniaMinh\MinhCastlevania\Simon.h(150,81): warning C4244: '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitPushGame\CastlevaniaMinh\MinhCastlevania\Whip.cpp(51,28): warning C4244: '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+C:\Users\Minh\Desktop\GitPushGame\CastlevaniaMinh\MinhCastlevania\Whip.cpp(71,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Minh\Desktop\GitPushGame\CastlevaniaMinh\MinhCastlevania\Whip.cpp(182,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   MinhCastlevania.vcxproj -> C:\Users\Minh\Desktop\GitPushGame\CastlevaniaMinh\Debug\MinhCastlevania.exe

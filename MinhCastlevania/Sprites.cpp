@@ -192,6 +192,7 @@ void CSprites::ClearSpritesScene()
 
 #define MAX_LENGTH_LINE 100
 #define MAX_LINE 1000
+
 void CSprites::LoadResource(string filesprite)
 {
 	LPDIRECT3DTEXTURE9 tex;

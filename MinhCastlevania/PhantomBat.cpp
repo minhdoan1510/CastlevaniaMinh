@@ -6,9 +6,9 @@
 float CPhantomBat::CalcSpeed(float _vx)
 {
 	if (distanceFlew < PHANTOMBAT_FLY_HALF)
-		return float(PHANTOMBAT_FORCE_VY / 65536) * pow(distanceFlew, 2) - (PHANTOMBAT_FORCE_VY / 128) * distanceFlew + PHANTOMBAT_FORCE_VY;
+		return PHANTOMBAT_FLY_VY_PARABOL(PHANTOMBAT_FORCE_VY, distanceFlew);//float(PHANTOMBAT_FORCE_VY / 65536) * pow(distanceFlew, 2) - (PHANTOMBAT_FORCE_VY / 128) * distanceFlew + PHANTOMBAT_FORCE_VY;
 	else
-		return -(float(PHANTOMBAT_FORCE_VY / 65536) * pow(distanceFlew, 2) - (PHANTOMBAT_FORCE_VY / 128) * distanceFlew + PHANTOMBAT_FORCE_VY);
+		return -PHANTOMBAT_FLY_VY_PARABOL(PHANTOMBAT_FORCE_VY, distanceFlew);// -(float(PHANTOMBAT_FORCE_VY / 65536) * pow(distanceFlew, 2) - (PHANTOMBAT_FORCE_VY / 128) * distanceFlew + PHANTOMBAT_FORCE_VY);
 }
 
 void CPhantomBat::MovePhantomBatPal(int direct, bool isApproach)
@@ -35,7 +35,7 @@ void CPhantomBat::UpdateMovePhantomBat(RECT boxSimon)
 	case PHANTOMBAT_STATE_FLY_1:
 		vx = PHANTOMBAT_FLY_FAST*directFly;
 		vy = CalcSpeed(distanceFlew);
-		DebugOut(L"%4.2f , %4.2f\n", distanceFlew, vy);
+		//DebugOut(L"%4.2f , %4.2f\n", distanceFlew, vy);
 		if (boxSimon.top - y >= PHANTOMBAT_DISTANCE_FLY_MAX_WITH_SIMON)
 			stateFly = PHANTOMBAT_STATE_FLY_2;
 		break;
@@ -52,7 +52,7 @@ void CPhantomBat::UpdateMovePhantomBat(RECT boxSimon)
 		break;
 	}
 
-	DebugOut(L"%4.2f,%4.2f\n", vx, vy);
+	//DebugOut(L"%4.2f,%4.2f\n", vx, vy);
 
 }
 
@@ -102,7 +102,7 @@ void CPhantomBat::Render()
 
 void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
-	DebugOut(L"%d, %d\n", statePhantomBat,(int)timeIdle );
+	//DebugOut(L"%d, %d\n", statePhantomBat,(int)timeIdle );
 
 	CGameObject::Update(dt);
 

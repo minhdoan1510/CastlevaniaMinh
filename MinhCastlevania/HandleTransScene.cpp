@@ -45,7 +45,16 @@ void CHandleTransScene::Init()
 	DoneTransScene = 0;
 	cScoreBoard = new CScoreBoard();
 	CCamera::GetInstance()->AutoCamX(-PULL_X_SCREEN + (int)SCREEN_WIDTH / 2,CSimon::GetIntance()->GetNx());
-	cScoreBoard->Update(TIME_DEFAULT_SCENE, CSceneManager::GetInstance()->ScoreGame, CSimon::GetIntance()->GetHeart(), CSimon::GetIntance()->GetLifeSimon(), CSimon::GetIntance()->GetHPSimon(), 16, CSceneManager::GetInstance()->GetCurrentSceneID()+1, CSimon::GetIntance()->GetSecondWeapon(), CSimon::GetIntance()->GetAmount2ndWeapon());
+	cScoreBoard->Update(
+		TIME_DEFAULT_SCENE, 
+		CSceneManager::GetInstance()->ScoreGame,
+		CSimon::GetIntance()->GetHeart(), 
+		CSimon::GetIntance()->GetLifeSimon(), 
+		CSimon::GetIntance()->GetHPSimon(), 
+		SIMON_DEFAULT_HP,
+		CSceneManager::GetInstance()->GetCurrentSceneID()+1, 
+		CSimon::GetIntance()->GetSecondWeapon(),
+		CSimon::GetIntance()->GetAmount2ndWeapon());
 }
 
 void CHandleTransScene::Update(DWORD dt)

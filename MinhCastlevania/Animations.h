@@ -5,6 +5,9 @@
 
 #include "Sprites.h"
 
+#define folder_ani		"/animation.txt"
+#define folder_aniset	"/animationset.txt"
+
 class CAnimationFrame
 {
 	LPSPRITE sprite;

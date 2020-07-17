@@ -37,6 +37,7 @@ void CGunpowder::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - timeFire > GUNPOWDER_TIME_ATTACK && timeFire != 0)
 	{
 		isFinish = 1;
+		CSound::GetInstance()->stop("GUNPOWDER");
 		return;
 	}
 
@@ -62,6 +63,9 @@ void CGunpowder::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
+
+
+	
 
 	CalcPotentialCollisions(coObjects, coEvents);
 	if (coEvents.size() == 0)
@@ -97,6 +101,7 @@ void CGunpowder::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isCollision = flag;
 		if (flag)
 		{
+			CSound::GetInstance()->play("GUNPOWDER",1, 10000);
 			x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 			y += min_ty * dy + ny * 0.4f;
 			if (nx != 0) vx = 0;

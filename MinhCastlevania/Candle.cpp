@@ -12,14 +12,6 @@ CCandle::CCandle(float x, float y, ObjectType _itemHolder, ObjectType _candleTyp
 	IsDestroy = false;
 	//ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType);
 	ani = CAnimationSets::GetInstance()->Get(CANDLE)->at(candleType)->Clone();
-}
-
-CCandle::~CCandle()
-{
-}
-
-void CCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
-{
 	switch (candleType)
 	{
 	case CANDLE1:
@@ -35,6 +27,15 @@ void CCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 		height = DEATH_ANI_SIZE.y;
 		break;
 	}
+}
+
+CCandle::~CCandle()
+{
+}
+
+void CCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
+{
+	
 }
 void CCandle::SetCandleSize(int _width, int _height)
 {

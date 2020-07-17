@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<datasound>
+	<sound path="Resources/Sound/whip.wav"  name = "Whip" />
+	<sound path="Resources/Sound/hit.wav"  name = "Hit" />
+	<sound path="Resources/Sound/collectItem.wav"  name = "CollectItem" />
+	<sound path="Resources/Sound/collectWhip.wav"  name = "CollectWeapon" />
+	<sound path="Resources/Sound/collectMoney.wav"  name = "CollectMoney" />
+	<sound path="Resources/Sound/Knife.wav"  name = "Knife" />
+	<sound path="Resources/Sound/Boomerang.wav"  name = "Boomerang" />
+	<sound path="Resources/Sound/gunpower.wav"  name = "GUNPOWDER" />
+	<sound path="Resources/Sound/selected.wav"  name = "SELECTED" />
+	<sound path="Resources/Sound/visible.wav"  name = "VISIBLE" />
+</datasound>

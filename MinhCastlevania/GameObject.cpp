@@ -82,6 +82,8 @@ void CGameObject::CalcPotentialCollisions(
 		else
 		if ((!coObjects->at(i)->isColisible && !dynamic_cast<CWeapon*> (this)))//&& dynamic_cast<CSimon*>(this)) 
 			continue;
+		if (dynamic_cast<CItem*>(coObjects->at(i)) && dynamic_cast<CWeapon*>(this))
+			continue;
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
 		if (e->t > 0 && e->t <= 1.0f)
@@ -133,17 +135,17 @@ bool CGameObject::GetDeath()
 
 void CGameObject::RenderBoundingBox()
 {
-	RECT rect = GetBBox();
+	//RECT rect = GetBBox();
 
-	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get(BBOX);
-	if (!IsContain(rect, CCamera::GetInstance()->GetRectCam()))
-		return;
-	RECT r;
-	r.left = 0;
-	r.top = 0;
-	r.right = rect.right - rect.left;
-	r.bottom = rect.bottom - rect.top;
-	D3DXVECTOR2 pos = CCamera::GetInstance()->Transform(rect.left, rect.top + PULL_SCREEN_Y);
+	//LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get(BBOX);
+	//if (!IsContain(rect, CCamera::GetInstance()->GetRectCam()))
+	//	return;
+	//RECT r;
+	//r.left = 0;
+	//r.top = 0;
+	//r.right = rect.right - rect.left;
+	//r.bottom = rect.bottom - rect.top;
+	//D3DXVECTOR2 pos = CCamera::GetInstance()->Transform(rect.left, rect.top + PULL_SCREEN_Y);
 	//CGame::GetInstance()->GetSpriteHandler()->Draw(bbox, &r, NULL, &D3DXVECTOR3(pos.x, pos.y, 0), D3DCOLOR_ARGB(OPACITY_BBOX, 255, 255, 255));
 }
 

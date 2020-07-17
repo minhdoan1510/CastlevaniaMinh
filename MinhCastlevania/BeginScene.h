@@ -6,6 +6,8 @@
 #include "ScoreBoard.h"
 #include "GameObject.h"
 
+#define FOLDER_PATH				"Resources/IntroScene/BeginScene/"
+#define MAP_PATH				"Resources/IntroScene/BeginScene/map.txt"
 #define ANI_GAME_POSITION		D3DXVECTOR2(400,170)
 #define JOIN_GAME_POSITION		D3DXVECTOR2(170,192)
 #define JOIN_GAME_TIME			1000
@@ -13,6 +15,7 @@
 #define FONT_FRAME_TIME			200
 #define ANI_BEGIN_SCENE			100
 #define DISTANCE_SIMON_AUTO		234
+#define TIME_SOUND				500
 
 class CBeginScene:public CScene
 {
@@ -26,7 +29,7 @@ class CBeginScene:public CScene
 	vector<CGameObject*>* objects;
 public:
 	bool isJoinGame;
-	CBeginScene(int id = 0, string folderPath = "Resources/IntroScene/BeginScene/");
+	CBeginScene(int id = 0, string folderPath = FOLDER_PATH);
 	void LoadObjectIntroScene();
 	void Load();
 	void Unload(); 

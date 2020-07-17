@@ -193,6 +193,10 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="Trigger.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -249,6 +253,8 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Trigger.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Weapon.h" />

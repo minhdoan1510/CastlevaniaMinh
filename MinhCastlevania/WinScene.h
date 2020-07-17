@@ -3,6 +3,7 @@
 #include "Font.h"
 #include "ScoreBoard.h"
 
+#define MUSIC_FOLDER		"Resources/Sound/musicMap1.wav"
 #define ENTER_POSITION		D3DXVECTOR2(90,400)
 #define WIN_POSITION		D3DXVECTOR2(63,110)
 #define WIN_SIZE			D3DXVECTOR2(240,60)

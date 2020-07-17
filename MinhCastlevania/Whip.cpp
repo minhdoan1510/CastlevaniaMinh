@@ -92,7 +92,7 @@ void CWhip::Render()
 {
 	if (isFinish) return;
 
-	if (CSimon::GetIntance()->IsFreeze() && CSimon::GetIntance()->IsEndgameState())
+	if (CSimon::GetIntance()->IsEndgameState())// && CSimon::GetIntance()->IsEndgameState())
 	{
 		if (ani->GetCurrentFrame() == 2)
 		{

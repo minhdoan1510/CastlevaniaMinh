@@ -1,16 +1,33 @@
-#include <windows.h>
+﻿#include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Game.h"
 #include "SceneManager.h"
 #include "WinScene.h"
 #include "resource.h"
+#include "Sound.h"
+#include "PlayScence.h"
+
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
 	case WM_DESTROY:
 		PostQuitMessage(0);
+		break;
+	case WM_SETFOCUS:
+		try {
+			if (dynamic_cast<CPlayScene*> (CSceneManager::GetInstance()->GetCurrentScene()))
+				static_cast<CPlayScene*> (CSceneManager::GetInstance()->GetCurrentScene())->ResumeMusic();
+		}
+		catch(exception e) {}
+		//CSound::GetInstance()->SetVolume(100.0f);
+		DebugOut(L"in  ");
+		break;
+	case WM_KILLFOCUS:
+		CSound::GetInstance()->stop();
+		//CSound::GetInstance()->SetVolume(50.0f);
+		DebugOut(L"out  ");
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
@@ -102,31 +119,32 @@ int Run()
 	int done = 0;
 	DWORD frameStart = GetTickCount();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-
+	DWORD timeLost=0;
 	while (!done)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
+		{	
 			if (msg.message == WM_QUIT) done = 1;
 
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
 
-		DWORD now = GetTickCount();
-		DWORD dt = now - frameStart;
+			DWORD now = GetTickCount();
+			DWORD dt = now - frameStart ;// -(now - timeLostFocus);//loại bỏ thời gian lostfocus
+		
+			//timeLostFocus = now;
+			if (dt >= tickPerFrame)
+			{
+				frameStart = now;
 
-		if (dt >= tickPerFrame)
-		{
-			frameStart = now;
+				CGame::GetInstance()->ProcessKeyboard();
 
-			CGame::GetInstance()->ProcessKeyboard();
-			
-			Update(dt);
-			Render();
-		}
-		else
-			Sleep(tickPerFrame - dt);	
+				Update(dt);
+				Render();
+			}
+			else
+				Sleep(tickPerFrame - dt);
 	}
 
 	return 1;
@@ -141,7 +159,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	CGame::GetInstance()->InitKeyboard();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-
 	Run();
 
 	return 0;

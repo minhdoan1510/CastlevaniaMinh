@@ -154,7 +154,6 @@ void CFeaman::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)
 						{
 							Jump(1, 1);
 							DebugOut(L"Nhay phai");
-							//Dap datDap datNhay phaiDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap datDap dat
 						}
 					}
 					else
@@ -225,7 +224,7 @@ void CFeaman::Update(DWORD dt, vector<LPGAMEOBJECT>* _objects)
 
 	vy += FEAMAN_GRAVITY * dt;
 	CGameObject::Update(dt);
-	//DebugOut(L"%.6f \n", vy);
+
 	//Collision with Brick
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

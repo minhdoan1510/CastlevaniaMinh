@@ -5,8 +5,8 @@
 
 class CGrid
 {
-	//vector<CGameObject*>** cells;
-	vector<CGameObject*> cells[20][20];
+	vector<CGameObject*>** cells;
+	//vector<CGameObject*> cells[20][20];
 	int columnGrid, rowGrid;
 	float cellW, cellH;
 	vector<CGameObject*> FilterObjectDuplicate(vector<CGameObject*> obj);
@@ -23,6 +23,7 @@ public:
 	void InsertGrid(CGameObject* obj);
 
 	D3DXVECTOR2 GetPosSimonDefault();
-	vector<CGameObject*> GetListObj();
+	vector<CGameObject*> GetListUpdateObj();
+	vector<CGameObject*> GetListRenderObj();
 };
 

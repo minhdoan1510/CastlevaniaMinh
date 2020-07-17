@@ -12,10 +12,9 @@ CTextureManager::CTextureManager()
 
 #define MAX_LENGTH_LINE 100
 #define MAX_LINE 1000
+
 void CTextureManager::LoadResource(string fileTexture)
 {
-	//Add(ObjectType::TEX_ALL, "Resources/tex/texture.png");
-	//Add(ObjectType::SIMON_DEADTH, "Resources/simondeath.png");
 	
 	char str[MAX_LENGTH_LINE];
 	ifstream ifs(fileTexture);
@@ -35,15 +34,8 @@ void CTextureManager::LoadResource(string fileTexture)
 	ifs.close();
 
 	DebugOut(L"[Texture] Load success resource texture global\n");
-
-	/*int _h, _w , _r, _c;
-	string path;
-	for (int i = 0; i < scene; i++)
-	{
-		path = "Resources/map/" + to_string(i+1) + "/map.png";
-		Add(static_cast<ObjectType>(MAP1+i), path.c_str());
-	}*/
 }
+
 void CTextureManager::LoadResourceScene(string fileTexture)
 {
 	char str[MAX_LENGTH_LINE];

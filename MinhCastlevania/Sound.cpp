@@ -3,6 +3,7 @@
 #include <dsound.h>
 #include <d3dx9.h>
 #include <d3d9.h>
+#include "tinyxml.h"
 
 CSound* CSound::Instance = nullptr;
 
@@ -44,6 +45,8 @@ CSound::CSound(HWND hWnd)
 	}
 	volume = 100.0f;
 	isMute = false;
+
+	LoadSoundResource();
 }
 
 CSound::~CSound()
@@ -191,6 +194,39 @@ void CSound::UnLoadSound(string name)
 		(exception e){ }
 }
 
+void CSound::LoadSoundResource()
+{
+	/*loadSound("Resources/Sound/whip.wav", "Whip");
+	loadSound("Resources/Sound/hit.wav", "Hit");
+	loadSound("Resources/Sound/collectItem.wav", "CollectItem");
+	loadSound("Resources/Sound/collectWhip.wav", "CollectWeapon");
+	loadSound("Resources/Sound/collectMoney.wav", "CollectMoney");
+	loadSound("Resources/Sound/Knife.wav", "Knife");
+	loadSound("Resources/Sound/Boomerang.wav", "Boomerang");
+	loadSound("Resources/Sound/gunpower.wav", "GUNPOWDER");
+	loadSound("Resources/Sound/selected.wav", "SELECTED");
+	loadSound("Resources/Sound/visible.wav", "VISIBLE");*/
+
+	TiXmlDocument doc("Resources/txt/Sound.xml");
+	if (!doc.LoadFile())
+	{
+		DebugOut(L"[Sound] %s", doc.ErrorDesc());
+	}
+
+	TiXmlElement* root = doc.RootElement();
+
+	TiXmlElement* sound = nullptr;
+	string name;
+	string path;
+
+
+	for (sound = root->FirstChildElement(); sound != NULL; sound = sound->NextSiblingElement())
+	{
+		name = sound->Attribute("name"); path = sound->Attribute("path");
+		loadSound(path, name);
+	}
+}
+
 void CSound::play(std::string name, bool infiniteLoop, int times)
 {
 	if (isMute)
@@ -207,7 +243,7 @@ void CSound::play(std::string name, bool infiniteLoop, int times)
 	}
 	else
 	{
-		it->second->Stop();
+		//it->second->Stop();
 		it->second->SetCurrentPosition(0);
 		it->second->Play(0, 0, times - 1);
 	}
@@ -220,7 +256,9 @@ void CSound::stop(std::string name)
 	{
 		for (std::map< std::string, IDirectSoundBuffer8*> ::iterator it = soundBufferMap.begin(); it != soundBufferMap.end(); it++)
 		{
+
 			it->second->Stop();
+			//soundTemp.insert(make_pair(it->first, it->second));
 			it->second->SetCurrentPosition(0);
 		}
 	}
@@ -231,14 +269,5 @@ void CSound::stop(std::string name)
 		if (it == soundBufferMap.end())
 			return;
 		else it->second->Stop();
-	}
-}
-
-void CSound::ClearQueue()
-{
-	for (std::map< std::string, IDirectSoundBuffer8*> ::iterator it = soundBufferMap.begin(); it != soundBufferMap.end(); it++)
-	{
-		it->second->Stop();
-		it->second->SetCurrentPosition(0);
 	}
 }

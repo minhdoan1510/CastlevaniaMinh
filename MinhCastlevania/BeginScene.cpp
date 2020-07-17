@@ -92,11 +92,14 @@ void CBeginScene::Update(DWORD dt)
 		{
 			lTime = GetTickCount();
 		}
+		if(GetTickCount() - lTime  >= TIME_SOUND)
+			CSound::GetInstance()->stop("SELECTED");
+
 		if (lTime != 0 && GetTickCount() - lTime >= JOIN_GAME_TIME)
 		{
 			isIntro = 0;
 			SAFE_DELETE(mapIntro);
-			mapIntro = new CMap(0, "Resources/IntroScene/BeginScene/map.txt");
+			mapIntro = new CMap(0, MAP_PATH);
 			mapIntro->SetSpriteTex(CSprites::GetInstance()->Get(200), CTextureManager::GetInstance()->Get(static_cast<ObjectType>(200)));
 			mapIntro->SetBoundaryLeftRight(1);
 			LoadObjectIntroScene();
@@ -127,7 +130,15 @@ void CBeginScene::Update(DWORD dt)
 				CSimon::GetIntance()->EnterIntroGameState(1);
 			}
 		}
-		cScoreBoard->Update(300, CSceneManager::GetInstance()->ScoreGame, CSimon::GetIntance()->GetHeart(), CSimon::GetIntance()->GetLifeSimon(), CSimon::GetIntance()->GetHPSimon(), 16, CSceneManager::GetInstance()->GetCurrentSceneID(), CSimon::GetIntance()->GetSecondWeapon(), CSimon::GetIntance()->GetAmount2ndWeapon());
+		cScoreBoard->Update(TIME_GAME,
+			CSceneManager::GetInstance()->ScoreGame,
+			CSimon::GetIntance()->GetHeart(), 
+			CSimon::GetIntance()->GetLifeSimon(),
+			CSimon::GetIntance()->GetHPSimon(), 
+			SIMON_DEFAULT_HP,
+			CSceneManager::GetInstance()->GetCurrentSceneID(), 
+			CSimon::GetIntance()->GetSecondWeapon(), 
+			CSimon::GetIntance()->GetAmount2ndWeapon());
 	}
 }
 
@@ -168,7 +179,10 @@ void CBeginScenceKeyHandler::KeyState(BYTE* states)
 void CBeginScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	if (!static_cast<CBeginScene*>(CSceneManager::GetInstance()->GetCurrentScene())->isJoinGame)
+	{
+		CSound::GetInstance()->play("SELECTED", 1);
 		static_cast<CBeginScene*>(CSceneManager::GetInstance()->GetCurrentScene())->isJoinGame = 1;
+	}
 }
 
 void CBeginScenceKeyHandler::OnKeyUp(int KeyCode)

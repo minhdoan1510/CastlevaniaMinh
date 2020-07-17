@@ -33,7 +33,7 @@ void CPlayScene::LoadMap()
 		CMapManager::GetIntance()->Add(id, map);
 	}
 
-	map->LoadMap("Resources /map/"+folderPath+"/map.png");
+	map->LoadMap(FOLDER_MAP+folderPath+"/map.png");
 }
 
 void CPlayScene::LoadObject()
@@ -44,7 +44,7 @@ void CPlayScene::LoadObject()
 
 void CPlayScene::LoadSound()
 {
-	CSound::GetInstance()->loadSound("Resources/map/" + folderPath + "/musicMap.wav", "MusicMap");
+	CSound::GetInstance()->loadSound(FOLDER_MAP + folderPath + BACKMUSIC_FILE, MUSIC_NAME);
 }
 
 void CPlayScene::LoadBossMusic()
@@ -52,10 +52,10 @@ void CPlayScene::LoadBossMusic()
 	if (!isLoadBossMusic)
 	{
 		isLoadBossMusic = 1;
-		CSound::GetInstance()->UnLoadSound("MusicMap");
-		CSound::GetInstance()->stop("MusicMap");
-		CSound::GetInstance()->loadSound("Resources/map/" + folderPath + "/bossmusic.wav", "MusicMap");
-		CSound::GetInstance()->play("MusicMap", 1, 10000);
+		CSound::GetInstance()->UnLoadSound(MUSIC_NAME);
+		CSound::GetInstance()->stop(MUSIC_NAME);
+		CSound::GetInstance()->loadSound(FOLDER_MAP + folderPath + BOSSMUSIC_FILE, MUSIC_NAME);
+		CSound::GetInstance()->play(MUSIC_NAME, 1, 10000);
 	}
 }
 
@@ -63,38 +63,44 @@ void CPlayScene::LoadEndMusic()
 {
 	if (!isLoadEndMusic) {
 		isLoadEndMusic = 1;
-		CSound::GetInstance()->UnLoadSound("MusicMap");
-		CSound::GetInstance()->stop("MusicMap");
-		CSound::GetInstance()->loadSound("Resources/map/" + folderPath + "/endmusic.wav", "MusicMap");
-		CSound::GetInstance()->play("MusicMap", 1, 10000);
+		CSound::GetInstance()->UnLoadSound(MUSIC_NAME);
+		CSound::GetInstance()->stop(MUSIC_NAME);
+		CSound::GetInstance()->loadSound(FOLDER_MAP + folderPath + ENDMUSIC_FILE, MUSIC_NAME);
+		CSound::GetInstance()->play(MUSIC_NAME, 1, 10000);
 	}
 }
 
 void CPlayScene::Load()
 {
-	CTextureManager::GetInstance()->LoadResourceScene("Resources/map/" + folderPath + "/texture.txt");
-	CSprites::GetInstance()->LoadResourceScene("Resources/map/" + folderPath + "/sprite.txt");
-	CAnimationSets::GetInstance()->LoadResourceScene("Resources/map/" + folderPath);
+	CTextureManager::GetInstance()->LoadResourceScene(FOLDER_MAP + folderPath + TEXTURE_FILE);
+	CSprites::GetInstance()->LoadResourceScene(FOLDER_MAP + folderPath + SPRITE_FILE);
+	CAnimationSets::GetInstance()->LoadResourceScene(FOLDER_MAP + folderPath);
 
 	CSimon::GetIntance()->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON));
 	LoadMap();
 	LoadObject();
-	lifeTime = GetTickCount64();
+	lifeTime = 0;
 	cScoreBoard = new CScoreBoard();
 	isTransScene = 0;
 	hpBoss = 16;
-	CSound::GetInstance()->stop("MusicMap");
+	CSound::GetInstance()->stop(MUSIC_NAME);
 	LoadSound();
-	CSound::GetInstance()->play("MusicMap", 1, 10000);
+	CSound::GetInstance()->play(MUSIC_NAME, 1, 10000);
 	CCamera::GetInstance()->UnlockCam();
+}
+
+void CPlayScene::ResumeMusic()
+{
+	CSound::GetInstance()->play(MUSIC_NAME, 1, 10000);
 }
 
 void CPlayScene::Update(DWORD dt)
 {
 	DWORD now = GetTickCount64();
-	if (now - lifeTime > 1000&& !CSimon::GetIntance()->IsEndgameState())
+	lifeTime += dt;
+	if (lifeTime > 1000 && !CSimon::GetIntance()->IsEndgameState())
 	{
-		lifeTime = now;
+		lifeTime = 0;
 		timeGame--;
 	}
 	if (timeGame <= 0&& !CSimon::GetIntance()->IsEndgameState())
@@ -130,10 +136,12 @@ void CPlayScene::Update(DWORD dt)
 				{
 					GameOver();
 					CSceneManager::GetInstance()->WinGame();
+					return;
 				}
 			}
 		}
 	}
+
 	float _x, _y;
 	CSimon::GetIntance()->GetPosition(_x, _y);
 
@@ -147,7 +155,7 @@ void CPlayScene::Update(DWORD dt)
 		(CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()));
 	//
 
-	vector<LPGAMEOBJECT> coObjects = grid->GetListObj();
+	vector<LPGAMEOBJECT> coObjects = grid->GetListUpdateObj();
 
 	CSimon::GetIntance()->Update(dt, &coObjects);//Update CSimon
 
@@ -156,6 +164,7 @@ void CPlayScene::Update(DWORD dt)
 		LPANIMATION aniObj;
 		for (int i = 0; i < coObjects.size(); i++)
 		{
+			if (dynamic_cast<CBrick*>(coObjects[i])) continue;
 			aniObj = coObjects[i]->GetAni();
 			if (aniObj)
 			{
@@ -165,24 +174,15 @@ void CPlayScene::Update(DWORD dt)
 		cScoreBoard->Update(timeGame, CSceneManager::GetInstance()->ScoreGame, CSimon::GetIntance()->GetHeart(), CSimon::GetIntance()->GetLifeSimon(), CSimon::GetIntance()->GetHPSimon(), hpBoss, CSceneManager::GetInstance()->GetCurrentSceneID(), CSimon::GetIntance()->GetSecondWeapon(), CSimon::GetIntance()->GetAmount2ndWeapon());
 		return;
 	}
+
 	if (CSceneManager::GetInstance()->IsPassScene())
 	{
-		//CCamera::GetInstance()->AutoCamX(SCREEN_WIDTH / 2, CSimon::GetIntance()->GetNx());
 		CSceneManager::GetInstance()->Update(dt);
-		//CSceneManager::GetInstance()->EndPassScene();
 		return;
 	}
 
 	if (_x + SIMON_BBOX_WIDTH > map->GetMapWidth())
 		CSimon::GetIntance()->SetPosition(map->GetMapWidth() - SIMON_BBOX_WIDTH, _y);
-
-	/*map->SetBoundaryLeftRight(1 + (int)(_y + SIMON_BBOX_HEIGHT / 2) / (CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()));
-
-	CCamera::GetInstance()->SetPosition(
-		(int)(_x - SCREEN_WIDTH / 2 + SIMON_BBOX_WIDTH / 2),
-		(CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()) *
-		((int)(_y + SIMON_BBOX_HEIGHT / 2) / (CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap())),
-		(CMapManager::GetIntance()->Get(id)->GetMapHeight() / CMapManager::GetIntance()->Get(id)->GetFloorMap()));*/
 
 
 	// Kiểm tra đã pass map hay chưa
@@ -193,13 +193,16 @@ void CPlayScene::Update(DWORD dt)
 	for (int i = 0; i < addAfterUpdate.size(); i++)
 	{
 		grid->InsertGrid(addAfterUpdate.at(i));
+		coObjects.push_back(addAfterUpdate.at(i));
 	}
-	coObjects = grid->GetListObj();
+	//coObjects = grid->GetListUpdateObj();
 
 	//update obj
 	for (int i = 0; i < coObjects.size(); i++)
 	{
-		coObjects[i]->Update(dt, &coObjects);
+
+		if (!dynamic_cast<CBrick*>(coObjects.at(i)) && !dynamic_cast<CTrigger*>(coObjects.at(i))&& !dynamic_cast<CCandle*>(coObjects.at(i)))
+			coObjects[i]->Update(dt, &coObjects);
 		if (dynamic_cast<CEnemy*>(coObjects[i]))
 		{
 			if ((static_cast<CEnemy*>(coObjects[i]))->IsBoss()&&(static_cast<CEnemy*>(coObjects[i]))->IsActive())
@@ -229,7 +232,11 @@ void CPlayScene::Update(DWORD dt)
 	//update effect
 	for (int i = 0; i < effects.size() ; i++)
 	{
-		if (effects[i]==NULL) continue;
+		if (effects[i] == NULL) {
+			effects.erase(effects.begin() + i); 
+			continue;
+			i--;
+		}
 		effects[i]->Update(dt);
 		if (effects[i]->IsFinish())
 		{
@@ -356,7 +363,7 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	map->DrawMap();
-	vector<LPGAMEOBJECT> coObjects = grid->GetListObj();
+	vector<LPGAMEOBJECT> coObjects = grid->GetListRenderObj();
 	for (int i = 0; i < coObjects.size(); i++)
 		coObjects[i]->Render();
 
@@ -378,7 +385,7 @@ void CPlayScene::Unload()
 	CSprites::GetInstance()->ClearSpritesScene();
 	CAnimations::GetInstance()->ClearAniScene();
 	CAnimationSets::GetInstance()->ClearAniScene();
-	CSound::GetInstance()->UnLoadSound("MusicMap");
+	CSound::GetInstance()->UnLoadSound(MUSIC_NAME);
 }
 
 void CPlayScene::GameOver()
@@ -426,11 +433,11 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		if (!simon->IsJumping())
 			simon->Stop();
 		break;
-	//case DIK_P:
-	//	CSceneManager::GetInstance()->StartPassScene(0,0,1);
-	//	break;
-	//case DIK_R:
-	//	CSimon::GetIntance()->SetPosition(1400, 0);
+	case DIK_P:
+		CSceneManager::GetInstance()->StartPassScene(0,0,1);
+		break;
+	case DIK_R:
+		CSimon::GetIntance()->SetPosition(1400, 0);
 		break;
 	}
 }

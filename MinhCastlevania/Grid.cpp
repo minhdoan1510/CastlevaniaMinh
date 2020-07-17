@@ -38,6 +38,11 @@ CGrid::CGrid(int _mapW, int _mapH, string _fileobj)
 
 void CGrid::LoadGrid()
 {
+	cells = new vector<CGameObject*> * [rowGrid+1];
+	for (int i = 0; i < rowGrid+1; i++)
+	{
+		cells[i] = new vector<CGameObject*>[columnGrid+1];
+	}
 	ifstream ifs(fileobj);
 	int type;
 	float _x, _y, _w, _h;
@@ -265,7 +270,7 @@ void CGrid::UpdateGrid(vector<CGameObject*> objects)
 {
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (!dynamic_cast<CBrick*>(objects.at(i)))
+		if (!dynamic_cast<CBrick*>(objects.at(i))&&!dynamic_cast<CTrigger*>(objects.at(i)))
 		{
 			RemoveObj(objects.at(i),0);
 			InsertGrid(objects.at(i));
@@ -309,12 +314,11 @@ void CGrid::RemoveObj(CGameObject* obj,bool isDeletePointer)
 
 void CGrid::UnLoadGrid()
 {
-	/*for (int i = 0; i < rowGrid; i++)
+	for (int i = 0; i < rowGrid; i++)
 	{
 		delete[] cells[i];
 	}
-
-	delete[] cells;*/
+	delete[] cells;
 }
 
 void CGrid::InsertGrid(CGameObject* obj)
@@ -339,7 +343,36 @@ D3DXVECTOR2 CGrid::GetPosSimonDefault()
 	return posSimonDefault;
 }
 
-vector<CGameObject*> CGrid::GetListObj()
+vector<CGameObject*> CGrid::GetListUpdateObj()
+{
+	RECT rectCam = CCamera::GetInstance()->GetRectCam();
+	int minRow = int(rectCam.top) / cellH;
+	int maxRow = int(rectCam.bottom) / cellH -1; // sử dụng floor
+
+	//int minRow = (CCamera::GetInstance()->GetCurrentFloor()-1)*2;
+	//int maxRow = minRow + 2; // sử dụng floor
+
+	int minColumn = int(rectCam.left) / cellW;
+	int maxColumn = int(rectCam.right) / cellW;
+
+	vector<CGameObject*> result;
+	//DebugOut(L"%d,%d   %d,%d\n", minRow, maxRow, minColumn, maxColumn);
+
+	for (int i = minRow; i <= maxRow; i++)
+	{
+		for (int j = minColumn; j <= maxColumn; j++)
+		{
+			for (int m = 0; m < cells[i][j].size(); m++)
+				//if (!dynamic_cast<CBrick*>(cells[i][j].at(m)) && !dynamic_cast<CTrigger*>(cells[i][j].at(m)))
+					result.push_back(cells[i][j].at(m));
+		}
+	}
+	result = FilterObjectDuplicate(result);
+	
+	return result;
+}
+
+vector<CGameObject*> CGrid::GetListRenderObj()
 {
 	RECT rectCam = CCamera::GetInstance()->GetRectCam();
 	int minRow = int(rectCam.top) / cellH;
@@ -358,10 +391,10 @@ vector<CGameObject*> CGrid::GetListObj()
 		for (int j = minColumn; j <= maxColumn; j++)
 		{
 			for (int m = 0; m < cells[i][j].size(); m++)
-				result.push_back(cells[i][j].at(m));
+					result.push_back(cells[i][j].at(m));
 		}
 	}
 	result = FilterObjectDuplicate(result);
-	
+
 	return result;
 }

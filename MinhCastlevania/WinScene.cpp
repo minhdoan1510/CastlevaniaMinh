@@ -11,7 +11,7 @@ CWinScene::CWinScene() :CScene(-1, "")
 void CWinScene::LoadMusic()
 {
 	CSound::GetInstance()->stop("MusicMap");
-	CSound::GetInstance()->loadSound("Resources/Sound/musicMap1.wav", "MusicMap");
+	CSound::GetInstance()->loadSound(MUSIC_FOLDER, "MusicMap");
 	CSound::GetInstance()->play("MusicMap", 1, 10000);
 }
 

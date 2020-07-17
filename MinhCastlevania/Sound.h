@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "dsound.h"
 #include "windows.h"
 #include <map>
@@ -21,6 +21,9 @@ private:
 	std::map<std::string, IDirectSoundBuffer8*> soundBufferMap;
 	IDirectSound8* pDevice;
 	bool isMute;
+
+	std::map<std::string, IDirectSoundBuffer8*> soundTemp; // sound lưu thông tin để resume
+
 public:
 	struct WaveHeaderStruct
 	{
@@ -42,13 +45,12 @@ public:
 	static CSound* GetInstance();
 	float volume;
 	void static create(HWND hWnd);
-	void play(std::string name, bool infiniteLoop, int times);
+	void play(std::string name, bool infiniteLoop, int times = 100000);
 	void stop(std::string name = "");
-	void ClearQueue();
 	void loadSound(std::string fileName, std::string name);
 	void UnLoadSound(string name);
+	void LoadSoundResource();
 	~CSound();
-	void cleanUp();
 };
 
 

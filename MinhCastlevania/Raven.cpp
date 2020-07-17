@@ -88,9 +88,10 @@ void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 					float xSimon, ySimon;
 					CSimon::GetIntance()->GetPosition(xSimon, ySimon);
 
-					if ((ySimonBackup  == 0)||(!Attack && (abs(ySimonBackup - y) <= 5) && (ySimonBackup != ySimon + WHIP_BBOX_Y + WHIP_HEIGHT + 1 && ySimonBackup != ySimon + WHIP_BBOX_Y - RAVEN_BBOX_HEIGHT - 1)))
-					{
-						
+					if ((ySimonBackup  == 0)||(!Attack && (abs(ySimonBackup - y) <= 5) 
+						&& (ySimonBackup != ySimon + WHIP_BBOX_Y + WHIP_HEIGHT + 1 
+						&& ySimonBackup != ySimon + WHIP_BBOX_Y - RAVEN_BBOX_HEIGHT - 1)))
+					{						
 						if (rand()%2)
 							ySimonBackup = ySimon + WHIP_BBOX_Y - RAVEN_BBOX_HEIGHT - 1; // -1 tránh trong phạm vi của Whip
 						else
@@ -142,7 +143,7 @@ void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 
 					if (Attack)
 					{
-						DebugOut(L"Âtkc\n");
+						//DebugOut(L"Âtkc\n");
 						vx = RAVEN_SPEED_FLY_ATTACKING*nx;
 						vy = 0;
 						//UnFollow();
@@ -188,7 +189,7 @@ void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 		y += dy;
 		if ((XCP - x <= 0 && nx == 1) || (XCP - x >= 0 && nx == -1))// || (YCP - y <= 0 && nyCP == 1) || (nyCP == -1 && YCP - y >= 0))
 		{
-			DebugOut(L"End\n");
+			//DebugOut(L"End\n");
 			UnFollow();
 			isAutoFly = 0;
 		}
