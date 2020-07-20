@@ -1,6 +1,7 @@
 # Castlevania
-Ghé qua cho mình 1 sao nhé mn
------------------------------
+
+### Đồ án đạt 10 điểm. Ghé qua cho mình 1⭐ nhé
+-------------------------------------------------
 Đồ án nhập môn phát triển GameUIT
 
 Giáo viên hướng dẫn: Đinh Nguyễn Anh Dũng
