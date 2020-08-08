@@ -1,6 +1,6 @@
 # Castlevania
 
-### Đồ án đạt 10 điểm. Ghé qua cho mình 1⭐ nhé
+### Ghé qua cho mình 1⭐ nhé
 -------------------------------------------------
 Đồ án nhập môn phát triển GameUIT
 
